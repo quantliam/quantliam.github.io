@@ -325,7 +325,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  473
+                  463
                 </span>
               
 
@@ -364,32 +364,17 @@
       
         
           
-            <h2 id="All-the-programs-were-compiled-and-excuted-within-the-setting-of-Eclipse-CDT-and-MinGW64"><a href="#All-the-programs-were-compiled-and-excuted-within-the-setting-of-Eclipse-CDT-and-MinGW64" class="headerlink" title="All the programs were compiled and excuted within the setting of Eclipse CDT and MinGW64"></a><em><strong>All the programs were compiled and excuted within the setting of Eclipse CDT and MinGW64</strong></em></h2><h1 id="Exercise-0-0"><a href="#Exercise-0-0" class="headerlink" title="Exercise 0-0"></a>Exercise 0-0</h1><h2 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h2><p>Compile and run the <strong>Hello, world!</strong> program</p>
-<h2 id="Solution-amp-Result"><a href="#Solution-amp-Result" class="headerlink" title="Solution &amp; Result"></a>Solution &amp; Result</h2><p>Compile and run <strong>Hello, world!</strong> program with MinGW + Eclipse CDT:</p>
-<p><img src="/images/Exercise0_0.PNG" alt="Hello, world!"></p>
-<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>See <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a>. </p>
-<hr>
-<h1 id="Exercise-0-1"><a href="#Exercise-0-1" class="headerlink" title="Exercise 0-1"></a>Exercise 0-1</h1><h2 id="Question-1"><a href="#Question-1" class="headerlink" title="Question"></a>Question</h2><p>What does the following statement do?<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> + <span class="number">4</span>;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Solution-amp-Results"><a href="#Solution-amp-Results" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>The expression statement yields 7 as its results because it contains two int type operands (i.e. 3 and 4), and one operator (i.e. addition). However, it has no side effects on the state of the program and the implementation. Hence, there should be nothing displayed on the console when the program is excuated. As expected, the graph below shows the result along with a warning description <em>statement has no effect ‘3+4’</em>. </p>
-<p><img src="/images/Exercise0_1.PNG" alt="Expression Statement: 3+4;"></p>
-<h2 id="Analysis-1"><a href="#Analysis-1" class="headerlink" title="Analysis"></a>Analysis</h2><p>See <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a>.</p>
-<hr>
-<h1 id="Exercise-0-2"><a href="#Exercise-0-2" class="headerlink" title="Exercise 0-2"></a>Exercise 0-2</h1><h2 id="Question-2"><a href="#Question-2" class="headerlink" title="Question"></a>Question</h2><p>Write a program that, when run, writes<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This (&quot;) is a quote, and this (\) is a backslash.</span><br></pre></td></tr></table></figure></p>
-<h2 id="Solution-amp-Results-1"><a href="#Solution-amp-Results-1" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>It seems that this program is exactly the same as the <strong>Hello, world!</strong> program in Exercise 0-0 once we replace the string literals. In doing so, however, the compiler reports errors as below graph shows. </p>
-<p><img src="/images/Exercise0_2_1.PNG" alt="Compilation errors"></p>
-<p>The the occurrence of errors is due to the facts：</p>
-<ol>
-<li>Characters should be enclosed in double quotes and the string literals is not allowed to span lines. </li>
-<li>Some characters such as backslash or single/double quotes have special meaning in C++ language. </li>
-<li>Some characters such as backspace or control character are <em>nonprintable</em>. </li>
-</ol>
-<p>Therefore, it is impossible to use such characters directly. Instead, the language provides <em>escape sequence</em> to represent such characters. The <em>escape sequence</em> begins with a backslash, i.e. in the form of <strong>\+character</strong>. The follow graph shows the right solution to this question.</p>
-<p><img src="/images/Exercise0_2_2.PNG" alt="String literals output"></p>
-<h2 id="Analysis-2"><a href="#Analysis-2" class="headerlink" title="Analysis"></a>Analysis</h2><p> The below table gives the <em>escape sequences</em> that are defined in C++ language.<br> |           |     |                |      |               |   |<br> |———–|—–|—————-|——|—————|—|<br> | newline   |\n   | horizontal tab |\t    | alert bell    |\a |<br> | vertical  |\v   | backspace      |\b    | double quote  |\“|<br> | backslash |\\  | question mark  |\?    | single quote  |\‘|<br> | carriage return |\r                     | formfeed      |\f |<br>One can choose another syntax for using <em>Escape sequence</em>: a backslash followed by by hexadecimal or octal digits while the value represents the numerical value of the character. For example, the linefeed command in C++ can be written in three ways:<br> |                     |                           |<br> |———————|—————————|<br> | character           |\n                         |<br> | octal digits        |\12                        |<br> | hexadecimal digits  |\x0a                       |<br>If a backslash followed by more than three octal digits, the <em>escape sequence</em> is only valid for the first three digits while the rest digits will be read as normal character. For example, <strong>‘\12345’</strong> is equivalent to <strong>‘S’</strong> followed by <strong>‘4’</strong> and <strong>‘5’</strong>. But if a backslash followed by the hex digits, the <em>escape sequence</em> uses all the hex digits. </p>
-<hr>
-<h1 id="Exercise-0-3"><a href="#Exercise-0-3" class="headerlink" title="Exercise 0-3"></a>Exercise 0-3</h1><h2 id="Question-3"><a href="#Question-3" class="headerlink" title="Question"></a>Question</h2><p>The string literal “\t” represents a tab character; different C++ implementations display tabs in different ways. Experiment with your implementation to learn how it treats tabs. </p>
-<h2 id="Solution-amp-Results-2"><a href="#Solution-amp-Results-2" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2>
-          
+          All the programs were compiled and excuted within the setting of Eclipse CDT and MinGW64
+
+Exercise 0-0QuestionCompile and run the Hello, world! progra
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/06/02/2018/Accelerated-C-Solution-to-Exercise-Chapter 0/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -538,41 +523,15 @@
       
         
           
-            <p>To have a better understanding on the C++ programming language, I decided to learn it from the very begining. The notes were taken mainly from textbooks <a href="https://www.amazon.com/Accelerated-C-Practical-Programming-Example/dp/020170353X" target="_blank" rel="noopener">Accelerated C++: Practical Programming by Example</a> and <a href="https://www.amazon.com/Primer-5th-Stanley-B-Lippman/dp/0321714113" target="_blank" rel="noopener">C++ Primer (5th Edition)</a>, and some online C++ tutorials.  </p>
-<h1 id="Hello-world"><a href="#Hello-world" class="headerlink" title="Hello, world!"></a>Hello, world!</h1><p>Let’s start by writing a simple program, <strong>Hello, world!</strong>, and then analyse its <strong>structure</strong>.</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* A simple C++ Program</span></span><br><span class="line"><span class="comment">* Author: Mr. Nobody</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;	</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// output Hello, world!</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="0-1-Comments"><a href="#0-1-Comments" class="headerlink" title="0.1 Comments"></a>0.1 Comments</h1><p>As shown above, there are two types of comments in C++:</p>
-<ol>
-<li>Single line comment indicated by two slash signs <strong>//</strong>.</li>
-<li>Comment pairs using two delimiters, beigining with a <strong>/*</strong> and ending with a <strong>*/</strong>. </li>
-</ol>
-<h1 id="0-2-include"><a href="#0-2-include" class="headerlink" title="0.2 #, #include"></a>0.2 #, #include</h1><p>Lines begining with <strong>#</strong> are preprocessor directives which are preprocessed before actual compilation, i.e. the compilation of the program itself. These preprocessor directives are not part of the program statement, and hence semicolons <strong>;</strong>, marking the end of most statements in C++, are not required.  </p>
-<p>The directive <strong>#include</strong> gives preprocessor instructions to include a header file, i.e. copy the entire content of the specified header or file and insert. There are two ways to use **#include#:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;header&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"file"</span></span></span><br></pre></td></tr></table></figure></p>
-<p>The angle-brackets <strong>&lt;&gt;</strong> are generally used to include a header of the standard library, e.g. iostream, string…, while the quotes <strong>“”</strong> include a file that is typically programmer-defined. For example, the program above includes a standard header named <strong>iostream</strong> to accomplish Input-Output (<strong>IO</strong>) as the C++ language doesn’t define any statements to do <strong>IO</strong>. </p>
-<h1 id="0-3-The-main-function"><a href="#0-3-The-main-function" class="headerlink" title="0.3 The main function"></a>0.3 The main function</h1><p>Every C++ program must contain a <strong>main</strong> function. The main function is being called when the operating system runs a program. As same as other functions, the main function also includes four elements: <em>return type</em>, <em>function name</em>, <em>parameter list</em> and <em>function body</em>.     </p>
-<p>The main function requires an <strong>int</strong> (i.e. integers) type return value. A return value of zero tells the implementation that the program ran successfully while a non-zero value indicates errors. The example above has an empty parameter list, showing that there is nothing between the parentheses (<strong>()</strong>). </p>
-<p>The function body begins with an open curly brace (<strong>{</strong>) and ends with a close curly brace (<strong>}</strong>). The braces indicate that all the statements inside are part of the same function, of which the return statement terminates the execution of the function by returning a value to the function’s caller. Of course, the value that returned should has the same type as the defined return type of the function. In the case of <em>main function</em>, if the return statement is omitted, the implementation would assume a return value of zero (<em><strong>not recommended</strong></em>).  </p>
-<h1 id="0-4-IO-amp-using-declarations"><a href="#0-4-IO-amp-using-declarations" class="headerlink" title="0.4 IO &amp; using declarations"></a>0.4 IO &amp; using declarations</h1><p>Before the return statement inside the braces, the first statement (as shown below) achieves the goal of this program.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure></p>
-<p>As mentioned above, the statement writes <strong>Hello, World!</strong> on the standard output. The <strong>std::</strong> indicates the followed name is part of the namespace named std. The names <strong>std::cout</strong> and <strong>std::cin</strong> refer to the objects of the standard output stream (<strong>ostream</strong>) and input stream (<strong>istream</strong>), which had already been defined in the <strong>iostream</strong> standard header. The name <strong>std::endl</strong>, which is a manipulator, ends the current line of output. The output operator (<strong>&lt;&lt;</strong>) and input operator (<strong>&gt;&gt;</strong>) indicate that what follows is inserted into <strong>std::cout</strong> and <strong>std::cin</strong>. </p>
-<p>To simplify the usage of library names from namesapce <strong>std</strong>, one could use unqualified names <strong>cout</strong> or <strong>cin</strong> instead of <strong>std::cout</strong> or <strong>std::cin</strong> by the means of <em>using declarations</em>. For example, above program is exactly as same as the below program:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* A simple C++ Program</span></span><br><span class="line"><span class="comment">* Author: Mr. Nobody</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;	</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// output Hello, world!</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;f</span><br></pre></td></tr></table></figure>
-<p>It should be noted that <strong>Headers</strong> should not include <em>using declarations</em> for the purpose of avoiding potential name confilits. </p>
-<h1 id="0-5-Expressions-amp-Scope"><a href="#0-5-Expressions-amp-Scope" class="headerlink" title="0.5 Expressions &amp; Scope"></a>0.5 Expressions &amp; Scope</h1><p>An <em>Expression</em> typically contains <em>operators</em> and <em>operands</em>. It becomes an <em>expression statement</em> when it is followed by a semicolon. The expression statement asks the implementation to compute or evaluate the expression but discards the results. However, the computation may lead to side effects such as printing a result. For example:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> + <span class="number">4</span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-<p>The first statement yields a result 7 but has no side effects. In other words, it is useless because the result is discarded. The second statement is useful because of its side effects, that is, the string is inserted into the standard output stream and hence is printed out. </p>
-<p>In this case, <strong>&lt;&lt;</strong> symbols are operators while <strong>std::cout</strong>, <strong>std::endl</strong> and <strong>Hello, world!</strong> are operands. Every operand has a type that determines the effect of the operators. As mentioned above, <strong>std::cout</strong> has type <strong>std::ostream</strong>.    </p>
-<p>The operator <strong>&lt;&lt;</strong> is <em>left-associative</em>. For example, the first <strong>&lt;&lt;</strong> in above program has <strong>Hello, world!</strong> as its right operand and <strong>std::cout</strong> as its left operand. In a similar manner, the second <strong>&lt;&lt;</strong> has following relationships with its left and right operands:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!"</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure></p>
-<p>The scope of a name is the part of a program, in which the name is valid. The above program shows two kinds of scopes: one kind is <em>namespace scope</em>, i.e. scope name <strong>std</strong> and scope operator <strong>::</strong>; another kind is <em>block scope</em> formed by curly braces. </p>
-<h1 id="0-6-Others"><a href="#0-6-Others" class="headerlink" title="0.6 Others"></a>0.6 Others</h1><p>Another aspect is that C++ programs do not have strict requirements on <em>indentation</em> and <em>spaces</em>, allowing improving readability based on personal preference. However, three entities are not allowed to be used in a free-form. </p>
-<ol>
-<li><em>string literals</em> which enclosed in double quotes are generally not span lines.</li>
-<li><em>preprocessor directive</em> should be put on its own line. </li>
-<li><em><strong>//</strong> type comments</em> should ends at the end of the current line, and  <em>/<em>*</em>/</em> type comments cannot nest.</li>
-</ol>
-<hr>
-<p>To be continued…</p>
-
-          
+          To have a better understanding on the C++ programming language, I decided to learn it from the very begining. The notes were taken mainly from textboo
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/02/02/2018/C++ - Getting Started/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -721,17 +680,15 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/01/02/2018/hello-world/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -891,7 +848,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">1.6k</span>
+    <span title="Site words total count">1.5k</span>
   
 </div>
 
