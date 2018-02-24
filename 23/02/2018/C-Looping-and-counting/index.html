@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C++,Notes," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="In last chapter, the authors Koenig and Moo presents how to write a program that can produce a framed greeting. This chapter is to make the program more flexible so that we can change the size of the">
+<meta name="keywords" content="C++,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ - Looping and counting">
+<meta property="og:url" content="http://www.quanttour.com/23/02/2018/C-Looping-and-counting/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="In last chapter, the authors Koenig and Moo presents how to write a program that can produce a framed greeting. This chapter is to make the program more flexible so that we can change the size of the">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-24T16:49:41.189Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ - Looping and counting">
+<meta name="twitter:description" content="In last chapter, the authors Koenig and Moo presents how to write a program that can produce a framed greeting. This chapter is to make the program more flexible so that we can change the size of the">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.quanttour.com/23/02/2018/C-Looping-and-counting/"/>
+
+
+
+
+
+  <title>C++ - Looping and counting | Liam's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/23/02/2018/C-Looping-and-counting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++ - Looping and counting</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-23T12:09:14+00:00">
+                23-02-2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,595
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>In last chapter, the authors Koenig and Moo presents how to write a program that can produce a framed greeting. This chapter is to make the program more flexible so that we can change the size of the frame easily. Let’s have a look at the framed greeting again:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">********************</span><br><span class="line">*                  *</span><br><span class="line">* Hello, Estragon! *</span><br><span class="line">*                  *</span><br><span class="line">********************</span><br></pre></td></tr></table></figure></p>
+<p>It has been observed that the greeting work has following characteristics:</p>
+<ul>
+<li>it consist of three elements: the greeting itself, asterisks and spaces. </li>
+<li>the greeting itself will be fixed once we finished inputing. </li>
+<li>the greeting itself is centrally located, meaning that it is surrounded by blank rows and the same number of black columns.</li>
+<li>the outmost rows and columns are constituted by asterisks.</li>
+</ul>
+<p>Clearly, the size of the frame is determined by the length of the greeting itself and the number of blank lines(i.e. spaces in this case). Now, we can define a variable named <strong>pad</strong> that represents the length of spaces (e.g. 1):<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> pad = <span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<p>Then, we can indicate the number of rows with defining another variable:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> rows = <span class="number">1</span> + <span class="number">2</span> + <span class="number">2</span>*pad;</span><br></pre></td></tr></table></figure></p>
+<p>The number 1 means the row of the greeting itself and the number 2 means two edges formed by asterisks. Once we know the number of rows, we can write the program similar as the the original one which defines several variables for each row and prints one by one. However, we need to change the code every time we change the frame size. This problem can be tackled with using <strong>iterative statements</strong> which will fully utilize the information listed above including the position of each type of elements. </p>
+<h2 id="While-statement-amp-for-statement"><a href="#While-statement-amp-for-statement" class="headerlink" title="While statement &amp; for statement"></a>While statement &amp; for statement</h2><p>A <strong>while statement</strong> repeatedly executes a given statement as long as a pre-dertimined condition is true. The syntax of a <strong>while statement</strong> is<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (condition)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure></p>
+<p>The processing of <strong>while statement</strong> starts from testing the <strong>condition</strong> and then executes the statement (aka, the <strong>while body</strong>) if the <strong>condition</strong> is true, and it starts all over again until the <strong>condition</strong> becomes false. Our purpose is to write each row, totalling <strong>rows</strong> times. Hence, what the program need here is a counting variable which is used to control the outputs.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> r = <span class="number">0</span>; <span class="comment">// counting variable with initial value 0</span></span><br><span class="line"><span class="keyword">while</span> (r != rows)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// write a row of output</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    ++r; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The while loop requires a single statement but the logic of our program need more. Hence, we can use a <strong>compound statement</strong> which refers to a block formed by a pair of curly braces. As shown above, We can write a sequence of statements and declarations or empty statement in the block. Note that the block forms a scope and the right brace (<strong>}</strong>) indicates the end of the statement. </p>
+<p>The condition is an expression that returns bool type value (true or false). The <strong>inequality operator</strong> (<strong>!=</strong>) test the inequality between <strong>r</strong> and <strong>rows</strong>. The table below gives the logical and rational operators (all returns a value of bool type)：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Associativity</th>
+<th style="text-align:left">Operator</th>
+<th style="text-align:left">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Right</td>
+<td style="text-align:left">!</td>
+<td style="text-align:left">Logical NOT</td>
+</tr>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:left">&lt;</td>
+<td style="text-align:left">less than</td>
+</tr>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:left">&lt;=</td>
+<td style="text-align:left">less than or equal</td>
+</tr>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:left">&gt;</td>
+<td style="text-align:left">greater than</td>
+</tr>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:left">&gt;=</td>
+<td style="text-align:left">greater than or equal</td>
+</tr>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:left">==</td>
+<td style="text-align:left">equality</td>
+</tr>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:left">!=</td>
+<td style="text-align:left">inequality</td>
+</tr>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:left">&amp;&amp;</td>
+<td style="text-align:left">Logical AND</td>
+</tr>
+<tr>
+<td style="text-align:left">Left</td>
+<td style="text-align:left">\</td>
+<td style="text-align:left">\</td>
+<td></td>
+<td>Logical OR</td>
+</tr>
+<tr>
+<td style="text-align:left">Source: <em>C++ Primer 2012</em></td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>++</strong>(<strong>–</strong>) is the increment (decrement) operator which adds (subtract) 1 to the variable <strong>r</strong>. The expression is equivalent to<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r = r + <span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<p>If we want to add another variable with varing values each time, we can use compound assignment operators (refer to arithmetic operators)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">+=</td>
+<td style="text-align:center">-=</td>
+<td style="text-align:center">*=</td>
+<td style="text-align:center">/=</td>
+<td style="text-align:center">%/</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p>For example, <strong>x += y;</strong> is equivalent to<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = x + y;</span><br></pre></td></tr></table></figure></p>
+<p>Comparing with the ordinary assignment, compound assignment only evaluate the left operand once while the ordinary assignment evaluate twice. </p>
+<p>Let’s get back to the <strong>while statement</strong>. According to the condition, the counting process will starts from <strong>0</strong> till <strong>rows-1</strong> and the statement is expected to be executed <strong>rows</strong> times. In this case, an alternative loop structure can also be considered, a <strong>for statement</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (init-statement; condition; expression) <span class="comment">// for header</span></span><br><span class="line">    statement                               <span class="comment">// for body</span></span><br></pre></td></tr></table></figure></p>
+<p>The <strong>for header</strong> controls the <strong>for body</strong> which contains the statement that needs to be executed. The <strong>init-statement</strong> can only be one of three statements: <strong>declaration statement</strong>, an <strong>expression statement</strong> and a<strong>null statement</strong>(using a semicolon).<br>The processing order of the <strong>for statement</strong> is</p>
+<ol>
+<li>at the begining of the loop, <strong>init-statement</strong> will be executed.</li>
+<li>then, condition will be evaluated and the <strong>for body</strong> would be executed if the condition returns true. Otherwise, the loop terminates.</li>
+<li>if condition is true, the last step of the loop is to execute <strong>expression</strong>.</li>
+</ol>
+<p>In this case, the <strong>for statement</strong> can be write as<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> r; r != rows; ++r;)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// write a row of output</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Loop-invariant"><a href="#Loop-invariant" class="headerlink" title="Loop invariant"></a>Loop invariant</h2><p>To verify the correctness of the loops, the book introduces two techniques. The first is that the condition must be false when the loop finishes. In this case, when the while statement finishes, <strong>r != rows</strong> is false. Another one is to use <strong>loop invariant</strong> which is a property that is true before and after each loop. In this example, the <strong>loop invariant</strong> is not the core language but a comment before the while statement:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// invariant: we have written r rows so far</span><br></pre></td></tr></table></figure></p>
+<p>The loop invariant shows that the while statement works as expected, and in turn the program should meet the requirements that invariant is true in each iteration. There are two specific points for verify this：</p>
+<ol>
+<li>the first point is before the first time that the condition is evaluated. In this example, we know it is correct as there is no output yet. </li>
+<li>the second point is before the end of the while body. Once the while body is executed, one row will be written. To meet the requirement, we increase the value of <strong>r</strong> by adding 1 each time. </li>
+</ol>
+<p>When the while statement finishes, there will be <strong>rows</strong> lines are written as <strong>r = rows</strong>. The below piece of code shows how the <strong>loop invariant</strong> plays its role.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// invariant: we have written r rows so far</span></span><br><span class="line"><span class="keyword">int</span> r = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// setting r to 0 makes the invariant true</span></span><br><span class="line"><span class="keyword">while</span> (r != rows)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// we can assume the invariant is true here</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// writting a row of output makes the invariant false</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// incrementing r makes the invariant true again</span></span><br><span class="line">    ++r;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// we can conclude that the invariant is true here</span></span><br></pre></td></tr></table></figure></p>
+<p>Up to now, we have figured how to control the loops for producing right number of rows. Similarly, we can use <strong>while</strong> loop or <strong>for</strong> loop to produce every character of each specific row. By the analogy, the first step is to define a variable to representing the number of columns. But the difference is that the number of columns is not only determined by blanks but also by the size of the greeting itself.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>::size_type cols = greeting.size() + pad*<span class="number">2</span> + <span class="number">2</span>;</span><br></pre></td></tr></table></figure></p>
+<p>The variable <strong>cols</strong> is defined as a <strong>std::string::size_type</strong> to keep consistent with the type of <strong>greeting.size()</strong>. This knowledge has been introduced in my last notes. We can also use type specifiers <strong>auto</strong> or <strong>decltype</strong>. For example<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">auto</span> cols = greeting.size() + pad*<span class="number">2</span> + <span class="number">2</span>;</span><br></pre></td></tr></table></figure></p>
+<p>What if we use <strong>int</strong> type directly? Then the variable might be insufficient if one input a name that is long enough. Now we can write the structure for writing a specific row.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>:：<span class="built_in">string</span>::size_type c = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// invariant: we have written c characters so far in the current row</span></span><br><span class="line"><span class="keyword">while</span> (c != cols)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// write one or more characters  </span></span><br><span class="line">    <span class="comment">// adjust the value of c to maintain the invariant </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="if-statements"><a href="#if-statements" class="headerlink" title="if statements"></a>if statements</h2><p>Now We already have the whole structure of the program. What we need next is to determine what character is needed to be written for each row and column. As listed at the begining of this notes, we can utilize the characteristic of the target. I’ll further transform the information to plain english for clarify the logic of the program. There are three components in the outputs: asterisk, spaces and the greeting. The asterisks form the border of the frame and will be written when the loop is processing</p>
+<ul>
+<li>the first row       or</li>
+<li>the last row    or</li>
+<li>the first column    or</li>
+<li>the last column </li>
+</ul>
+<p>These conditions can be expressed by means of the logical operators and relational operators<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r == 0 || r == rows - 1 || c == 0 || cols - 1</span><br></pre></td></tr></table></figure></p>
+<p>The relational operators <strong>==</strong> have lower <strong>precedence</strong> than the arithmetic operators. Therefore, <strong>r == rows - 1</strong> is equivalent to <strong>r == (rows - 1)</strong>. </p>
+<p>The <strong>logical OR</strong> operator has lower <strong>precedence</strong> than the relational operators. Therefore, above expression means<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(r == 0) || (r == rows - 1) || (c == 0) || (cols - 1)</span><br></pre></td></tr></table></figure></p>
+<p>Moreover, the <strong>logical OR</strong> is left associative and the expression is evluated using the <strong>short-circuit strategy</strong>, that is, <em>“the right side of an || is evaluated if and only if the left side is false”</em> (Lippman ect. 2012, p.154). </p>
+<p>To evaluate above condition, we use the <strong>if statement</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition) </span><br><span class="line">    statement</span><br></pre></td></tr></table></figure></p>
+<p>or <strong>if else statement</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition)</span><br><span class="line">    statement1</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    statement2</span><br></pre></td></tr></table></figure></p>
+<p>or <strong>nested if statement</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition1)</span><br><span class="line">    statement1</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (condition2)</span><br><span class="line">    statement2</span><br></pre></td></tr></table></figure></p>
+<p>Now we have got a complete structure for printing out the border<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (r == <span class="number">0</span> || r == rows - <span class="number">1</span> || c == <span class="number">0</span> || cols - <span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"*"</span>;</span><br><span class="line">    ++c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// write one or more noborder characters</span></span><br><span class="line">    <span class="comment">// adjust the value of c to maintain the invariant</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/Notes/" rel="tag"># Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/22/02/2018/Accelerated-C-Solutions-to-Exercises-Chapter-2/" rel="next" title="Accelerated C++ Solutions to Exercises(Chapter 2)">
+                <i class="fa fa-chevron-left"></i> Accelerated C++ Solutions to Exercises(Chapter 2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Liam</p>
+              <p class="site-description motion-element" itemprop="description">Stochastic Modelling Notes; Programming Notes</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/quantliam" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yanshijiutu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#While-statement-amp-for-statement"><span class="nav-number">1.</span> <span class="nav-text">While statement &amp; for statement</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Loop-invariant"><span class="nav-number">2.</span> <span class="nav-text">Loop invariant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if-statements"><span class="nav-number">3.</span> <span class="nav-text">if statements</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">8.5k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
