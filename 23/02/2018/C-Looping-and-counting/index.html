@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Liam&#39;s Blog">
 <meta property="og:description" content="In last chapter, the authors Koenig and Moo presents how to write a program that can produce a framed greeting. This chapter is to make the program more flexible so that we can change the size of the">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-25T05:34:14.792Z">
+<meta property="og:updated_time" content="2018-03-02T14:46:03.294Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ - Looping and counting">
 <meta name="twitter:description" content="In last chapter, the authors Koenig and Moo presents how to write a program that can produce a framed greeting. This chapter is to make the program more flexible so that we can change the size of the">
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  2,191
+                  2,223
                 </span>
               
 
@@ -397,7 +397,12 @@
 <h2 id="While-statement-amp-for-statement"><a href="#While-statement-amp-for-statement" class="headerlink" title="While statement &amp; for statement"></a>While statement &amp; for statement</h2><p>A <strong>while statement</strong> repeatedly executes a given statement as long as a pre-dertimined condition is true. The syntax of a <strong>while statement</strong> is<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (condition)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure></p>
 <p>The processing of <strong>while statement</strong> starts from testing the <strong>condition</strong> and then executes the statement (aka, the <strong>while body</strong>) if the <strong>condition</strong> is true, and it starts all over again until the <strong>condition</strong> becomes false. Our purpose is to write each row, totalling <strong>rows</strong> times. Hence, what the program need here is a counting variable which is used to control the outputs.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> r = <span class="number">0</span>; <span class="comment">// counting variable with initial value 0</span></span><br><span class="line"><span class="keyword">while</span> (r != rows)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// write a row of output</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    ++r; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>The while loop requires a single statement but the logic of our program need more. Hence, we can use a <strong>compound statement</strong> which refers to a block formed by a pair of curly braces. As shown above, We can write a sequence of statements and declarations or empty statement in the block. Note that the block forms a scope and the right brace (<strong>}</strong>) indicates the end of the statement. </p>
-<p>The condition is an expression that returns bool type value (true or false). The <strong>inequality operator</strong> (<strong>!=</strong>) test the inequality between <strong>r</strong> and <strong>rows</strong>. The table below gives the logical and rational operators (all returns a value of bool type)：</p>
+<p>The condition is an expression that returns <strong>bool</strong> type value (true or false). When the condition yields an arithmetic type value, the value will be converted to a value of <strong>bool</strong> type:</p>
+<ol>
+<li>zero values convert to <strong>false</strong></li>
+<li>non-zero values convert to <strong>true</strong></li>
+</ol>
+<p>The <strong>inequality operator</strong> (<strong>!=</strong>) test the inequality between <strong>r</strong> and <strong>rows</strong>. The table below gives the logical and rational operators (all returns a value of bool type)：</p>
 <table>
 <thead>
 <tr>
@@ -648,7 +653,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -753,7 +758,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">15.3k</span>
+    <span title="Site words total count">17.1k</span>
   
 </div>
 
