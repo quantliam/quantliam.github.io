@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C++,Notes," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Previous chapters mainly covers topics including  main function structure statements such as expression statements and flow-of-control statements.  built-in types, such as int, float, double, bool and">
+<meta name="keywords" content="C++,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ - Organizing programs and data">
+<meta property="og:url" content="http://www.quanttour.com/06/03/2018/C-Organizing-programs-and-data/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="Previous chapters mainly covers topics including  main function structure statements such as expression statements and flow-of-control statements.  built-in types, such as int, float, double, bool and">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-03-07T14:18:44.396Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ - Organizing programs and data">
+<meta name="twitter:description" content="Previous chapters mainly covers topics including  main function structure statements such as expression statements and flow-of-control statements.  built-in types, such as int, float, double, bool and">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.quanttour.com/06/03/2018/C-Organizing-programs-and-data/"/>
+
+
+
+
+
+  <title>C++ - Organizing programs and data | Liam's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/06/03/2018/C-Organizing-programs-and-data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++ - Organizing programs and data</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-06T11:28:53+00:00">
+                06-03-2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,728
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Previous chapters mainly covers topics including</p>
+<ol>
+<li><strong>main function</strong> structure</li>
+<li><strong>statements</strong> such as expression statements and flow-of-control statements. </li>
+<li>built-in types, such as <strong>int</strong>, <strong>float</strong>, <strong>double</strong>, <strong>bool</strong> and <strong>char</strong>.</li>
+<li>standard library <strong>IO</strong> mechanism.</li>
+<li>standard library <strong>string</strong>.</li>
+<li>standard library <strong>vector</strong>. </li>
+</ol>
+<p>We have achieved several goals through certain statements and operations on objects of different types. However, the program becomes unmanageable along with increasingly complex functions and growing information. For this reason, this chapter introduces how to organize programs and data. </p>
+<h1 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h1><h2 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h2><h3 id="writing-a-function"><a href="#writing-a-function" class="headerlink" title="writing a function"></a>writing a function</h3><p>If we break a program(e.g. <a href="http://quanttour.com/02/03/2018/C-Working-with-batches-of-data/" target="_blank" rel="noopener">A complete program</a>) into pieces, we found that it is in fact constituted by <strong>data information</strong>, <strong>homework grade computation</strong> and <strong>final grade computation</strong>. Both computations can be organized as a <strong>function</strong>, which is a named block of code. The functions will be called When the computation results are needed. Let’s start with writing a function to compute the <strong>final grade</strong>, assuming that the homework grade has been computed.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// compute the final grade of a student</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> final, <span class="keyword">double</span> homework)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.2</span>*midterm + <span class="number">0.4</span>*final + <span class="number">0.4</span>*homework;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Basically, it has the same structure as the <strong>main</strong> function except that we use empty parameter list in previous <strong>main</strong> function. </p>
+<p>In general, a function includes four parts:</p>
+<ol>
+<li><strong>return type</strong>. In this case, it has return type of <strong>double</strong>.</li>
+<li><strong>function name</strong>. In this case, the function is names as <strong>grade</strong>.</li>
+<li><strong>parameter list</strong> enclosed in parentheses <strong>()</strong>. In this case, there are three parameters seperated by commas. All three parameters have type of <strong>double</strong>. They are defined like variables but only be created when the function is called.</li>
+<li><strong>function body</strong> enclosed in curly braces <strong>{}</strong>. The return statements returns the result to function caller. </li>
+</ol>
+<h3 id="calling-a-function"><a href="#calling-a-function" class="headerlink" title="calling a function"></a>calling a function</h3><p>When calling the function, the excution of function caller is suspended and execution of the called function begins. We must supply corresponding <strong>arguments</strong> for the purpose of initializing the parameters. In other words, <strong>arguments</strong> are the initializers for a function’s parameters. <strong>Arguments</strong> can be variables or expressions or even values. But they must be provided in the same order as well as the same type as the parameters. If we replace the computation in the original program, it would be like<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"You final grade is "</span> &lt;&lt; setprecision(<span class="number">3</span>)</span><br><span class="line">    &lt;&lt; grade(midterm, final, sum/count) &lt;&lt; setprecision(prec) &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure></p>
+<p>The first parameter <strong>midterm</strong> will be initialized by copying the value of <strong>argument</strong> midterm into it. So do the other parameters. This is what so called <strong>call by value</strong>. Essentially, these parameters are created in an area independent from the variables in the calling function though they have the same values. Therefore, if the function manipulate these parameters, it wouldn’t change values of the calling function variables. In addition, the parameters are local to the function and only exist start from calling the function to returning from the function. Therefore, it doesn’t matter that we use same name as the variable in the calling function. </p>
+<p>Once the execution encounters the return statement in the function body, the execution of the function ends and back to the calling function. </p>
+<h2 id="Writing-a-median-function"><a href="#Writing-a-median-function" class="headerlink" title="Writing a median function"></a>Writing a median function</h2><p>Now we consider writing a median function that computes the median value of the homework grades. Let’s list four parts of a median function:</p>
+<ol>
+<li>the return type should be <strong>double</strong>.</li>
+<li>it is named as <strong>median</strong> for clarity.</li>
+<li>what we need for computation is only a <strong>vector</strong> of <strong>double</strong> type (assuming that we have read all grades). </li>
+<li>computing algorithms. </li>
+</ol>
+<p>It’s pretty straightforward<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// algorithms to be written</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The algorithm in the original program is<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get the size of the vector</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::size_type vec_size;</span><br><span class="line">vec_size size = homework.size();</span><br><span class="line"></span><br><span class="line"><span class="comment">// check special case</span></span><br><span class="line"><span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="string">"You must enter your grades. "</span></span><br><span class="line">                <span class="string">"Please try again."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// sort the grades</span></span><br><span class="line">sort(homework.begin(), homework.end());</span><br><span class="line"></span><br><span class="line"><span class="comment">// compute the median homework grade</span></span><br><span class="line">vec_size mid = size/<span class="number">2</span>;</span><br><span class="line"><span class="keyword">double</span> median;</span><br><span class="line">median = size % <span class="number">2</span> == <span class="number">0</span> ? (homework[mid] + homework[mid - <span class="number">1</span>])/<span class="number">2</span> : homework[mid];</span><br></pre></td></tr></table></figure></p>
+<p>To write this piece of code into the function, we need to first change the variable name <strong>homework</strong> to <strong>vec</strong> as this function suites for more general cases. Nevertheless, you don’t have to do it if you dislike. The second step is to remove the variable <strong>median</strong> and add return because what this function need to do to return the median value. The last step is to change the code that deals with the case of empty vector.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">throw</span> domain_error(<span class="string">"median of an empty vector"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>This is because the original code can not be used here due to it returns another value 1 (unless we change the function structure). In real word programming, <strong>throw</strong> an <strong>exception</strong> is a more general way to complain. The usage is explained in next part. Now the function is accomplished as shown below<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function to compute the median of a vector&lt;double&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="comment">// get the size of the vector</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::size_type vec_size;</span><br><span class="line">    vec_size size = vec.size();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check whether the empty is empty</span></span><br><span class="line">    <span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"median of an empty vector"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sort the grades</span></span><br><span class="line">    sort(vec.begin(), vec.end());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute the median homework grade</span></span><br><span class="line">    vec_size mid = size/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> size % <span class="number">2</span> == <span class="number">0</span> ? (vec[mid] + vec[mid - <span class="number">1</span>])/<span class="number">2</span> : vec[mid];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="try-blocks-and-Exception-handling"><a href="#try-blocks-and-Exception-handling" class="headerlink" title="try blocks and Exception handling"></a><strong>try</strong> blocks and Exception handling</h2><p><em>“Exceptions are run-time anomalies—such as losing a database connection or encountering unexpected input—that exist outside the normal functioning of a program.”</em> - Lippman etc. 2012</p>
+<h3 id="throw-expressions"><a href="#throw-expressions" class="headerlink" title="throw expressions"></a><strong>throw</strong> expressions</h3><p><strong>throw</strong> expressions is used to detect the exceptions, which is followed by an <strong>exception</strong> onject that describes the problems that it encounters. It stops the execution of the current function and passes an exception object to the caller for handling it.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// the detecting part</span></span><br><span class="line"><span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">    <span class="comment">// throw raises exceptions</span></span><br><span class="line">    <span class="keyword">throw</span> domain_error(<span class="string">"median of an empty vector"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>For example, the exception object <strong>domian_error</strong> contains the information of that the caller can use to act on the exception. It is a type that the standard library defines in header <stdexcept> for use in reporting the logic error: argument is out side the values that the function can accept. What closely follows is a string enclosed by parentheses to describe the problem.</stdexcept></p>
+<h3 id="the-try-block"><a href="#the-try-block" class="headerlink" title="the try block"></a>the <strong>try</strong> block</h3><p>The <strong>try</strong> block is the handling part uses to deal with an exception. Once the exception is thrown, it catches the exception and handle it according to the type of the exception object. The general syntax is<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">// statements including the detecting part</span></span><br><span class="line">&#125; catches(exception object1)&#123;</span><br><span class="line">    <span class="comment">// handler-statements</span></span><br><span class="line">&#125; catches(exception object2)&#123;</span><br><span class="line">    <span class="comment">// handler-statements</span></span><br><span class="line">&#125;  ...</span><br></pre></td></tr></table></figure></p>
+<p>The catch clause handles the exception and hence is termed as “exception handler”. </p>
+<p>It is worthing noting that each pair of curly braces forms a name scope. The application of the <strong>try</strong> block will be finished at the end of this post. </p>
+<h2 id="Finish-the-grade-function"><a href="#Finish-the-grade-function" class="headerlink" title="Finish the grade function"></a>Finish the <strong>grade</strong> function</h2><p>Now we can embed the <strong>median</strong> function in the <strong>grade</strong> function.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function to compute the final grade which is the weighted average grade of medterm exam grade, final exam grade and the median homework grade</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> grade, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (hw.size() == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"student has done no homework"</span>;</span><br><span class="line">    <span class="keyword">return</span> grade(midterm, final, median(hw));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="reference-and-call-by-reference"><a href="#reference-and-call-by-reference" class="headerlink" title="reference and call by reference"></a><strong>reference</strong> and call by reference</h3><p>It has been noted that this <strong>grade</strong> function differs from the previous one mentioned at the beigining in the part of <strong>parameter list</strong>. The third parameter here has a compound type with modifier <strong>reference</strong>. Recalling that to declare a variable needs a <strong>type</strong> and a <strong>name</strong>. More generally, a declaration is a <strong>base type</strong> followed by a list of <strong>declarators</strong> including a <strong>name</strong> and an optional <strong>type modifier</strong>.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    base type modifier name </span><br><span class="line">``` </span><br><span class="line">A variable declared in above form has a type named **compound type** which is built from the base type. In <span class="keyword">this</span> <span class="keyword">case</span>, the third parameter has a type of **<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;** with modifier **reference** which indicates that the onject named **hw** refers to its **initializer**. In other words, a reference is a **alias** <span class="keyword">and</span> **hw** is simply another name <span class="keyword">for</span> the argument to be passed. Note that a reference can only reference to an object due to it is <span class="keyword">not</span> an object. For example</span><br><span class="line">```c++</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">int</span> &amp;j = i; <span class="comment">// correct: j is bound to i</span></span><br><span class="line">    <span class="keyword">int</span> &amp;m = <span class="number">10</span>; <span class="comment">// error: initializer must be an object</span></span><br></pre></td></tr></table></figure></p>
+<p>In addition, a reference to a reference is in fact the same as a reference to the original object. For example<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw1 = hw; <span class="comment">// hw1 is another name for the vector homework</span></span><br></pre></td></tr></table></figure></p>
+<p>In contrast to <strong>call by value</strong>, this is termed as <strong>call by reference</strong>. When we operate on a reference, we actually operate on the object that the reference refers. For the purpose of computational effiency, passing argument by reference can avoid copies, particularly for objects of large containers or class types. But, it is not a good habit to modify the value of the object that the reference refers. It’s complete ok in this case as the object is passed by copy in the <strong>median</strong> function where we will operate on the homework grades. Beyond this, there is a <strong>const</strong> qualifier before the reference, which restrict the values of the object to be changed when operating on the reference. </p>
+<h3 id="overloaded-function"><a href="#overloaded-function" class="headerlink" title="overloaded function"></a>overloaded function</h3><p>Recalling the previous <strong>grade function</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">```c++</span><br><span class="line"><span class="comment">// compute the final grade of a student</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> final, <span class="keyword">double</span> homework)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.2</span>*midterm + <span class="number">0.4</span>*final + <span class="number">0.4</span>*homework;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>These two functions have the same name but different parameter list. This is termed as <strong>function overloading</strong> with different types or numbers of parameters. If two function only differs in <strong>return type</strong>, functions can not be overloaded. When calling the overloaded function, the complier determines which function to call according to the supplied arguments and the defined parameters in each funciton.</p>
+<h2 id="Writing-a-reading-function"><a href="#Writing-a-reading-function" class="headerlink" title="Writing a reading function"></a>Writing a reading function</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/Notes/" rel="tag"># Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/05/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-3-Part-2/" rel="next" title="Accelerated C++ Solutions to Exercises(Chapter 3 Part 2)">
+                <i class="fa fa-chevron-left"></i> Accelerated C++ Solutions to Exercises(Chapter 3 Part 2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Liam</p>
+              <p class="site-description motion-element" itemprop="description">Stochastic Modelling Notes; Programming Notes</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/quantliam" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yanshijiutu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Functions"><span class="nav-number">1.</span> <span class="nav-text">Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Basics"><span class="nav-number">1.1.</span> <span class="nav-text">Basics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#writing-a-function"><span class="nav-number">1.1.1.</span> <span class="nav-text">writing a function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#calling-a-function"><span class="nav-number">1.1.2.</span> <span class="nav-text">calling a function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Writing-a-median-function"><span class="nav-number">1.2.</span> <span class="nav-text">Writing a median function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-blocks-and-Exception-handling"><span class="nav-number">1.3.</span> <span class="nav-text">try blocks and Exception handling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#throw-expressions"><span class="nav-number">1.3.1.</span> <span class="nav-text">throw expressions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-try-block"><span class="nav-number">1.3.2.</span> <span class="nav-text">the try block</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finish-the-grade-function"><span class="nav-number">1.4.</span> <span class="nav-text">Finish the grade function</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#reference-and-call-by-reference"><span class="nav-number">1.4.1.</span> <span class="nav-text">reference and call by reference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#overloaded-function"><span class="nav-number">1.4.2.</span> <span class="nav-text">overloaded function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Writing-a-reading-function"><span class="nav-number">1.5.</span> <span class="nav-text">Writing a reading function</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">26.3k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
