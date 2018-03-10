@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Accelerated C++ Solutions," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Stochastic Modelling Notes; Programming Notes">
+<meta name="description" content="Exercise 4-0Compile, execute, and test the programs in this chapter Solution &amp;amp; ResultsThis exercise has been done presented in Organizing programs with functions and Organizing programs with data">
+<meta name="keywords" content="Accelerated C++ Solutions">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Accelerated C++ Solutions to Exercises(Chapter 4)">
 <meta property="og:url" content="http://www.quanttour.com/09/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-4/index.html">
 <meta property="og:site_name" content="Liam&#39;s Blog">
-<meta property="og:description" content="Stochastic Modelling Notes; Programming Notes">
+<meta property="og:description" content="Exercise 4-0Compile, execute, and test the programs in this chapter Solution &amp;amp; ResultsThis exercise has been done presented in Organizing programs with functions and Organizing programs with data">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-09T14:38:09.649Z">
+<meta property="og:updated_time" content="2018-03-10T19:34:34.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Accelerated C++ Solutions to Exercises(Chapter 4)">
-<meta name="twitter:description" content="Stochastic Modelling Notes; Programming Notes">
+<meta name="twitter:description" content="Exercise 4-0Compile, execute, and test the programs in this chapter Solution &amp;amp; ResultsThis exercise has been done presented in Organizing programs with functions and Organizing programs with data">
 
 
 
@@ -302,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -323,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  0
+                  1,344
                 </span>
               
 
@@ -339,7 +362,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  8
                 </span>
               
             </div>
@@ -360,7 +383,39 @@
       
 
       
-        
+        <h1 id="Exercise-4-0"><a href="#Exercise-4-0" class="headerlink" title="Exercise 4-0"></a>Exercise 4-0</h1><p>Compile, execute, and test the programs in this chapter</p>
+<h2 id="Solution-amp-Results"><a href="#Solution-amp-Results" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>This exercise has been done presented in <a href="http://quanttour.com/06/03/2018/C-Organizing-programs-and-data/" target="_blank" rel="noopener">Organizing programs with functions</a> and <a href="http://quanttour.com/08/03/2018/Organizing-programs-and-data-Part-2/" target="_blank" rel="noopener">Organizing programs with data structures</a>.</p>
+<hr>
+<h1 id="Exercise-4-1"><a href="#Exercise-4-1" class="headerlink" title="Exercise 4-1"></a>Exercise 4-1</h1><p>We noted in §4.2.3/65 that it is essential that the argument types in a call to maxmatch exactly. Will the following code work? If there is a problem, how would you fix it?<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> maxlen;</span><br><span class="line">Student_info s;</span><br><span class="line">max(s.name.size(), maxlen);</span><br></pre></td></tr></table></figure></p>
+<h2 id="Solution-amp-Results-1"><a href="#Solution-amp-Results-1" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>It doesn’t work. There exist two problems here. </p>
+<p>First, the <strong>max</strong> function defined in standard header<algorithm> requires that both arguments must have the same type. But in this piece of code, <strong>s.name.size()</strong> has the type of <strong>string::size_type</strong> while <strong>maxlen</strong> is a <strong>int</strong> type. To fix this, we need to define <strong>maxlen</strong> as a variable of type <strong>string::size_type</strong>. </algorithm></p>
+<p>Second, it should be initialized as a variable of <strong>built-in</strong> type(assuming no problem with type <strong>int</strong>) is undefined if it is not initialized explicitly. For a variable of other types, the default value (if available, otherwise the variable is undefined) depends on how each type defines. I did a simple experiment as follows<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">string</span>::size_type y;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; y;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The result is<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4200939</span><br></pre></td></tr></table></figure></p>
+<p>with warning<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;y&apos; is used uninitialized in this function</span><br></pre></td></tr></table></figure></p>
+<p>The experiment shows that the type of <strong>string::size_type</strong> doesn’t support default initialization. To fixed this, we need to explicitly initialize it. </p>
+<p>The correct code should be:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span>::size_type maxlen = <span class="number">0</span>;</span><br><span class="line">Student_info s;</span><br><span class="line">max(s.name.size(), maxlen);</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Exercise-4-2-4-3"><a href="#Exercise-4-2-4-3" class="headerlink" title="Exercise 4-2, 4-3"></a>Exercise 4-2, 4-3</h1><p>4-2: Write a program to calculate the squares of int values up to 100. The program should write two columns: The first lists the value; the second contains the square of that value.Use setw to manage the output so that the values line up in columns.</p>
+<p>4-3: What happens if we rewrite the previous program to allow values up to but not including 1000 but neglect to change the arguments to setw? Rewrite the program to be more robust in the face of changes that allow i to grow without adjusting the setw arguments.</p>
+<h2 id="Solution-amp-Result"><a href="#Solution-amp-Result" class="headerlink" title="Solution &amp; Result"></a>Solution &amp; Result</h2><h3 id="algorithms"><a href="#algorithms" class="headerlink" title="algorithms"></a>algorithms</h3><p>Exercise 4-3 is a generalized version of 4-2. Specifically, the program is required to write two colomns as follows<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  0        0</span><br><span class="line">  1        1</span><br><span class="line">  2        4</span><br><span class="line">  3        9</span><br><span class="line">...      ...</span><br><span class="line"> 99     9801</span><br><span class="line">100    10000 </span><br><span class="line">...      ...</span><br><span class="line">  n      n*n</span><br></pre></td></tr></table></figure></p>
+<p>Each line contains an integer value followed by the square of the integer. The range of integers in the first column starts from 0 to 1000 (excluded). Most importantly, each line should be formated such that the values line up in columns. </p>
+<p>The key to the solution is to find the longest number in each column. Then, we can set the width of the first column as the number of digits of the corresponding longest number. Analogously, the width of the second column will be set as the number of digits of the longest number in it, with an additional space to seperate from the first column.</p>
+<p>For an ascending sequence, the longest numbers in both columns depend on the largest number. For exercise 4-2, the largest number is 100 and 10000 (square of 100) in the first and second column, respectively. We can write and format each line as below shows<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != <span class="number">101</span>; ++i)</span><br><span class="line">&#123;   </span><br><span class="line">    <span class="comment">// 100 has three digits and 10000 has 5 digits, 1 additional space for seperate two columns</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setw(<span class="number">3</span>) &lt;&lt; i &lt;&lt; setw(<span class="number">6</span>) &lt;&lt; i*i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Exercise 4-3 requires more flexibility such that no needs to change <strong>setw</strong> arguments when the largest number changes. Naturally, the key is to compute the number of digits of a user-defined largest number, e,g. defined as <strong>maxNum</strong>.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hold the number of digits of maxNum and its square</span></span><br><span class="line"><span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> m = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// hold the values of the largest number and its square</span></span><br><span class="line"><span class="keyword">int</span> j = maxNum;</span><br><span class="line"><span class="keyword">int</span> k = maxNum*maxNum;</span><br><span class="line"><span class="comment">// bounds check</span></span><br><span class="line"><span class="keyword">if</span> (j &gt;= <span class="number">1000</span> || j &lt; <span class="number">0</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter a number greater than or equal to 0 and less than 1000. Please try again "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// computations</span></span><br><span class="line"><span class="keyword">if</span> (j == <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    m = n = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// loop invariant: we have counted n digits of the value j</span></span><br><span class="line">    <span class="keyword">while</span> (j != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// each operation j reduces one digit </span></span><br><span class="line">        j /= <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// maintain the loop invariant</span></span><br><span class="line">        ++n;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// loop invariant: we have counted n digits of the value j</span></span><br><span class="line">    <span class="keyword">while</span> (k != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        k /= <span class="number">10</span>;</span><br><span class="line">        ++m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="organize-the-program-with-functions"><a href="#organize-the-program-with-functions" class="headerlink" title="organize the program with functions"></a>organize the program with functions</h3><p>Obviously, above code is partly repeated. I’ll rewrite the computations as a function which returns the number of digits of an entered value.<br><strong>width.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function to compute the number of digits of an integer value</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"width.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">width</span><span class="params">(<span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (num == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(num != <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            num /= <span class="number">10</span>;</span><br><span class="line">            ++n;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>width.h</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_width_h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_width_h</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">width</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<p><strong>mainfunction.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"width.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;     <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;    <span class="keyword">using</span> <span class="built_in">std</span>::setw;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="comment">// asks to enter the upper bound </span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter a number greater than or equal to 0 and less than 1000: "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the largest number</span></span><br><span class="line">    <span class="keyword">int</span> maxNum;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; maxNum;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// bounds check</span></span><br><span class="line">    <span class="keyword">if</span> (maxNum &gt;= <span class="number">1000</span> || maxNum &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"The entered value is beyond the allowed value range. Please try again."</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write the outputs</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != maxNum + <span class="number">1</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; setw(width(maxNum)) &lt;&lt; i </span><br><span class="line">        &lt;&lt; setw(width(maxNum*maxNum) + <span class="number">1</span>) &lt;&lt; i*i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Test-performance"><a href="#Test-performance" class="headerlink" title="Test performance"></a>Test performance</h3><p><strong>Test 1</strong>: the upper limit is 10<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Enter a number greater than or equal to 0 and less than 1000: 10</span><br><span class="line"> 0   0</span><br><span class="line"> 1   1</span><br><span class="line"> 2   4</span><br><span class="line"> 3   9</span><br><span class="line"> 4  16</span><br><span class="line"> 5  25</span><br><span class="line"> 6  36</span><br><span class="line"> 7  49</span><br><span class="line"> 8  64</span><br><span class="line"> 9  81</span><br><span class="line">10 100</span><br></pre></td></tr></table></figure></p>
+<p><strong>Test 2</strong>: the upper limit is 101<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Enter a number greater than or equal to 0 and less than 1000: 101</span><br><span class="line">  0     0</span><br><span class="line">  1     1</span><br><span class="line">  2     4</span><br><span class="line">  3     9</span><br><span class="line"> ..    .. </span><br><span class="line"> 90  8100</span><br><span class="line"> 91  8281</span><br><span class="line"> 92  8464</span><br><span class="line"> 93  8649</span><br><span class="line"> 94  8836</span><br><span class="line"> 95  9025</span><br><span class="line"> 96  9216</span><br><span class="line"> 97  9409</span><br><span class="line"> 98  9604</span><br><span class="line"> 99  9801</span><br><span class="line">100 10000</span><br><span class="line">101 10201</span><br></pre></td></tr></table></figure></p>
+<p><strong>Test 3</strong>: the upper limit is 1000<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Enter a number greater than or equal to 0 and less than 1000: 1000</span><br><span class="line">The entered value is beyond the allowed value range. Please try again.</span><br></pre></td></tr></table></figure></p>
+<p>It can be seen from these tests that the program perform as expected. </p>
+<hr>
+<h1 id="Exercise-4-4"><a href="#Exercise-4-4" class="headerlink" title="Exercise 4-4"></a>Exercise 4-4</h1><p>Now change your squares program to use double values instead of ints. Use manipulators to manage the output so that the values line up in columns</p>
+<h2 id="Solution-amp-Results-2"><a href="#Solution-amp-Results-2" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>The difference between this exercise and last exercise is that the function <strong>width</strong> defined above can not compute the number of digits of a double value.</p>
+<hr>
+<h1 id="Exercise-4-5"><a href="#Exercise-4-5" class="headerlink" title="Exercise 4-5"></a>Exercise 4-5</h1><p>Write a function that reads words from an input stream and stores them in a vector. Use that function both to write programs that count the number of words in the input, and to count how many times each word occurred.</p>
+<h2 id="Solution-amp-Results-3"><a href="#Solution-amp-Results-3" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><h1 id="Exercise-4-6"><a href="#Exercise-4-6" class="headerlink" title="Exercise 4-6"></a>Exercise 4-6</h1><p>Rewrite the Student_info structure to calculate the grades immediately and store only the final grade.</p>
+
       
     </div>
     
@@ -374,6 +429,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Accelerated-C-Solutions/" rel="tag"># Accelerated C++ Solutions</a>
+          
+        </div>
       
 
       
@@ -444,8 +505,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -522,6 +592,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-4-0"><span class="nav-number">1.</span> <span class="nav-text">Exercise 4-0</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results"><span class="nav-number">1.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-4-1"><span class="nav-number">2.</span> <span class="nav-text">Exercise 4-1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-4-2-4-3"><span class="nav-number">3.</span> <span class="nav-text">Exercise 4-2, 4-3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Result"><span class="nav-number">3.1.</span> <span class="nav-text">Solution &amp; Result</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#algorithms"><span class="nav-number">3.1.1.</span> <span class="nav-text">algorithms</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#organize-the-program-with-functions"><span class="nav-number">3.1.2.</span> <span class="nav-text">organize the program with functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Test-performance"><span class="nav-number">3.1.3.</span> <span class="nav-text">Test performance</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-4-4"><span class="nav-number">4.</span> <span class="nav-text">Exercise 4-4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-2"><span class="nav-number">4.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-4-5"><span class="nav-number">5.</span> <span class="nav-text">Exercise 4-5</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-3"><span class="nav-number">5.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-4-6"><span class="nav-number">6.</span> <span class="nav-text">Exercise 4-6</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -549,7 +635,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">30.1k</span>
+    <span title="Site words total count">31.4k</span>
   
 </div>
 

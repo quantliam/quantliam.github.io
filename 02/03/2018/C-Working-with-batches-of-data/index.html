@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://www.quanttour.com/images/even.png">
 <meta property="og:image" content="http://www.quanttour.com/images/odd.png">
-<meta property="og:updated_time" content="2018-03-05T14:23:36.619Z">
+<meta property="og:updated_time" content="2018-03-10T03:35:35.767Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ - Working with batches of data">
 <meta name="twitter:description" content="Imagine a course in which each student’s final exam counts for 40% of the final grade, the midterm exam counts for 20%, and the average homework grade makes up the remaining 40%. Now we are asked to w">
@@ -349,7 +349,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  3,625
+                  3,616
                 </span>
               
 
@@ -399,9 +399,9 @@
 <li><strong>setprecision</strong> doesn’t work on int type values</li>
 <li>the parameter <strong>n</strong> (in this case is 3) controls the number of significant digits (i.e. count from the first non-zero number).</li>
 <li>it follows the rounding principles.</li>
-<li>it omits the literal ‘0’ if 0 is at the end of the number.</li>
+<li>it omits the trailing <strong>0</strong>s.</li>
 </ol>
-<p>If one want to keep the tail zero, the manipulator <strong>showpoint</strong> should be used. <strong>showpoint</strong> is declared in the <strong>ios</strong> library and its name is also in the namespace std. It sets the format flag and always includes the decimal point as well as the tail 0 for matching the precision. The <strong>showpoint</strong> flag can be unset with the <strong>noshowpoint</strong> manipulator. </p>
+<p>If one want to keep the trailing zero, the manipulator <strong>showpoint</strong> can be used. <strong>showpoint</strong> is declared in the <strong>ios</strong> library and its name is also in the namespace std. It sets the format flag and always includes the decimal point as well as the tail 0 for matching the precision. The <strong>showpoint</strong> flag can be unset with the <strong>noshowpoint</strong> manipulator. </p>
 <p>If we want control the precision of the decimal part, we can use <strong>fixed</strong> manipulator to fixed the decimal part. Together with the <strong>setprecision(n)</strong>, the number of digits in the fractional part will be fixed at <strong>n</strong>. If there is no enough numbers after the decimal point, zero will be added to match the precision. </p>
 <p>To veryfy the usages of <strong>showpoint</strong> and <strong>fixed</strong>, I did tests as follows.</p>
 <p><strong>Experiment 2</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ios&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::setprecision;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::fixed;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::showpoint;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::noshowpoint;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">float</span> f1 = <span class="number">1000.00</span>;</span><br><span class="line">    <span class="keyword">float</span> f2 = <span class="number">3.14800</span>;</span><br><span class="line">    <span class="keyword">float</span> f3 = <span class="number">0.03148</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; showpoint &lt;&lt; setprecision(<span class="number">4</span>) &lt;&lt; f1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f3 &lt;&lt; noshowpoint &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write a bank line to sepearate outputs</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; setprecision(<span class="number">6</span>) &lt;&lt; f1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -735,7 +735,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">30.1k</span>
+    <span title="Site words total count">31.4k</span>
   
 </div>
 
