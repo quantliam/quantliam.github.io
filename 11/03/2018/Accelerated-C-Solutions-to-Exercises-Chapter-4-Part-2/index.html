@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Accelerated C++ Solutions," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Stochastic Modelling Notes; Programming Notes">
+<meta name="description" content="Exercise 4-6Rewrite the Student_info structure to calculate the grades immediately and storeonly the final grade. Solution &amp;amp; ResultsTo be solved.   Exercise 4-7Write a program to calculate the ave">
+<meta name="keywords" content="Accelerated C++ Solutions">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Accelerated C++ Solutions to Exercises(Chapter 4 Part 2)">
 <meta property="og:url" content="http://www.quanttour.com/11/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-4-Part-2/index.html">
 <meta property="og:site_name" content="Liam&#39;s Blog">
-<meta property="og:description" content="Stochastic Modelling Notes; Programming Notes">
+<meta property="og:description" content="Exercise 4-6Rewrite the Student_info structure to calculate the grades immediately and storeonly the final grade. Solution &amp;amp; ResultsTo be solved.   Exercise 4-7Write a program to calculate the ave">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-11T13:30:07.852Z">
+<meta property="og:updated_time" content="2018-03-11T14:24:34.099Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Accelerated C++ Solutions to Exercises(Chapter 4 Part 2)">
-<meta name="twitter:description" content="Stochastic Modelling Notes; Programming Notes">
+<meta name="twitter:description" content="Exercise 4-6Rewrite the Student_info structure to calculate the grades immediately and storeonly the final grade. Solution &amp;amp; ResultsTo be solved.   Exercise 4-7Write a program to calculate the ave">
 
 
 
@@ -302,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -323,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  0
+                  587
                 </span>
               
 
@@ -339,7 +362,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  4
                 </span>
               
             </div>
@@ -360,7 +383,35 @@
       
 
       
-        
+        <h1 id="Exercise-4-6"><a href="#Exercise-4-6" class="headerlink" title="Exercise 4-6"></a>Exercise 4-6</h1><p>Rewrite the Student_info structure to calculate the grades immediately and storeonly the final grade.</p>
+<h2 id="Solution-amp-Results"><a href="#Solution-amp-Results" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>To be solved. </p>
+<hr>
+<h1 id="Exercise-4-7"><a href="#Exercise-4-7" class="headerlink" title="Exercise 4-7"></a>Exercise 4-7</h1><p>Write a program to calculate the average of the numbers stored in a vector<double>.</double></p>
+<h2 id="Solution-amp-Results-1"><a href="#Solution-amp-Results-1" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>It’s a simple project and the solution can be divided into three steps</p>
+<ol>
+<li>define a function to read and store data into a vector<double>.</double></li>
+<li>define a function to compute the average value.</li>
+<li>set precision to format the double value of outputs.</li>
+</ol>
+<p>All details can be found in other exercises and hence no more explination here.</p>
+<p>Below shos the only file including both functions and main function.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;			<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::domain_error;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::streamsize;	<span class="keyword">using</span> <span class="built_in">std</span>::setprecision;</span><br><span class="line"></span><br><span class="line"><span class="comment">// define function to read data into a vector</span></span><br><span class="line"><span class="function">istream &amp;<span class="title">read</span><span class="params">(istream &amp;is, <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;doubleValues)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> number;</span><br><span class="line">	<span class="keyword">while</span>(is &gt;&gt; number)</span><br><span class="line">		doubleValues.push_back(number);</span><br><span class="line">	<span class="keyword">return</span> is;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// define function to compute the average of a data sequence</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">average</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;doubleValues)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (doubleValues.size() == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> domain_error(<span class="string">"An empty vector"</span>);</span><br><span class="line">	<span class="keyword">typedef</span>  <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::size_type vec_size;</span><br><span class="line">	<span class="keyword">double</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (vec_size i = <span class="number">0</span>; i != doubleValues.size(); ++i)</span><br><span class="line">		sum += doubleValues[i];</span><br><span class="line">	<span class="keyword">return</span> sum/doubleValues.size();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; doubleValues;</span><br><span class="line">	read(<span class="built_in">cin</span>, doubleValues);</span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">double</span> averageValue = average(doubleValues);</span><br><span class="line">            streamsize prec = <span class="built_in">cout</span>.precision();</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">3</span>) &lt;&lt; averageValue </span><br><span class="line">            &lt;&lt; setprecision (prec) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;<span class="keyword">catch</span>(domain_error)&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"You must enter at least 1 number. Pleast try again."</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>Test</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: </span><br><span class="line">1.2 5.89 9.33 12.7 7.8 4</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">6.82</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Exercise-4-8"><a href="#Exercise-4-8" class="headerlink" title="Exercise 4-8"></a>Exercise 4-8</h1><p>If the following code is legal, what can we infer about the return type of f?<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> d = f()[n];</span><br></pre></td></tr></table></figure></p>
+<h2 id="Solution-amp-Results-2"><a href="#Solution-amp-Results-2" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>From the code, we can infer  </p>
+<ol>
+<li><strong>f()[n]</strong> is possible a value of type <strong>int</strong> or <strong>float</strong> or <strong>double</strong> or <strong>bool</strong>. </li>
+<li><strong>f()</strong> supports accessing the element using subscript and hence it could be a container.</li>
+<li><strong>f()</strong> has the form of a <strong>function</strong>. </li>
+</ol>
+<p>According to above analysis, <strong>f()</strong> could be a function that returns a container which can hold values of types listed above. As far as I know, the container is <strong>vector</strong> and <strong>f</strong> has a type of <strong>vector<types></types></strong>(inside types including <strong>int</strong>, <strong>float</strong>, <strong>double</strong> and <strong>bool</strong>).</p>
+<p>To verify my analysis, I wrote a simple program shown as below<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// funtion to return a vector&lt;double&gt;</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; values(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; number)</span><br><span class="line">&#123;</span><br><span class="line">	number.push_back(<span class="number">11</span>);</span><br><span class="line">	number.push_back(<span class="number">20.5</span>);</span><br><span class="line">	<span class="keyword">return</span> number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; number;</span><br><span class="line">	<span class="keyword">double</span> x = values(number)[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">double</span> y = values(number)[<span class="number">1</span>];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; y &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>It works as expected and gives results<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">11</span><br><span class="line">20.5</span><br></pre></td></tr></table></figure></p>
+<p>If I change the type <strong>double</strong> to any of types listed above, the program works fine. s</p>
+<hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>Koenig, A. and Moo, B.E., 2000. Accelerated C++.</p>
+<p>Lippman, S.B., Lajoie, J. and Moo, B.E., 2013. C++ Primer, 5th edt.</p>
+
       
     </div>
     
@@ -374,6 +425,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Accelerated-C-Solutions/" rel="tag"># Accelerated C++ Solutions</a>
+          
+        </div>
       
 
       
@@ -444,8 +501,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -522,6 +588,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-4-6"><span class="nav-number">1.</span> <span class="nav-text">Exercise 4-6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results"><span class="nav-number">1.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-4-7"><span class="nav-number">2.</span> <span class="nav-text">Exercise 4-7</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-4-8"><span class="nav-number">3.</span> <span class="nav-text">Exercise 4-8</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-2"><span class="nav-number">3.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -549,7 +631,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">33.0k</span>
+    <span title="Site words total count">33.5k</span>
   
 </div>
 
