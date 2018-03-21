@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Arithmetic types   Arithmetic types in C++       Type Meaning Minimum size   bool boolean NA   char character 8bits   wchar_t wide character 16bits   char16_t Unicode character 16bits   char32_t Unico">
+<meta name="description" content="Generic algorithmcopyRecalling the vcat function described in Vertical concatenation:1234for (vector&amp;lt;string&amp;gt;::const_iterator i = bottom.begin(); i != bottom.end(); ++i)&amp;#123;    ret.push_back((*">
 <meta name="keywords" content="C++,Notes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++ - Built-in types and expressions">
-<meta property="og:url" content="http://www.quanttour.com/02/03/2018/C-Built-in-types-and-expressions/index.html">
+<meta property="og:title" content="C++ - Using library algorithms">
+<meta property="og:url" content="http://www.quanttour.com/21/03/2018/C-Using-library-algorithms/index.html">
 <meta property="og:site_name" content="Liam&#39;s Blog">
-<meta property="og:description" content="Arithmetic types   Arithmetic types in C++       Type Meaning Minimum size   bool boolean NA   char character 8bits   wchar_t wide character 16bits   char16_t Unicode character 16bits   char32_t Unico">
+<meta property="og:description" content="Generic algorithmcopyRecalling the vcat function described in Vertical concatenation:1234for (vector&amp;lt;string&amp;gt;::const_iterator i = bottom.begin(); i != bottom.end(); ++i)&amp;#123;    ret.push_back((*">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-02T02:16:34.702Z">
+<meta property="og:updated_time" content="2018-03-21T15:02:25.123Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++ - Built-in types and expressions">
-<meta name="twitter:description" content="Arithmetic types   Arithmetic types in C++       Type Meaning Minimum size   bool boolean NA   char character 8bits   wchar_t wide character 16bits   char16_t Unicode character 16bits   char32_t Unico">
+<meta name="twitter:title" content="C++ - Using library algorithms">
+<meta name="twitter:description" content="Generic algorithmcopyRecalling the vcat function described in Vertical concatenation:1234for (vector&amp;lt;string&amp;gt;::const_iterator i = bottom.begin(); i != bottom.end(); ++i)&amp;#123;    ret.push_back((*">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.quanttour.com/02/03/2018/C-Built-in-types-and-expressions/"/>
+  <link rel="canonical" href="http://www.quanttour.com/21/03/2018/C-Using-library-algorithms/"/>
 
 
 
 
 
-  <title>C++ - Built-in types and expressions | Liam's Blog</title>
+  <title>C++ - Using library algorithms | Liam's Blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/02/03/2018/C-Built-in-types-and-expressions/">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/21/03/2018/C-Using-library-algorithms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liam">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">C++ - Built-in types and expressions</h1>
+          <h1 class="post-title" itemprop="name headline">C++ - Using library algorithms</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-02T00:46:29+08:00">
-                02-03-2018
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T14:39:48+08:00">
+                21-03-2018
               </time>
             
 
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  31
+                  738
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  5
                 </span>
               
             </div>
@@ -383,87 +383,24 @@
       
 
       
-        <h1 id="Arithmetic-types"><a href="#Arithmetic-types" class="headerlink" title="Arithmetic types"></a>Arithmetic types</h1><table>
-<thead>
-<tr>
-<th style="text-align:left">Arithmetic types in C++</th>
-<th style="text-align:left"></th>
-<th style="text-align:left"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Type</td>
-<td style="text-align:left">Meaning</td>
-<td style="text-align:left">Minimum size</td>
-</tr>
-<tr>
-<td style="text-align:left">bool</td>
-<td style="text-align:left">boolean</td>
-<td style="text-align:left">NA</td>
-</tr>
-<tr>
-<td style="text-align:left">char</td>
-<td style="text-align:left">character</td>
-<td style="text-align:left">8bits</td>
-</tr>
-<tr>
-<td style="text-align:left">wchar_t</td>
-<td style="text-align:left">wide character</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">char16_t</td>
-<td style="text-align:left">Unicode character</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">char32_t</td>
-<td style="text-align:left">Unicode character</td>
-<td style="text-align:left">32bits</td>
-</tr>
-<tr>
-<td style="text-align:left">short</td>
-<td style="text-align:left">short integer</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">int</td>
-<td style="text-align:left">integer</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">long</td>
-<td style="text-align:left">long integer</td>
-<td style="text-align:left">32bits</td>
-</tr>
-<tr>
-<td style="text-align:left">long long</td>
-<td style="text-align:left">long integer</td>
-<td style="text-align:left">64bits</td>
-</tr>
-<tr>
-<td style="text-align:left">float</td>
-<td style="text-align:left">single-precision floating-point</td>
-<td style="text-align:left">6 significant digits</td>
-</tr>
-<tr>
-<td style="text-align:left">double</td>
-<td style="text-align:left">double-precision floating-point</td>
-<td style="text-align:left">10 significant digits</td>
-</tr>
-<tr>
-<td style="text-align:left">long double</td>
-<td style="text-align:left">extended-precision floating-point</td>
-<td style="text-align:left">10 significant digits</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-</tr>
-</tbody>
-</table>
-
+        <h1 id="Generic-algorithm"><a href="#Generic-algorithm" class="headerlink" title="Generic algorithm"></a>Generic algorithm</h1><h2 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h2><p>Recalling the <strong>vcat</strong> function described in <a href="http://quanttour.com/14/03/2018/C-Sequential-Containers-Part-2/" target="_blank" rel="noopener">Vertical concatenation</a>:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::const_iterator i = bottom.begin(); i != bottom.end(); ++i)</span><br><span class="line">&#123;</span><br><span class="line">    ret.push_back((*i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Using a <strong>for</strong> loop, all elements of <strong>vector<string> bottom</string></strong> are copied and appended to the end of the <strong>vector<string> ret</string></strong>.<br>An alternative method is to use the <strong>insert</strong> function:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ret.insert(ret.end(), bottom.begin(), bottom.end());</span><br></pre></td></tr></table></figure></p>
+<p>These two methods rely on the member functions of a specified container. A more general solution, using generic algorithm <strong>copy</strong>, to solve the same question,<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy(bottom.begin(), bottom.end(), back_inserter(ret));</span><br></pre></td></tr></table></figure></p>
+<p>The generic algorithms provided in the standard library implement classic algorithms via iterator operations. They do not depend on any specific type of container. The <strong>copy</strong> algorithm is an algorithm that writes elements to a container. It takes three iterators, of which, the first two iterators indicates the input range while the third iterator denotes the starting point of the destination sequence. </p>
+<p><strong>back_inserter()</strong> is a <strong>iterator adaptor</strong> which is a function that returns an appropriate iterator (has type of <strong>back_insert_iterator</strong>) according to the argument. All <strong>intertor adaptors</strong> are defined in header <iterator>. In this case, <strong>back_inserter()</strong> takes a container as its arguments and yields an <strong>iterator</strong> that, when used as a destination, appends values to the container. But noting that<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy(bottom.begin(), bottom.end(), ret.end())</span><br></pre></td></tr></table></figure></iterator></p>
+<p>is not allowed as there is no element at <strong>ret.end</strong>.</p>
+<p>After this function completes, the size of <strong>ret</strong> increases by <strong>bottom.size()</strong>. The <strong>copy</strong> function returns an iterator ((has type of <strong>back_insert_iterator</strong>) that refers to the next postion of the last element of <strong>ret</strong>.</p>
+<h2 id="find-if-algorithm"><a href="#find-if-algorithm" class="headerlink" title="find_if algorithm"></a>find_if algorithm</h2><p>Now, using another generic algorithm <strong>find_if</strong>, we can simplify the <strong>split</strong> function described in <a href="http://quanttour.com/13/03/2018/C-Sequential-Containers/" target="_blank" rel="noopener">Taking strings apart</a>.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// true if the argument is whitespace, false otherwise</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">space</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">isspace</span>(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// false is the argument is whitespace, true otherwise</span></span><br><span class="line"><span class="function">book <span class="title">not_space</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="built_in">isspace</span>(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; split(const_string &amp;str)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">string</span>::const_iterator iter;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ret;</span><br><span class="line"></span><br><span class="line">    iter i = str.begin();</span><br><span class="line">    <span class="keyword">while</span>(i != str.end())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// ignore leading blanks</span></span><br><span class="line">        i = find_if(i, str.end(), not_space)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// find end of next word</span></span><br><span class="line">        iter j = find_if(i, str.end(), space);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// copy the characters in [i, j)</span></span><br><span class="line">        <span class="keyword">if</span>(i != str.end())</span><br><span class="line">            ret.push_back(<span class="built_in">string</span>(i, j));</span><br><span class="line">        i = j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>First, in this function, we use iterators instead of indices. The core algorithm is that use <strong>find_if</strong> to firstly find a nonwhiltespace character and a whitespace that closely follows, which determines the range of a word. </p>
+<p><strong>find_if</strong> algorithm takes three arguments, of which, first two are iterators that denotes a sequence while the third one is a predicate on characters. The algorithm calls the predicate to test each element starting from <strong>*i</strong>, and stops when the predicate returns <strong>true</strong>, i.e. the character is not whitespace in this case. It returns an iterator that refers to the first element that satisfies the predicate. If <strong>find_if</strong> failed to find an element that satifies the predicate, it returns its second arguments, i.e. <strong>str.end()</strong> in this case.</p>
+<p>It has been observed that we didn’t use <strong>isspace()</strong> directly instead we write our own functions. This is because that <strong>isspace()</strong> is overloaded depending on arguments and can’t be passed as an argument to a template function. </p>
+<p>Another new usage is <strong>string(i,j)</strong>, which constructs a new string that copies the value from the range [i, j).</p>
+<h2 id="equal-algorithm"><a href="#equal-algorithm" class="headerlink" title="equal algorithm"></a>equal algorithm</h2><p>Now we introduce another algorithm <strong>equal</strong>, which can simplify the <strong>isPalindromes</strong> function described in <a href="http://quanttour.com/20/03/2018/Accelerated-C-Solutions-to-Exercise-Chapter-5-Part-4/" target="_blank" rel="noopener">Exercise 5-10</a>.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_palindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> equal(s.begin(), s.end(), s.rbegin());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>It is consise enough compare the one I wrote before. The <strong>equal</strong> algorithm takes three iterators, of which first two indicate the range of the first sequence while the third iterator denotes the inital position of the second sequence. It compares these two sequence and returns <strong>true</strong> otherwise returns <strong>false</strong>.</p>
+<p>It is known that <strong>begin()</strong> returns an iterator that refers to the first element in a container. On the contrary, <strong>rbegin()</strong> returns an reverse iterator that refers to the last element in a container. Similarly, <strong>rend()</strong> returns to an iterator that refers to the position that before the first element. </p>
+<h2 id="Finding-URLs"><a href="#Finding-URLs" class="headerlink" title="Finding URLs"></a>Finding URLs</h2>
       
     </div>
     
@@ -495,8 +432,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/01/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-2-Part3/" rel="next" title="Accelerated C++ Solutions to Exercises (Chapter 2 Part3)">
-                <i class="fa fa-chevron-left"></i> Accelerated C++ Solutions to Exercises (Chapter 2 Part3)
+              <a href="/20/03/2018/Accelerated-C-Solutions-to-Exercise-Chapter-5-Part-4/" rel="next" title="Accelerated C++ Solutions to Exercises(Chapter 5 Part 4)">
+                <i class="fa fa-chevron-left"></i> Accelerated C++ Solutions to Exercises(Chapter 5 Part 4)
               </a>
             
           </div>
@@ -504,10 +441,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/02/03/2018/C-Working-with-batches-of-data/" rel="prev" title="C++ - Working with batches of data">
-                C++ - Working with batches of data <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -655,7 +588,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Arithmetic-types"><span class="nav-number">1.</span> <span class="nav-text">Arithmetic types</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Generic-algorithm"><span class="nav-number">1.</span> <span class="nav-text">Generic algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#copy"><span class="nav-number">1.1.</span> <span class="nav-text">copy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find-if-algorithm"><span class="nav-number">1.2.</span> <span class="nav-text">find_if algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#equal-algorithm"><span class="nav-number">1.3.</span> <span class="nav-text">equal algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-URLs"><span class="nav-number">1.4.</span> <span class="nav-text">Finding URLs</span></a></li></ol></li></ol></div>
             
 
           </div>
