@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Revisit the grading programThe purpose of this part is">
+<meta name="description" content="Revisit the grading programThis part redesign the grading program described in Organizing programs with data structures. The new program is required to include two grading schemes(Koenig and Moo 2000)">
 <meta name="keywords" content="C++,Notes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ - Using library algorithms (Part 2)">
 <meta property="og:url" content="http://www.quanttour.com/22/03/2018/C-Using-library-algorithms-Part-2/index.html">
 <meta property="og:site_name" content="Liam&#39;s Blog">
-<meta property="og:description" content="Revisit the grading programThe purpose of this part is">
+<meta property="og:description" content="Revisit the grading programThis part redesign the grading program described in Organizing programs with data structures. The new program is required to include two grading schemes(Koenig and Moo 2000)">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-22T12:48:12.042Z">
+<meta property="og:updated_time" content="2018-03-22T14:59:04.848Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ - Using library algorithms (Part 2)">
-<meta name="twitter:description" content="Revisit the grading programThe purpose of this part is">
+<meta name="twitter:description" content="Revisit the grading programThis part redesign the grading program described in Organizing programs with data structures. The new program is required to include two grading schemes(Koenig and Moo 2000)">
 
 
 
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  10
+                  559
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  3
                 </span>
               
             </div>
@@ -383,7 +383,27 @@
       
 
       
-        <h1 id="Revisit-the-grading-program"><a href="#Revisit-the-grading-program" class="headerlink" title="Revisit the grading program"></a>Revisit the grading program</h1><p>The purpose of this part is </p>
+        <h1 id="Revisit-the-grading-program"><a href="#Revisit-the-grading-program" class="headerlink" title="Revisit the grading program"></a>Revisit the grading program</h1><p>This part redesign the grading program described in <a href="http://quanttour.com/08/03/2018/Organizing-programs-and-data-Part-2/" target="_blank" rel="noopener">Organizing programs with data structures</a>. The new program is required to include two grading schemes(Koenig and Moo 2000):</p>
+<p><em>1. using the average instead of the median, and treating those assignments that the student failed to turn in as zero.</em><br><em>2. using the median of only the assignments that the student actually submitted.</em></p>
+<p>Further, the program should solve following problems based on these grading schemes:</p>
+<p><em>1. reading all the student records, separating the students who did all the homework from the others.</em><br><em>2. apply each of the grading schemes to all the students in each group, and report the median grade of each group.</em></p>
+<p>Now, let’s follow the instructions and finish this program step by step.</p>
+<h2 id="Reading-and-Separating-the-students-records"><a href="#Reading-and-Separating-the-students-records" class="headerlink" title="Reading and Separating the students records"></a>Reading and Separating the students records</h2><p>According to the first problem, we need to read and separate the students records into two groups, one group of which includes students who did all homeworks, and another group includes students who didn’t submit all homeworks. The <strong>read</strong> function has been introduced before and hence no further analysis. What is the next is to use a predict on students’ records and store the records separately based on the check results.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">did_all_hw</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ((find(s.homework.begin(), s.homework.end(), <span class="number">0</span>)) == s.homework.end());</span><br><span class="line">&#125;</span><br><span class="line">The <span class="keyword">return</span> statements in the function body means that <span class="keyword">if</span> none of the homework grades equal to <span class="number">0</span>, the function returns **<span class="literal">true</span>**. The idea behind it is that overdue homeworks are given a <span class="number">0</span> grades. </span><br><span class="line"></span><br><span class="line">Now <span class="keyword">this</span> part can be accomplished with following code:</span><br><span class="line">```c++</span><br><span class="line"><span class="comment">// to hold two groups of students records</span></span><br><span class="line"><span class="built_in">vector</span>&lt;Student_info&gt; did, didnt;   </span><br><span class="line">Student_info student;</span><br><span class="line"></span><br><span class="line"><span class="comment">// read all the records and separating them based on whether all homework was done</span></span><br><span class="line"><span class="keyword">while</span>(read(<span class="built_in">cin</span>, student))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(did_all_hw(student))</span><br><span class="line">        did.push_back(student);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        didnt.push_back(student);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// check that both groups contain dada</span></span><br><span class="line"><span class="keyword">if</span> (did.empty())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"No student did all the homework!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (didnt.empty())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Every student did all the homework!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Analyzing-the-grades"><a href="#Analyzing-the-grades" class="headerlink" title="Analyzing the grades"></a>Analyzing the grades</h2><p>Now let’s think about the second problem. For each group of students, we need to do three analysis:</p>
+<ol>
+<li><strong>median</strong> grade analysis</li>
+<li><strong>average</strong> grade analysis</li>
+<li><strong>median</strong> of the completed homework</li>
+</ol>
+<p>In addition, the analysis for each pair will be reported in a common format. The solution provided in the book is to define three analysis functions and pass each on as an argument to the reporting function. Specifically, there are five arguments to be passed (Koenig and Moo 2000):</p>
+<ol>
+<li>the stream on which to write the output</li>
+<li>a string that represents the name of the analysis</li>
+<li>the function to use for the analysis</li>
+<li>two arguments, each of which is one of the vectors that we want to analyze</li>
+</ol>
+<p>For example, we want to generate the report about the median grades analysis for two groups:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">write_analysis(<span class="built_in">cout</span>, <span class="string">"median"</span>, median_analysis, did, didnt);</span><br></pre></td></tr></table></figure></p>
+<p>where the <strong>median_analysis</strong> function is defined as<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;students)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; grades;</span><br><span class="line"></span><br><span class="line">    transform(students.begin(), students.end(), back_insert(grades), grade_aux);</span><br><span class="line">    <span class="keyword">return</span> median(grades);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -572,7 +592,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Revisit-the-grading-program"><span class="nav-number">1.</span> <span class="nav-text">Revisit the grading program</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Revisit-the-grading-program"><span class="nav-number">1.</span> <span class="nav-text">Revisit the grading program</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reading-and-Separating-the-students-records"><span class="nav-number">1.1.</span> <span class="nav-text">Reading and Separating the students records</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyzing-the-grades"><span class="nav-number">1.2.</span> <span class="nav-text">Analyzing the grades</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -606,7 +626,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">53.2k</span>
+    <span title="Site words total count">53.7k</span>
   
 </div>
 
