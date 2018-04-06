@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Arithmetic types   Arithmetic types in C++       Type Meaning Minimum size   bool boolean NA   char character 8bits   wchar_t wide character 16bits   char16_t Unicode character 16bits   char32_t Unico">
+<meta name="description" content="Rewrite Student_info in class typeIn chapter 4, we learned how to organize data with a single data structure:12345struct Student_info&amp;#123;    std::string name;    double midterm, final;    std::vecto">
 <meta name="keywords" content="C++,Notes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++ - Built-in types and expressions">
-<meta property="og:url" content="http://www.quanttour.com/02/03/2018/C-Built-in-types-and-expressions/index.html">
+<meta property="og:title" content="C++ - Defining new types">
+<meta property="og:url" content="http://www.quanttour.com/06/04/2018/C-Defining-new-types/index.html">
 <meta property="og:site_name" content="Liam&#39;s Blog">
-<meta property="og:description" content="Arithmetic types   Arithmetic types in C++       Type Meaning Minimum size   bool boolean NA   char character 8bits   wchar_t wide character 16bits   char16_t Unicode character 16bits   char32_t Unico">
+<meta property="og:description" content="Rewrite Student_info in class typeIn chapter 4, we learned how to organize data with a single data structure:12345struct Student_info&amp;#123;    std::string name;    double midterm, final;    std::vecto">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-02T02:16:34.702Z">
+<meta property="og:updated_time" content="2018-04-06T16:00:12.969Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++ - Built-in types and expressions">
-<meta name="twitter:description" content="Arithmetic types   Arithmetic types in C++       Type Meaning Minimum size   bool boolean NA   char character 8bits   wchar_t wide character 16bits   char16_t Unicode character 16bits   char32_t Unico">
+<meta name="twitter:title" content="C++ - Defining new types">
+<meta name="twitter:description" content="Rewrite Student_info in class typeIn chapter 4, we learned how to organize data with a single data structure:12345struct Student_info&amp;#123;    std::string name;    double midterm, final;    std::vecto">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.quanttour.com/02/03/2018/C-Built-in-types-and-expressions/"/>
+  <link rel="canonical" href="http://www.quanttour.com/06/04/2018/C-Defining-new-types/"/>
 
 
 
 
 
-  <title>C++ - Built-in types and expressions | Liam's Blog</title>
+  <title>C++ - Defining new types | Liam's Blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/02/03/2018/C-Built-in-types-and-expressions/">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/06/04/2018/C-Defining-new-types/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liam">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">C++ - Built-in types and expressions</h1>
+          <h1 class="post-title" itemprop="name headline">C++ - Defining new types</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-02T00:46:29+08:00">
-                02-03-2018
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-06T13:50:00+08:00">
+                06-04-2018
               </time>
             
 
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  31
+                  887
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  6
                 </span>
               
             </div>
@@ -383,87 +383,33 @@
       
 
       
-        <h1 id="Arithmetic-types"><a href="#Arithmetic-types" class="headerlink" title="Arithmetic types"></a>Arithmetic types</h1><table>
-<thead>
-<tr>
-<th style="text-align:left">Arithmetic types in C++</th>
-<th style="text-align:left"></th>
-<th style="text-align:left"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Type</td>
-<td style="text-align:left">Meaning</td>
-<td style="text-align:left">Minimum size</td>
-</tr>
-<tr>
-<td style="text-align:left">bool</td>
-<td style="text-align:left">boolean</td>
-<td style="text-align:left">NA</td>
-</tr>
-<tr>
-<td style="text-align:left">char</td>
-<td style="text-align:left">character</td>
-<td style="text-align:left">8bits</td>
-</tr>
-<tr>
-<td style="text-align:left">wchar_t</td>
-<td style="text-align:left">wide character</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">char16_t</td>
-<td style="text-align:left">Unicode character</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">char32_t</td>
-<td style="text-align:left">Unicode character</td>
-<td style="text-align:left">32bits</td>
-</tr>
-<tr>
-<td style="text-align:left">short</td>
-<td style="text-align:left">short integer</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">int</td>
-<td style="text-align:left">integer</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">long</td>
-<td style="text-align:left">long integer</td>
-<td style="text-align:left">32bits</td>
-</tr>
-<tr>
-<td style="text-align:left">long long</td>
-<td style="text-align:left">long integer</td>
-<td style="text-align:left">64bits</td>
-</tr>
-<tr>
-<td style="text-align:left">float</td>
-<td style="text-align:left">single-precision floating-point</td>
-<td style="text-align:left">6 significant digits</td>
-</tr>
-<tr>
-<td style="text-align:left">double</td>
-<td style="text-align:left">double-precision floating-point</td>
-<td style="text-align:left">10 significant digits</td>
-</tr>
-<tr>
-<td style="text-align:left">long double</td>
-<td style="text-align:left">extended-precision floating-point</td>
-<td style="text-align:left">10 significant digits</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-</tr>
-</tbody>
-</table>
-
+        <h1 id="Rewrite-Student-info-in-class-type"><a href="#Rewrite-Student-info-in-class-type" class="headerlink" title="Rewrite Student_info in class type"></a>Rewrite Student_info in class type</h1><p>In chapter 4, we learned how to organize data with a single data structure:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student_info</span>&#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">double</span> midterm, final;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; homework;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>The type <strong>Stuent_info</strong> holds information including <strong>name, midterm, final exam grades and a bunch of homework grades</strong> for a student. It help us to easily access the information of one student. Then, we wrote several functions to compute final grades based on the objects of such type. However, our program that uses such data type has several limitations</p>
+<ol>
+<li><p>users of our program have to follow some conventions. If we want to use a newly created object of <strong>Student_info</strong>, we need to ensure that we have read data into it. If one want to check whether the object contains information, he can only look at the actual data members in it. This requires users knowing well about the iternal structure of such type that the object belongs to. In other words, if I am a user but not a programmer, I need to learn each details about how to implement such type in a program. </p>
+</li>
+<li><p>there is no data protection mechanism. Users might want to keep students’ information unchanged once read in. However, we don’t provide such mechanism in the original program. </p>
+</li>
+<li><p>There is no universal interface for users. Function such as <strong>read**</strong> is closely connected with a <strong>Student_info</strong> object as they can change the state of an object. We might like to put them into a single header file for providing convenience for other users. However, we don’t have such structure that provids a universal interface for users. </p>
+</li>
+</ol>
+<p>Now we learn how to deal with these problems with a new data type-class. <strong>class</strong> type is a mechanism that combines related data values into a data structure. It is an abstract data type that similar to <strong>Student_info</strong>. But it also provides an interface that allows us to operate an object, e.g. an <strong>Student_info</strong>, while hiding all deatils of the object. </p>
+<p>For example, we are familar with <strong>vector<double></double></strong> which is a class that provides a set of operations, such as <strong>push_back, erase</strong> for users. But we don’t know how exactly these functions are implemented. </p>
+<h2 id="Member-function"><a href="#Member-function" class="headerlink" title="Member function"></a>Member function</h2><p>As analysed above, we may don’t need some details of the students’ information as well as how <strong>read</strong> function deal with these information. What users need to know is how to use the relevant functions. Therefore, we need to design such interface.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student_info</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">double</span> midterm, final;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; homework;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="function">istream &amp; <span class="title">read</span><span class="params">(<span class="built_in">std</span>::istream &amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>Let’s say we have such an <strong>Student_info</strong> object named <strong>record</strong>. It has four data members <strong>name, midterm, final and homework</strong>. In addition, there are two member functions named <strong>read and grade</strong> which let us to read a record from an input stream and calculate the final grade for the object. Now, though we didn’t define any such structure before, we can presume how to use it. By the analogy of other class such as <strong>vector<double></double></strong>, I can store information for one student by calling its member function <strong>read</strong>:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">record.read(<span class="built_in">cin</span>);</span><br></pre></td></tr></table></figure></p>
+<p>Again, we can calculate the final grade for <strong>record</strong> by calling member function <strong>grade()</strong>:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">record.grade();</span><br></pre></td></tr></table></figure></p>
+<p>Member functions can be defined inside or outside the class definition. Member functions defined inside are implicitly <strong>inline</strong> to avoid function call overhead. Apparently, member functions above are declared only and defined outside of the class. Let’s look at the <strong>read</strong> function:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">istream &amp; Student_info::read(istream &amp;in)</span><br><span class="line">&#123;</span><br><span class="line">    in &gt;&gt; name &gt;&gt; midterm &gt;&gt; final;</span><br><span class="line">    read_hw(in, homework);</span><br><span class="line">    <span class="keyword">return</span> in;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Comparing with the original version:</p>
+<ol>
+<li>the name of the function is <strong>Student_info::read</strong> because it is declared inside of and as a member of <strong>Student_info</strong>. </li>
+<li>we don’t need to pass the <strong>Student_info</strong> object as an argument to the function as the function is a member of <strong>Student_info</strong>. </li>
+<li>the member function can access data members directly using <strong>name, midterm etc.</strong> instead of <strong>record.name, record.midterm etc.</strong>.</li>
+</ol>
+<p>Now let’s look at the <strong>grade</strong> member:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> Student_info::grade() <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span>  ::grade(midterm, final, homework);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>It is similar to the <strong>read</strong> member in terms of putting <strong>::</strong> in front of the name and accessing data members without any qualification. But there are two differences:</p>
+<p>First, putting <strong>::</strong> in front of <strong>grade</strong> when call it means that the <strong>grade</strong> function is a version that is not a member of class <strong>Student_info</strong>. Second, we put a qualifier <strong>const</strong> after the parameter list. What’s that mean? Recalling the original version<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;)</span> </span>&#123;...&#125;</span><br></pre></td></tr></table></figure></p>
+<p>We pass <strong>Student_info</strong> object by reference to const to avoid changing the argument to pass. In the new version, we don’t need to pass the <strong>Student_info* object any more as the function itself is a member function. Therefore, we add the </strong>const<strong> after the parameter list for the same purpose, that is, to avoid changing the state of data members of the </strong>Student_info<strong> object. Noting that, the class object may not be created with </strong>const<strong> but is referenced to </strong>const<strong> in a function. Then, the function treat the object as if it were </strong>const**. </p>
+<h2 id="Protection"><a href="#Protection" class="headerlink" title="Protection"></a>Protection</h2>
       
     </div>
     
@@ -495,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/01/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-2-Part3/" rel="next" title="Accelerated C++ Solutions to Exercises (Chapter 2 Part3)">
-                <i class="fa fa-chevron-left"></i> Accelerated C++ Solutions to Exercises (Chapter 2 Part3)
+              <a href="/04/04/2018/Accelerated-C-Solutions-to-Exercises-Chapter-8-Part-2/" rel="next" title="Accelerated C++ Solutions to Exercises(Chapter 8 Part 2)">
+                <i class="fa fa-chevron-left"></i> Accelerated C++ Solutions to Exercises(Chapter 8 Part 2)
               </a>
             
           </div>
@@ -504,10 +450,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/02/03/2018/C-Working-with-batches-of-data/" rel="prev" title="C++ - Working with batches of data">
-                C++ - Working with batches of data <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -655,7 +597,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Arithmetic-types"><span class="nav-number">1.</span> <span class="nav-text">Arithmetic types</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Rewrite-Student-info-in-class-type"><span class="nav-number">1.</span> <span class="nav-text">Rewrite Student_info in class type</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Member-function"><span class="nav-number">1.1.</span> <span class="nav-text">Member function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Protection"><span class="nav-number">1.2.</span> <span class="nav-text">Protection</span></a></li></ol></li></ol></div>
             
 
           </div>

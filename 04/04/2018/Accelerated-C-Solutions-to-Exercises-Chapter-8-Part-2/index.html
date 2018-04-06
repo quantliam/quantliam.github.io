@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Liam&#39;s Blog">
 <meta property="og:description" content="Exercise 8-3As we learned in §4.1.4/58, it can be expensive to return (or pass) a container by value. Yet the median function that we wrote in §8.1.1/140 passes the vector by value. Could we rewrite t">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-04T11:47:59.467Z">
+<meta property="og:updated_time" content="2018-04-05T06:51:34.882Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Accelerated C++ Solutions to Exercises(Chapter 8 Part 2)">
 <meta name="twitter:description" content="Exercise 8-3As we learned in §4.1.4/58, it can be expensive to return (or pass) a container by value. Yet the median function that we wrote in §8.1.1/140 passes the vector by value. Could we rewrite t">
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  2,246
+                  2,249
                 </span>
               
 
@@ -400,7 +400,8 @@
 <p>This program gives following outputs<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">9</span><br><span class="line">8</span><br><span class="line">7</span><br><span class="line">6</span><br><span class="line">5</span><br><span class="line">4</span><br><span class="line">3</span><br><span class="line">2</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line">10</span><br><span class="line">9</span><br><span class="line">8</span><br><span class="line">7</span><br><span class="line">6</span><br><span class="line">5</span><br><span class="line">4</span><br><span class="line">3</span><br><span class="line">2</span><br><span class="line">1</span><br></pre></td></tr></table></figure></p>
 <p>We have seen that both three method works fine, but why we use <strong>swap</strong>? The major limitation of other two methods is that they both copies objects to and from a variable, which may be not allowed for some highlevel objects. Also, it is not inefficient to do if we can avoid performing copies. The sandard <strong>swap</strong> algorithm is also an template and hence can determine the elements type automatically. As far as I know, it doesn’t rely on such <strong>temp</strong> variable as other two methods. I’ll give more explanations about <strong>swap</strong> once I know how exactly it works. </p>
 <h1 id="Exercise-8-5"><a href="#Exercise-8-5" class="headerlink" title="Exercise 8-5"></a>Exercise 8-5</h1><p>Reimplement the gen_sentence and xref functions from Chapter 7 to use output iterators rather than writing their output directly to a vector<string> . Test these new versions by writing programs that attach the output iterator directly to the standard output,and by storing the results in a list<string> and a vector<string>.</string></string></string></p>
-<h2 id="Solution-amp-Results-2"><a href="#Solution-amp-Results-2" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><h1 id="Exercise-8-6"><a href="#Exercise-8-6" class="headerlink" title="Exercise 8-6"></a>Exercise 8-6</h1><p>Suppose that m has type map<int, string=""> , and that we encounter a call to copy(m.begin(), m.end(), back_inserter(x)). What can we say about the type of x ? What if the call were copy(x.begin(), x.end(), back_inserter(m)) instead?</int,></p>
+<h2 id="Solution-amp-Results-2"><a href="#Solution-amp-Results-2" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>To be updated. </p>
+<h1 id="Exercise-8-6"><a href="#Exercise-8-6" class="headerlink" title="Exercise 8-6"></a>Exercise 8-6</h1><p>Suppose that m has type map<int, string=""> , and that we encounter a call to copy(m.begin(), m.end(), back_inserter(x)). What can we say about the type of x ? What if the call were copy(x.begin(), x.end(), back_inserter(m)) instead?</int,></p>
 <h2 id="Solution-amp-Results-3"><a href="#Solution-amp-Results-3" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy(m.begin(), m.end(), back_inserter(x));</span><br></pre></td></tr></table></figure>
 <p>This statement copy all elements of <strong>m</strong> into the destination sequence <strong>x</strong> via <strong>back_inserter</strong>. It is known that <strong>x</strong> should support <strong>push_back</strong> member function. In addition, the elements contained in <strong>m</strong> have type <strong>pair<int, string=""></int,></strong>. Therefore, <strong>x</strong> should be a container that has type <strong>c&lt;pair<int, string="">&gt;</int,></strong>. Standard contaniers that meet the first condition include <strong>vector, list, deque, string</strong>. But <strong>string</strong> can only store string literals. In summary, I presume that <strong>x</strong> can be</p>
 <ol>
@@ -470,6 +471,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/06/04/2018/C-Defining-new-types/" rel="prev" title="C++ - Defining new types">
+                C++ - Defining new types <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -546,7 +551,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -651,7 +656,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">79.2k</span>
+    <span title="Site words total count">80.1k</span>
   
 </div>
 
