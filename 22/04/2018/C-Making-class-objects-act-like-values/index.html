@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Liam&#39;s Blog">
 <meta property="og:description" content="As last chapter introduces, we can control what happens when objects are created, copied, assigned, and destroyed by defining special members. Now we intend to make class objects act like objects of b">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-23T11:31:31.959Z">
+<meta property="og:updated_time" content="2018-04-23T15:24:39.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ - Making class objects act like values">
 <meta name="twitter:description" content="As last chapter introduces, we can control what happens when objects are created, copied, assigned, and destroyed by defining special members. Now we intend to make class objects act like objects of b">
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  3,426
+                  3,609
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  21
+                  23
                 </span>
               
             </div>
@@ -444,7 +444,9 @@
 <li>we can’t simply return <strong>data</strong> as <strong>data</strong> is a <strong>Vec<char></char></strong> while we need an array of <strong>char</strong>.</li>
 <li>if we design our <strong>Vec</strong> based on an array of <strong>char</strong>, we could return it as the converted result. However, doing so exposes the private data member, which violates the class <strong>Str</strong>‘s encapsulation. If users obtained a pointer to <strong>data</strong>, they could change the value of the string. In addition, if the string is destroyed, then the pointer becomes invalid and any related operations would be dengerous. </li>
 </ol>
-<p>To solve the encaosulation problem, we may provide only one conversion to <strong>const char*</strong>. To solve the dangling pointer problem, we may allocate a new space for a copy of the characters from data, and returning a pointer to this newly allocated space. By doing so, users can manage the allocated storage properly. However, this design probably doesn’t work either because we would implicitly convert the <strong>Str</strong> to the <strong>const char*</strong>. </p>
+<p>To solve the encapsulation problem, we may provide only one conversion to <strong>const char*</strong>. To solve the dangling pointer problem, we may allocate a new space for a copy of the characters from data, and returning a pointer to this newly allocated space. By doing so, users can manage the allocated storage properly. However, this design probably doesn’t work either because the conversion happens implicitly and hence no pointer is provided explicitly. </p>
+<p>The standard <strong>string</strong> class takes a different approach that allows us to get a copy of the <strong>string</strong> in a character array but also makes them do explicitly. It defines three member functions to get a character array from a <strong>string</strong>. The first is <strong>c_str()</strong> which copies the contents of the <strong>string</strong> into a null-terminated <strong>char</strong> array. The <strong>string</strong> owns the array and users are expected not to delete the pointer. The data in the array are ephemeral and is only valid until the next call of a member function that might change the <strong>string</strong>. The second <strong>data()</strong> is like <strong>c_str</strong> except that it returns an array that is not null-terminated (c++11 releases this condition and hence data() and c_str() are synonym and return the same value). Finally, the <strong>copy</strong> function takes a <strong>char*</strong> and an integer as arguments, and copies as many characters as indicated by the integer into space pointed by the <strong>char*</strong>, which soace the user must allocate and free. These functions work as we expected. However, this type of <strong>coversions</strong> seems explicitly rather than implicitly. </p>
+<hr>
 
       
     </div>
@@ -667,7 +669,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">100.9k</span>
+    <span title="Site words total count">101.1k</span>
   
 </div>
 
