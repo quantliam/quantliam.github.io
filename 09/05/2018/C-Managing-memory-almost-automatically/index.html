@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Stochastic Modelling Notes; Programming Notes">
+<meta name="description" content="In last chapter, we write a new class named Student_info to encapsulate the pointer to Core so that we do not need to concern about the memory management. Now we’ll further improve our class by sepera">
 <meta name="keywords" content="C++,Notes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ - Managing memory (almost) automatically">
 <meta property="og:url" content="http://www.quanttour.com/09/05/2018/C-Managing-memory-almost-automatically/index.html">
 <meta property="og:site_name" content="Liam&#39;s Blog">
-<meta property="og:description" content="Stochastic Modelling Notes; Programming Notes">
+<meta property="og:description" content="In last chapter, we write a new class named Student_info to encapsulate the pointer to Core so that we do not need to concern about the memory management. Now we’ll further improve our class by sepera">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-09T14:21:04.026Z">
+<meta property="og:updated_time" content="2018-05-12T14:43:23.601Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ - Managing memory (almost) automatically">
-<meta name="twitter:description" content="Stochastic Modelling Notes; Programming Notes">
+<meta name="twitter:description" content="In last chapter, we write a new class named Student_info to encapsulate the pointer to Core so that we do not need to concern about the memory management. Now we’ll further improve our class by sepera">
 
 
 
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  0
+                  1,192
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  7
                 </span>
               
             </div>
@@ -383,7 +383,38 @@
       
 
       
-        
+        <p>In last chapter, we write a new class named <strong>Student_info</strong> to encapsulate the pointer to <strong>Core</strong> so that we do not need to concern about the memory management. Now we’ll further improve our class by seperating the class into two classes: one is a pure interface class and the other is a single pointerlike class which manages the underlying memory. The purpose to do so is that we then can use the pointerlike class with mutiple interface classes. In addition, by doing so, we can avoid copying objects unnecessarily. So what do we mean by saying <strong>copy an object</strong>? If an object <strong>x</strong> refers to an object <strong>y</strong>, does copying <strong>x</strong> cause <strong>y</strong> to be copied too ?</p>
+<ol>
+<li>if <strong>y</strong> is a memer of <strong>x</strong>, the answer must be yes</li>
+<li>if <strong>x</strong> is nothing but a pointer to <strong>y</strong>, the answer is no.</li>
+</ol>
+<p>This chapter defines three versions of our pointerlike class, each of which differs from the others in how it defines copying. </p>
+<h1 id="Handles-that-copy-their-objects"><a href="#Handles-that-copy-their-objects" class="headerlink" title="Handles that copy their objects"></a>Handles that copy their objects</h1><p>It is known that <strong>pointer</strong> is a primitive, low-level data structure. Working with <strong>pointers</strong> directly may leads to severe mistakes due to the fact that <strong>pointers</strong> are independent of the objects to which they point(Koenig and Moo 2000): </p>
+<p><em>1. Copying a pointer doesn’t copy the corresponding object, leading to surprises if two pointers inadvertently point to the same object.</em><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>);   <span class="comment">// p: pointer to an int object that has value 10</span></span><br><span class="line"><span class="keyword">int</span>* q = p;             <span class="comment">// q: points to the same int object </span></span><br><span class="line">*q = <span class="number">100</span>;               <span class="comment">// if we modify the object pointed by q</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *p;             <span class="comment">// we inevitably changes the object pointed by p</span></span><br><span class="line">                        <span class="comment">// the output is 100</span></span><br></pre></td></tr></table></figure></p>
+<p><em>2. Destroying a pointer doesn’t destroy its object, leading to memory leaks.</em><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">nameless</span><span class="params">(<span class="keyword">size_t</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span>* p = <span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">// local variable p is destroyed when this function </span></span><br><span class="line">&#125;                       <span class="comment">// finishes, however, the dynamically allocated                                  // array still exists on the heap.</span></span><br></pre></td></tr></table></figure></p>
+<p><em>3. Deleting an object without destroying a pointer to it leads to a dangling pointer, which causes undefined behavior if the program uses the pointer.</em><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>);   <span class="comment">// p: pointer to an int object that has value 10</span></span><br><span class="line"><span class="keyword">int</span>* q = p;             <span class="comment">// q: points to the same int object </span></span><br><span class="line"><span class="keyword">delete</span> p;               <span class="comment">// destroy the object pointed by p</span></span><br><span class="line">p = <span class="literal">nullptr</span>;            <span class="comment">// p points to nowhere now</span></span><br><span class="line">*q = <span class="number">100</span>;               <span class="comment">// undefined behavior as the object pointed by q has been destroyed.</span></span><br></pre></td></tr></table></figure></p>
+<p><em>4. Creating a pointer without initializing it leaves the pointer unbound, which also causes undefined behavior if the program uses it.</em><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p;                 <span class="comment">// unnitialized variable p, which is unbound to any object</span></span><br><span class="line">*p = <span class="number">100</span>;               <span class="comment">// undefined behavior</span></span><br></pre></td></tr></table></figure></p>
+<p>The <strong>Student_info</strong> class allows us to use pointers without worrying about above problems. Now we still let <strong>Student_info</strong> to provide the interface, but makes the handle class be independent of the type of the object that it manages. The properties that our class will provide are :</p>
+<p><em>1. A <strong>Handle</strong> is a value that refers to an object.</em></p>
+<p><em>2. We can copy a <strong>Handle</strong> object.</em></p>
+<p><em>3. We can test a <strong>Handle</strong> object to determine whether it is bound to another object.</em></p>
+<p><em>4. We can use a <strong>Handle</strong> to trigger polymorphic behavior when it points to an object of a class that belongs to an inheritance hierarchy. That is, if we call a <strong>virtual</strong> function through our class, we want the implementation to choose the function to run dynamically, just as if we’d called the function through a real pointer.</em></p>
+<p>Our <strong>Handle</strong> class will take over the memory management and therefore, we should attach only one <strong>Handle</strong> to any object, and we should not access the object directly through a built-in pointer. To tackle problems when using a built-in pointer, </p>
+<ol>
+<li>When we copy a <strong>Handle</strong> object, we’ll make a new copy of the object so that each <strong>Handle</strong> points to its own copy, such as what the copy constructor does in the <strong>Student_info</strong> class, calling <strong>clone()</strong> to create a new object. </li>
+<li>When we destroy a <strong>Handle</strong>, it will destroy the associated object, such as what the <strong>destructor</strong> does in the <strong>Student_info</strong>.  </li>
+<li>We allows users to create unbound <strong>Handles</strong> but we will throw an exception if the user attempts to access the object to which an unbound <strong>Handle</strong> refers. Users who want to avoid the exception can test to see whether the <strong>Handle</strong> is bound, for example, the operations defined in the <strong>Student_info</strong> class check whether the handle object was bound to a real object. </li>
+</ol>
+<p>Now, let’s write the <strong>Handle</strong> class:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Handle</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Handle(): p(<span class="number">0</span>) &#123;&#125;</span><br><span class="line">    Handle(<span class="keyword">const</span> Handle&amp; s): p(<span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (s.p) p = s.p-&gt;clone();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Handle&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp; rhs)&#123;</span><br><span class="line">        <span class="keyword">if</span>(&amp;rhs != <span class="keyword">this</span>)&#123;</span><br><span class="line">            <span class="keyword">delete</span> p;</span><br><span class="line">            p = rhs.p ? rhs.p-&gt;clone() : <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ~Handle() &#123; <span class="keyword">delete</span> p; &#125;</span><br><span class="line"></span><br><span class="line">    Handle(T* t): p(t) &#123; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">bool</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> p; &#125; <span class="comment">// type conversion</span></span><br><span class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span>;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T* p;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>Firstly, we observe that the <strong>Handle</strong> is a class template and can accommodate to any type. For example, <strong>Handle<core></core></strong> holds a pointer to an object of <strong>Core</strong> type. </p>
+<p>The default constructor initializes the pointer to a <strong>nullptr</strong>. The copy constructor lets the <strong>Handle</strong> object refers to a newly created object that has the same value as the object pointed by the passed argument. The <strong>operator=</strong> is samilar to the copy constructor except that it destroyes the original object pointed by the <strong>Handle</strong> object. The destructor is obvious. All these four members are defined exactly the same as those defined in the <strong>Student_info</strong> class. </p>
+<p>The other constructor that takes an argument lets us to bind the pointer to an actual object:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Handle&lt;Core&gt; student(<span class="keyword">new</span> Grad);</span><br></pre></td></tr></table></figure></p>
+<p>Finally, we define three <strong>operator</strong> functions: the first one <strong>operator bool()</strong> tests the value of a <strong>Handle</strong>, and returns <strong>true</strong> if the <strong>Handle</strong> is bound to an object, and false otherwise(in fact converts the Handle type to a bool type value); The other two deine <strong>operator*</strong> and <strong>operator-&gt;</strong> which give access to the object bound to the <strong>Handle</strong>:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span>&amp; <span class="title">Handle</span>&lt;T&gt;:</span>:<span class="keyword">operator</span>* () <span class="keyword">const</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(p)</span><br><span class="line">        <span class="keyword">return</span> *p;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">throw</span> runtime_error(<span class="string">"unbound Handle"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span>&amp; <span class="title">Handle</span>&lt;T&gt;:</span>:<span class="keyword">operator</span>-&gt;() <span class="keyword">const</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(p)</span><br><span class="line">        <span class="keyword">return</span> p;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">throw</span> runtime_error(<span class="string">"unbound Handle"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The <strong>operator*</strong> allows us to access <strong>*student.p</strong> by using <strong>*student</strong>. The <strong>-&gt;</strong> operator is used to access a member whose name appears in its right operand from an object named by its left operand. It returns a value that can be treated as a pointer. Therefore, if x is a value that defines <strong>operator-&gt;</strong>, then<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x-&gt;y;</span><br></pre></td></tr></table></figure></p>
+<p>is equivalent to<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(x.<span class="keyword">operator</span>-&gt;())-&gt;y;</span><br></pre></td></tr></table></figure></p>
+<p>is equivalent to<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.p-&gt;y; <span class="comment">// p is pointer data member, for example, p is Core*</span></span><br></pre></td></tr></table></figure></p>
+<p>By doing so, we can use the <strong>Handle</strong> object as if we are using a pointer to the associated object. </p>
+
       
     </div>
     
@@ -425,8 +456,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/09/05/2018/Sorting-Algorithms-C-Implementations/" rel="prev" title="Sorting Algorithms C++ Implementations">
-                Sorting Algorithms C++ Implementations <i class="fa fa-chevron-right"></i>
+              <a href="/09/05/2018/Sorting-Algorithms-C-Implementations/" rel="prev" title="Sorting Algorithms C++ Implementations-Selection Sort">
+                Sorting Algorithms C++ Implementations-Selection Sort <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -479,8 +510,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -557,6 +597,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Handles-that-copy-their-objects"><span class="nav-number">1.</span> <span class="nav-text">Handles that copy their objects</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -584,7 +640,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">112.0k</span>
+    <span title="Site words total count">113.3k</span>
   
 </div>
 
