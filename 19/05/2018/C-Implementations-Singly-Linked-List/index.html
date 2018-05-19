@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="C++,Notes," />
+  <meta name="keywords" content="C++,Data Structures,Algorithms," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Arithmetic types   Arithmetic types in C++       Type Meaning Minimum size   bool boolean NA   char character 8bits   wchar_t wide character 16bits   char16_t Unicode character 16bits   char32_t Unico">
-<meta name="keywords" content="C++,Notes">
+<meta name="description" content="Logical ViewHow to efficiently store a sequence of values (aka. a List) of a given type is crucial for any non-trivial program due to the limited memory. The way we store or organsize data introduces">
+<meta name="keywords" content="C++,Data Structures,Algorithms">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++ - Built-in types and expressions">
-<meta property="og:url" content="http://www.quanttour.com/02/03/2018/C-Built-in-types-and-expressions/index.html">
+<meta property="og:title" content="C++ Implementations: Singly Linked List">
+<meta property="og:url" content="http://www.quanttour.com/19/05/2018/C-Implementations-Singly-Linked-List/index.html">
 <meta property="og:site_name" content="Liam&#39;s Blog">
-<meta property="og:description" content="Arithmetic types   Arithmetic types in C++       Type Meaning Minimum size   bool boolean NA   char character 8bits   wchar_t wide character 16bits   char16_t Unicode character 16bits   char32_t Unico">
+<meta property="og:description" content="Logical ViewHow to efficiently store a sequence of values (aka. a List) of a given type is crucial for any non-trivial program due to the limited memory. The way we store or organsize data introduces">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-06T13:14:10.330Z">
+<meta property="og:updated_time" content="2018-05-19T14:39:24.105Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++ - Built-in types and expressions">
-<meta name="twitter:description" content="Arithmetic types   Arithmetic types in C++       Type Meaning Minimum size   bool boolean NA   char character 8bits   wchar_t wide character 16bits   char16_t Unicode character 16bits   char32_t Unico">
+<meta name="twitter:title" content="C++ Implementations: Singly Linked List">
+<meta name="twitter:description" content="Logical ViewHow to efficiently store a sequence of values (aka. a List) of a given type is crucial for any non-trivial program due to the limited memory. The way we store or organsize data introduces">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.quanttour.com/02/03/2018/C-Built-in-types-and-expressions/"/>
+  <link rel="canonical" href="http://www.quanttour.com/19/05/2018/C-Implementations-Singly-Linked-List/"/>
 
 
 
 
 
-  <title>C++ - Built-in types and expressions | Liam's Blog</title>
+  <title>C++ Implementations: Singly Linked List | Liam's Blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/02/03/2018/C-Built-in-types-and-expressions/">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/19/05/2018/C-Implementations-Singly-Linked-List/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liam">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">C++ - Built-in types and expressions</h1>
+          <h1 class="post-title" itemprop="name headline">C++ Implementations: Singly Linked List</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-02T00:46:29+08:00">
-                02-03-2018
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-19T15:26:10+08:00">
+                19-05-2018
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming/" itemprop="url" rel="index">
-                    <span itemprop="name">Programming</span>
+                  <a href="/categories/Algorithms/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithms</span>
                   </a>
                 </span>
 
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  31
+                  898
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  1
+                  6
                 </span>
               
             </div>
@@ -383,86 +383,74 @@
       
 
       
-        <h1 id="Arithmetic-types"><a href="#Arithmetic-types" class="headerlink" title="Arithmetic types"></a>Arithmetic types</h1><table>
+        <h1 id="Logical-View"><a href="#Logical-View" class="headerlink" title="Logical View"></a>Logical View</h1><p>How to efficiently store a sequence of values (aka. a List) of a given type is crucial for any non-trivial program due to the limited memory. The way we store or organsize data introduces an important concept, that is, data structures. A data structure is proposed to manage data in a specific way so that we can use it efficiently according to specific needs. </p>
+<p>In C++/C, the most common facility we use is so called built-in <strong>array</strong>, which stores a given number of elements in a contiguous memory block. All elements are stored in certain order indicated by their addresses. When we want to access any one of the elements, we pass the order of that element to the computer. Then the computer will calculate the address of that element based on the initial address of the array, and then return us the associated value. Since the addresses are contiguous and the size of memory occupied by the given type is fixed, we can always get any element in constant time: there is only one arithmetic operation needed. Naturally, we can modify any one of elements in constant time as well. However, the shortingcoming is obvious: an array has fixed length. There are two ways to solve this problem, one is that we can preset a large enough size for the array, however, doing so is very inefficient in terms of memory usage. Another way is to dynamically allocated an array when it is needed. However, doing so possibly invalidates all pointers/iterators as all elements are moved to a new allocated storage, which is also very inefficient in terms of time cost(O(n)). Even if the allocated storage is sufficient, any modifications of the array, such as, insert or delete element, also invalidates parts or all of the pointers/iterators, and hence these operations have high time cost: O(n). </p>
+<p>An alternative data structure is named <strong>Linked List</strong>, which stores data in a noncontinuous memory space through a manner that each element are connected and ordered by pointers. More specific, an element of a singly linked list is an single object (aka. Linked Node) that contains two members: one is the data stored in the object, and the other is the address (i.e. a pointer variable) of the next element. </p>
+<h1 id="Basic-Operations"><a href="#Basic-Operations" class="headerlink" title="Basic Operations"></a>Basic Operations</h1><p>The entrance of a singly linked list is a pointer to the <strong>Head Node</strong>, i.e. the first Linked Node. If the linked list is empty, the pointer to the <strong>Head Node</strong> is a <strong>nullptr</strong>. To access one element, we have to start from the <strong>Head Node</strong> and move one <strong>Node</strong> by one <strong>Node</strong>. Therefore, unlike the array, the time to access elements of the linked list is proportational to the size of the linked list, that is, the time complexity is O(n). Naturally if we want to insert or delete one element into/from the list, we have to find the position or the specific element first. The time complexity is also O(n). One advantage compared to the array is that it doesn’t worry about the size of the storage. We do not need to preset the length of the list and hence no extra memory is wasted. But it does need extra memory for storing the pointer variable in each <strong>Linked Node</strong>. Another advantage is that the operations such as insert or delete doesn’t change other elements, which is crucial for us when we manipulate an object by pointers or iterators. Now let’s briefly summarize these two elementary data structures: Array and Linked List.</p>
+<table>
 <thead>
 <tr>
-<th style="text-align:left">Arithmetic types in C++</th>
 <th style="text-align:left"></th>
-<th style="text-align:left"></th>
+<th style="text-align:left">Array</th>
+<th style="text-align:left">Linked List</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">Type</td>
-<td style="text-align:left">Meaning</td>
-<td style="text-align:left">Minimum size</td>
+<td style="text-align:left">Cost of accessing an element of an element</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
 </tr>
 <tr>
-<td style="text-align:left">bool</td>
-<td style="text-align:left">boolean</td>
-<td style="text-align:left">NA</td>
+<td style="text-align:left">Memory requirement</td>
+<td style="text-align:left">Fixed size: used memory and unused memory</td>
+<td style="text-align:left">No unused memory but need extra memory for pointer variables</td>
 </tr>
 <tr>
-<td style="text-align:left">char</td>
-<td style="text-align:left">character</td>
-<td style="text-align:left">8bits</td>
+<td style="text-align:left">Cost of Inserting or deleting an element</td>
+<td style="text-align:left">Inserting at beging: O(n); Insering at the end: O(1) if there exists unused memory but O(n) is the array is full; Inserting at middle: O(n)</td>
+<td style="text-align:left">Inserting at begining:O(1); Inserting at the end: O(n); Inserting at middle: O(n)</td>
 </tr>
 <tr>
-<td style="text-align:left">wchar_t</td>
-<td style="text-align:left">wide character</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">char16_t</td>
-<td style="text-align:left">Unicode character</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">char32_t</td>
-<td style="text-align:left">Unicode character</td>
-<td style="text-align:left">32bits</td>
-</tr>
-<tr>
-<td style="text-align:left">short</td>
-<td style="text-align:left">short integer</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">int</td>
-<td style="text-align:left">integer</td>
-<td style="text-align:left">16bits</td>
-</tr>
-<tr>
-<td style="text-align:left">long</td>
-<td style="text-align:left">long integer</td>
-<td style="text-align:left">32bits</td>
-</tr>
-<tr>
-<td style="text-align:left">long long</td>
-<td style="text-align:left">long integer</td>
-<td style="text-align:left">64bits</td>
-</tr>
-<tr>
-<td style="text-align:left">float</td>
-<td style="text-align:left">single-precision floating-point</td>
-<td style="text-align:left">6 significant digits</td>
-</tr>
-<tr>
-<td style="text-align:left">double</td>
-<td style="text-align:left">double-precision floating-point</td>
-<td style="text-align:left">10 significant digits</td>
-</tr>
-<tr>
-<td style="text-align:left">long double</td>
-<td style="text-align:left">extended-precision floating-point</td>
-<td style="text-align:left">10 significant digits</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
+<td style="text-align:left">Source:<a href="https://www.youtube.com/watch?v=hNP72JdOIgY&amp;index=17&amp;list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P" target="_blank" rel="noopener">mycodeschool</a></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
 </table>
+<p>From above table, we can see that whether to use an array or a linked list depends on that what is the most frequent operation the program performs and what is the size of the data structure.</p>
+<h1 id="Implementations"><a href="#Implementations" class="headerlink" title="Implementations"></a>Implementations</h1><p>To define a abstract data type based on the <strong>singly linked list</strong>,  </p>
+<p>with providing an interface as shown as follows:<br>```c++<br>template <typename t=""><br>class SinglyLinkedList{<br>    // implementations<br>    struct Node{<br>        T data;<br>        Node* next;<br>    };</typename></p>
+<pre><code>Node* ptrToHead;
+
+// interface
+</code></pre><p>public:<br>    typedef std::size_t size_type;</p>
+<pre><code>Linked_List(): ptrToHead(nullptr) {}                // create an empty linked_list
+explicit Linked_List(size_type, const T&amp; val = T());// create an linked list with size
+~Linked_List();                                     // destructor
+Linked_List(const Linked_List&amp;);                    // copy constructor
+Linked_List&amp; operator= (const Linked_List&amp;);        // assignment operator
+
+void clear();                                       // clear
+Node* begin() { return ptrToHead; }                 // pointer to the head node
+const Node* begin() const { return ptrToHead; }
+
+bool empty() const { return ptrToHead == nullptr; } // empty check
+size_type size() const;                             // get the size of the list
+
+void push_front(const T&amp;);                          // insert at begining 
+void push_back(const T&amp;);                           // insert at the end  
+void insert(size_type, const T&amp;);                   // insert at the nth position
+
+void pop_front();                                   // delete at the begining  
+void pop_back();                                    // delete the last element  
+void erase(size_type);                              // delete at nth position
+
+void ireverse();                                    // reverse the order iteratively  
+void rreverse(Node* p);                             // reverse the order recursively
+
+void remove(const T&amp;);                              // remove elements with specific values 
+void unique();                                      // remove duplicate elements
+</code></pre><p>};</p>
 
       
     </div>
@@ -482,7 +470,9 @@
           
             <a href="/tags/C/" rel="tag"># C++</a>
           
-            <a href="/tags/Notes/" rel="tag"># Notes</a>
+            <a href="/tags/Data-Structures/" rel="tag"># Data Structures</a>
+          
+            <a href="/tags/Algorithms/" rel="tag"># Algorithms</a>
           
         </div>
       
@@ -495,8 +485,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/01/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-2-Part3/" rel="next" title="Accelerated C++ Solutions to Exercises (Chapter 2 Part3)">
-                <i class="fa fa-chevron-left"></i> Accelerated C++ Solutions to Exercises (Chapter 2 Part3)
+              <a href="/18/05/2018/Sorting-Algorithms-C-Implementations-Quick-Sort/" rel="next" title="Sorting Algorithms C++ Implementations - Quick Sort">
+                <i class="fa fa-chevron-left"></i> Sorting Algorithms C++ Implementations - Quick Sort
               </a>
             
           </div>
@@ -504,10 +494,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/02/03/2018/C-Working-with-batches-of-data/" rel="prev" title="C++ - Working with batches of data">
-                C++ - Working with batches of data <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -655,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Arithmetic-types"><span class="nav-number">1.</span> <span class="nav-text">Arithmetic types</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Logical-View"><span class="nav-number">1.</span> <span class="nav-text">Logical View</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Operations"><span class="nav-number">2.</span> <span class="nav-text">Basic Operations</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Implementations"><span class="nav-number">3.</span> <span class="nav-text">Implementations</span></a></li></ol></div>
             
 
           </div>
