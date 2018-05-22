@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Liam&#39;s Blog">
 <meta property="og:description" content="Logical ViewHow to efficiently store a sequence of values (aka. a List) of a given type is crucial for any non-trivial program due to the limited memory. The way we store or organsize data introduces">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-19T14:39:24.105Z">
+<meta property="og:updated_time" content="2018-05-22T12:13:07.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ Implementations: Singly Linked List">
 <meta name="twitter:description" content="Logical ViewHow to efficiently store a sequence of values (aka. a List) of a given type is crucial for any non-trivial program due to the limited memory. The way we store or organsize data introduces">
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  898
+                  1,183
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  6
+                  7
                 </span>
               
             </div>
@@ -418,40 +418,9 @@
 </tbody>
 </table>
 <p>From above table, we can see that whether to use an array or a linked list depends on that what is the most frequent operation the program performs and what is the size of the data structure.</p>
-<h1 id="Implementations"><a href="#Implementations" class="headerlink" title="Implementations"></a>Implementations</h1><p>To define a abstract data type based on the <strong>singly linked list</strong>,  </p>
-<p>with providing an interface as shown as follows:<br>```c++<br>template <typename t=""><br>class SinglyLinkedList{<br>    // implementations<br>    struct Node{<br>        T data;<br>        Node* next;<br>    };</typename></p>
-<pre><code>Node* ptrToHead;
-
-// interface
-</code></pre><p>public:<br>    typedef std::size_t size_type;</p>
-<pre><code>Linked_List(): ptrToHead(nullptr) {}                // create an empty linked_list
-explicit Linked_List(size_type, const T&amp; val = T());// create an linked list with size
-~Linked_List();                                     // destructor
-Linked_List(const Linked_List&amp;);                    // copy constructor
-Linked_List&amp; operator= (const Linked_List&amp;);        // assignment operator
-
-void clear();                                       // clear
-Node* begin() { return ptrToHead; }                 // pointer to the head node
-const Node* begin() const { return ptrToHead; }
-
-bool empty() const { return ptrToHead == nullptr; } // empty check
-size_type size() const;                             // get the size of the list
-
-void push_front(const T&amp;);                          // insert at begining 
-void push_back(const T&amp;);                           // insert at the end  
-void insert(size_type, const T&amp;);                   // insert at the nth position
-
-void pop_front();                                   // delete at the begining  
-void pop_back();                                    // delete the last element  
-void erase(size_type);                              // delete at nth position
-
-void ireverse();                                    // reverse the order iteratively  
-void rreverse(Node* p);                             // reverse the order recursively
-
-void remove(const T&amp;);                              // remove elements with specific values 
-void unique();                                      // remove duplicate elements
-</code></pre><p>};</p>
-
+<h1 id="Implementations"><a href="#Implementations" class="headerlink" title="Implementations"></a>Implementations</h1><p>To define a abstract data type based on the <strong>singly linked list</strong>, the first step is to write the <strong>Linked Node</strong>:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">    T data;</span><br><span class="line">    Node* next;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>The <strong>Node</strong> struct is templated for satisfying different underlying types. It contains two items: one is named <strong>data</strong> which for storing values of <strong>T</strong> type and ther other named <strong>next</strong> which is a pointer to a <strong>Node</strong> object. Next we define the class type based on the singly linked list model described above. In fact, we can incorporate the <strong>Node</strong> type into our singly linked list class as a private member for the purpose of hidding the implementation details. Also, we declare a private member <strong>ptrToHead</strong> to indicate the address of the <strong>Head Node</strong>. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SinglyLinkedList</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>;</span> <span class="comment">// forward declaration</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="keyword">size_t</span> size_type;</span><br><span class="line">    <span class="keyword">typedef</span> T value_type;</span><br><span class="line"></span><br><span class="line">    Linked_List(): ptrToHead(<span class="literal">nullptr</span>) &#123;&#125;                <span class="comment">// create an empty linked_list</span></span><br><span class="line">    explicit Linked_List(size_type, const T&amp; val = T());// create an linked list with size</span><br><span class="line">    ~Linked_List();                                     <span class="comment">// destructor</span></span><br><span class="line">    Linked_List(<span class="keyword">const</span> Linked_List&amp;);                    <span class="comment">// copy constructor</span></span><br><span class="line">    Linked_List&amp; <span class="keyword">operator</span>= (<span class="keyword">const</span> Linked_List&amp;);        <span class="comment">// assignment operator</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;                                       <span class="comment">// clear</span></span><br><span class="line">    <span class="function">Node* <span class="title">begin</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> ptrToHead; &#125;                 <span class="comment">// pointer to the head node</span></span><br><span class="line">    <span class="function"><span class="keyword">const</span> Node* <span class="title">begin</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> ptrToHead; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> ptrToHead == <span class="literal">nullptr</span>; &#125; <span class="comment">// empty check</span></span><br><span class="line">    <span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span></span>;                             <span class="comment">// get the size of the list</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push_front</span><span class="params">(<span class="keyword">const</span> T&amp;)</span></span>;                          <span class="comment">// insert at begining </span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">const</span> T&amp;)</span></span>;                           <span class="comment">// insert at the end  </span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(size_type, <span class="keyword">const</span> T&amp;)</span></span>;                   <span class="comment">// insert at the nth position</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop_front</span><span class="params">()</span></span>;                                   <span class="comment">// delete at the begining  </span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop_back</span><span class="params">()</span></span>;                                    <span class="comment">// delete the last element  </span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">erase</span><span class="params">(size_type)</span></span>;                              <span class="comment">// delete at nth position</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ireverse</span><span class="params">()</span></span>;                                    <span class="comment">// reverse the order iteratively  </span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">rreverse</span><span class="params">(Node* p)</span></span>;                             <span class="comment">// reverse the order recursively</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">const</span> T&amp;)</span></span>;                              <span class="comment">// remove elements with specific values </span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">unique</span><span class="params">()</span></span>;                                      <span class="comment">// remove duplicate elements</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">        T data;</span><br><span class="line">        Node* next;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    Node* ptrToHead;</span><br><span class="line">    size_type count;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Let's define the special members first:</span><br><span class="line">#<span class="meta"># constructors</span></span><br><span class="line">The <span class="keyword">default</span> constructor initializes the **ptrToHead** to **<span class="literal">nullptr</span>** <span class="keyword">and</span> hence constructs an empty linked <span class="built_in">list</span>. The second constructor constructs a linked <span class="built_in">list</span> with a size <span class="keyword">and</span> a value of **T** type. If no value supplied, the **data** member in each **Node** will be <span class="keyword">default</span>-initialized <span class="keyword">or</span> value-initialized depending on whether there exists a user-defined **<span class="keyword">default</span> constructor** in the definition of **T** type. Also I specify <span class="keyword">this</span> constructor as **<span class="keyword">explicit</span>** to avoid potential type conversion. </span><br><span class="line">```c++</span><br><span class="line"><span class="comment">// constructor that takes a size and a value</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">Linked_List</span>&lt;T&gt;:</span>:Linked_List(<span class="keyword">const</span> size_type n, <span class="keyword">const</span> T&amp; val) &#123;</span><br><span class="line">	ptrToHead = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="keyword">while</span>(size() != n)</span><br><span class="line">		push_back(val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -675,7 +644,7 @@ void unique();                                      // remove duplicate elements
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">120.1k</span>
+    <span title="Site words total count">120.3k</span>
   
 </div>
 
