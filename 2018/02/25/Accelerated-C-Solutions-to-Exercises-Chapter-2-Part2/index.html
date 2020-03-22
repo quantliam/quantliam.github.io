@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Times New Roman:300,300italic,400,400italic,700,700italic|Courier New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"quantein.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":60,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Exercise 2-4The framing program writes the mostly blank lines that seperate the borders from the greeting one character at a time. Change the program so that it writes all the spaces needed in a singl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Accelerated C++ Solutions to Exercises (Chapter 2 Part2)">
+<meta property="og:url" content="http://quantein.com/2018/02/25/Accelerated-C-Solutions-to-Exercises-Chapter-2-Part2/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="Exercise 2-4The framing program writes the mostly blank lines that seperate the borders from the greeting one character at a time. Change the program so that it writes all the spaces needed in a singl">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-25T08:18:34.000Z">
+<meta property="article:modified_time" content="2018-03-01T09:43:11.000Z">
+<meta property="article:author" content="Liam">
+<meta property="article:tag" content="Accelerated C++ Solutions">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://quantein.com/2018/02/25/Accelerated-C-Solutions-to-Exercises-Chapter-2-Part2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>Accelerated C++ Solutions to Exercises (Chapter 2 Part2) | Liam's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/quantliam" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://quantein.com/2018/02/25/Accelerated-C-Solutions-to-Exercises-Chapter-2-Part2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="Stochastic Modelling Notes; Programming Notes">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Accelerated C++ Solutions to Exercises (Chapter 2 Part2)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-02-25 16:18:34" itemprop="dateCreated datePublished" datetime="2018-02-25T16:18:34+08:00">2018-02-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-03-01 17:43:11" itemprop="dateModified" datetime="2018-03-01T17:43:11+08:00">2018-03-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Exercise-2-4"><a href="#Exercise-2-4" class="headerlink" title="Exercise 2-4"></a>Exercise 2-4</h1><p>The framing program writes the mostly blank lines that seperate the borders from the greeting one character at a time. Change the program so that it writes all the spaces needed in a single output expression.</p>
+<h2 id="Solution-amp-Results"><a href="#Solution-amp-Results" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>Without considering the frame itself, there only exist two types of row. The first type is the rows that full of spaces. The second type is the row that contains the <strong>greeting</strong> and spaces symmetricly located on two sides of the <strong>greeting</strong>. Therefore, one of the possible solutions is to write one row directly each time instead of writing one character. First, I defines two variables representing two blank strings</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">// two blank strings containing different number of spaces</span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="built_in">string</span> <span class="title">blankStringTopBottom</span><span class="params">(cols - <span class="number">2</span>, <span class="string">' '</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="built_in">string</span> <span class="title">blankStringLeftRight</span><span class="params">(pad, <span class="string">' '</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>The first string is in fact the first type of row and can be written directly given certain conditions. The second row can be obtained by means of catenate operations</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">// the string that contains both the greeting and blanks</span></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> greetingRow = blankStringLeftRight + greeting +                             blankStringLeftRight;</span><br></pre></td></tr></table></figure>
+<p>To maintain the <strong>loop invariant</strong>, the <strong>c</strong> need to be adjusted after each output. Due to one row is written each time (ignoring the borders),  <strong>c</strong> increases <strong>cols - 1</strong> every time.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c += cols - <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>The modified program is</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// using namespace std and names</span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ask for the person's name</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter your first name: "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the name</span></span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; name;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// build the message that we intend to write</span></span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">string</span> greeting = <span class="string">"Hello, "</span> + name + <span class="string">"!"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// the number of blanks surrounding the greeting</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> pad = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// the number of rows and columns</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> rows = pad * <span class="number">2</span> + <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">string</span>::size_type cols = greeting.<span class="built_in">size</span>() + pad * <span class="number">2</span> + <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// two blank strings containing different number of spaces</span></span><br><span class="line">    <span class="function"><span class="keyword">const</span> <span class="built_in">string</span> <span class="title">blankStringTopBottom</span><span class="params">(cols - <span class="number">2</span>, <span class="string">' '</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">const</span> <span class="built_in">string</span> <span class="title">blankStringLeftRight</span><span class="params">(pad, <span class="string">' '</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// the string that contains both the greeting and blanks</span></span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">string</span> greetingRow = blankStringLeftRight + greeting + blankStringLeftRight;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// write a blank line to separate the output from the input</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write rows rows of output</span></span><br><span class="line">    <span class="comment">// invariant: we have written r rows so far</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r != rows; ++r)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">string</span>::size_type c = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// we have written c characters so far in the current row</span></span><br><span class="line">        <span class="keyword">while</span> (c != cols)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// are we on the border?</span></span><br><span class="line">            <span class="keyword">if</span> (r == <span class="number">0</span> || r == rows - <span class="number">1</span> ||</span><br><span class="line">                c == <span class="number">0</span> || c == cols - <span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="string">"*"</span>;</span><br><span class="line">                ++c;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;   <span class="comment">// is it time to write the greeting row?</span></span><br><span class="line">                <span class="keyword">if</span> (r == pad + <span class="number">1</span>)</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; greetingRow;</span><br><span class="line">                <span class="comment">// is it time to write the non-greeting rows?</span></span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; blankStringTopBottom;</span><br><span class="line">                c += cols - <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>A simple test has been done and the outputs are written on the console window as below</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Please enter your first name: Bruce</span><br><span class="line"></span><br><span class="line">*****************</span><br><span class="line">*               *</span><br><span class="line">* Hello, Bruce! *</span><br><span class="line">*               *</span><br><span class="line">*****************</span><br></pre></td></tr></table></figure>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>See deatiled analysis in <a href="http://quanttour.com/23/02/2018/C-Looping-and-counting/" target="_blank" rel="noopener">C++ - Looping and counting</a>.</p>
+<hr>
+<h1 id="Exercise-2-5"><a href="#Exercise-2-5" class="headerlink" title="Exercise 2-5"></a>Exercise 2-5</h1><p>Write a set of “*” characters so that they form a square, a rectangle, and a triangle.</p>
+<h2 id="Solution-amp-Results-1"><a href="#Solution-amp-Results-1" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><h3 id="The-design-ideas"><a href="#The-design-ideas" class="headerlink" title="The design ideas"></a>The design ideas</h3><p>The correct program for this exercise is non-unique as the requirements are loose. It doesn’t specify the details of each shape. I tried to design a program that is flexible enough to meet more needs and preferences. For example, users may ask the program to write various rectangles (or squares/triangles) with different lengths or different appearance such as solid or hollow shapes. In summary, I intend to design a program with following properties</p>
+<ol>
+<li>provide choices for three types of shapes, i.e. <strong>square</strong>, <strong>rectangle</strong> and <strong>triangle</strong>.</li>
+<li><ul>
+<li>for a <strong>square</strong>, the length of the side is customizable</li>
+<li>for a <strong>rectangle</strong>, the length and the width are customizable, and the base can be the long side or the short side.</li>
+<li>for a <strong>triangle</strong>, the height is customizable and the <strong>triangle</strong> is a equilateral triangle.</li>
+</ul>
+</li>
+<li>for all shapes, there are two types of appearance: solid and hollow.</li>
+</ol>
+<h3 id="The-Primary-Structure"><a href="#The-Primary-Structure" class="headerlink" title="The Primary Structure"></a>The Primary Structure</h3><p>Due to there are three types of shape, we can use <strong>if else statement</strong> as one of the choices of the primary structure and provide three banches for the three shapes. First, flags are needed for indicating what shape type is to be written. For example:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* flags for what shape to print</span></span><br><span class="line"><span class="comment"> *  shapeType == 1, print a square shape</span></span><br><span class="line"><span class="comment"> *  shapeType == 2, print a rectangle shape</span></span><br><span class="line"><span class="comment"> *  shapeType == 3, print a triangle shape </span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<p>In addition, each type of shape can be a solid shape or hollow shape. Therefore, a choice for the appearance will be provided for users before the computer enters into each branch. For other properties, such as lengths of sides and heights, are not the same for each types of shape and will be solved in the branches. Therefore, the whole structure of the program is</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// select a shape</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Select a shape type\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"1. A Square\n2. A Rectangle\n3. A Triangle\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter 1 or 2 or 3: "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the shape type</span></span><br><span class="line">    <span class="keyword">int</span> shapeType;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; shapeType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write a blank line for clarity</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// select appearance</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Do you want a solid shape?\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"yes: a solid shape\nno: a hollow shape\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter y or n: "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the shape appearance</span></span><br><span class="line">    <span class="keyword">char</span> shapeAppearance;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; shapeAppearance;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write a blank line for clarity</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (shapeType == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// statements for generating a square </span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (shapeType == <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// statements for generating a rectangle</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (shapeType == <span class="number">3</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// statements for generating a triangles</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Algorithms"><a href="#Algorithms" class="headerlink" title="Algorithms"></a>Algorithms</h3><h4 id="A-square-shape"><a href="#A-square-shape" class="headerlink" title="A square shape"></a>A square shape</h4><p>The core part of the program is how to impelment the algorithms that can generate different shapes. I starts with the implementation of writing a square. Assuming the edge length of the square is 10, the program aims to generate two different squares as follows</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">**********          **********</span><br><span class="line">*        *          **********                  </span><br><span class="line">*        *          **********</span><br><span class="line">*        *          **********</span><br><span class="line">*        *   and    **********</span><br><span class="line">*        *          **********</span><br><span class="line">*        *          **********</span><br><span class="line">*        *          **********</span><br><span class="line">*        *          **********</span><br><span class="line">**********          **********</span><br></pre></td></tr></table></figure>
+<p>Note that for all the shapes, the length or height means the number of columns or rows formed by asterisks (and spaces). </p>
+<p>The algorithm is similar as that in the <strong>framed greeting</strong> program except that it doesn’t need to write the greeting itself. Essentially, there are two types of string：one is full filled with asterisks and another one is filled by blanks and two asterisks located at both ends of the blanks. The structure could be a for loop or while loop, which is up to your preference. Firstly, I define the variables that are needed.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// read in edge length for a square</span></span><br><span class="line"><span class="keyword">int</span> edgeLength;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; edgeLength;</span><br><span class="line"></span><br><span class="line"><span class="comment">// string variable type 1: full of asterisks</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">asteriskString</span><span class="params">(edgeLength, <span class="string">'*'</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// string variable type 2: blanks and asterisks</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">blankString</span><span class="params">(edgeLength - <span class="number">2</span>, <span class="string">' '</span>)</span></span>;</span><br><span class="line"><span class="built_in">string</span> mixedString = <span class="string">"*"</span> + blankString + <span class="string">"*"</span>;</span><br></pre></td></tr></table></figure>
+<p>The solid square shape is simple and only needs one type of the string type vairable. If we choose one of the loop statements, the loop invariant can be expressed as: <em>we have written r rows of output</em>, of which <strong>r</strong> is the counting variable. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// invariant: we have written r rows of output</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r != edgeLength; ++r)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// write a row whose length is the edge length</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; asteriskString &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>To maintaint the loop invariant, <strong>r</strong> is increased by 1 after each iteration. Once the for loop finishes, the condition <strong>r != edgeLength</strong> is false and <strong>r = edgeLength</strong>. Then, the loop invariant becomes: we have written <strong>edgeLength</strong> rows of outputs, which keeps the correctness of our loop statement. </p>
+<p>For a hollow square shape, the output of each row is conditional on its position. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// is it the first row or last row of outputs?</span></span><br><span class="line"><span class="keyword">if</span> (r == <span class="number">0</span> || r == edgeLength - <span class="number">1</span>)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; asteriskString &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; mixedString &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>Now, we can combine two cases together</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">if</span> (shapeType == <span class="number">1</span>)</span><br><span class="line">&#123;   </span><br><span class="line">       <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter the edge length: "</span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// read the edge length</span></span><br><span class="line">       <span class="keyword">int</span> edgeLength;</span><br><span class="line">       <span class="built_in">cin</span> &gt;&gt; edgeLength;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// write a blank line to separate inputs and outputs</span></span><br><span class="line">       <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// string type 1: full of asterisks</span></span><br><span class="line">       <span class="function"><span class="built_in">string</span> <span class="title">asteriskString</span><span class="params">(edgeLength, <span class="string">'*'</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// string type 2: blanks and asterisks</span></span><br><span class="line">       <span class="function"><span class="built_in">string</span> <span class="title">blankString</span><span class="params">(edgeLength - <span class="number">2</span>, <span class="string">' '</span>)</span></span>;</span><br><span class="line">       <span class="built_in">string</span> mixedString = <span class="string">"*"</span> + blankString + <span class="string">"*"</span>;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r != edgeLength; ++r)</span><br><span class="line">       &#123;   </span><br><span class="line">           <span class="comment">// is it rows of a solid shape or </span></span><br><span class="line">           <span class="comment">// the first/ last row of a hollow shape ?</span></span><br><span class="line"></span><br><span class="line">           <span class="keyword">if</span> (shapeAppearance == <span class="string">'y'</span> || r == <span class="number">0</span> || r == edgeLength - <span class="number">1</span>)</span><br><span class="line">               <span class="comment">// write a row whose length is the edge length</span></span><br><span class="line">               <span class="built_in">cout</span> &lt;&lt; asteriskString &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">           <span class="keyword">else</span></span><br><span class="line">               <span class="built_in">cout</span> &lt;&lt; mixedString &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="A-rectangle-shape"><a href="#A-rectangle-shape" class="headerlink" title="A rectangle shape"></a>A rectangle shape</h4><p>Square shapes can be regarded as a special case of rectangles. We can simply modify the above algorithm to generate a rectangle. I use <strong>base lenght</strong> and <strong>height</strong> instead of the <strong>length</strong> and <strong>width</strong> for convenience.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (shapeType == <span class="number">2</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter the base length and height\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"The base lenght = "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the base length</span></span><br><span class="line">    <span class="keyword">int</span> baseLength;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; baseLength;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"The height = "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the height</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">height</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; <span class="built_in">height</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write a blank line to separate inputs and outputs</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// string type 1: full of asterisks</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">asteriskString</span><span class="params">(baseLength, <span class="string">'*'</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// string type 2: blanks and asterisks</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">blankString</span><span class="params">(baseLength - <span class="number">2</span>, <span class="string">' '</span>)</span></span>;</span><br><span class="line">    <span class="built_in">string</span> mixedString = <span class="string">"*"</span> + blankString + <span class="string">"*"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r != <span class="built_in">height</span>; ++r)</span><br><span class="line">    &#123;   </span><br><span class="line">        <span class="comment">// is it rows of a solid shape or </span></span><br><span class="line">        <span class="comment">// the first/ last row of a hollow shape ?</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (shapeAppearance == <span class="string">'y'</span> || r == <span class="number">0</span> || r == <span class="built_in">height</span> - <span class="number">1</span>)</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; asteriskString &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; mixedString&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="A-triangle-shape"><a href="#A-triangle-shape" class="headerlink" title="A triangle shape"></a>A triangle shape</h4><p>For a triangle, the ideal result is to print out follow two shapes, providing the height is 4.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   *                   *</span><br><span class="line">  ***      and        * *</span><br><span class="line"> *****               *   *</span><br><span class="line">*******             *******</span><br></pre></td></tr></table></figure>
+<p>The solid trangle shape is formed only by asterisks ignoring the outer blanks. However, the number of asterisks of each row is different with eachother. From the table below, we can see a pattern in the numbers of asterisks of the rows. </p>
+<p>| The <strong>r</strong>th Row| The number of columns of each row |<br>| :—: | :—: | :—: |<br>|0|1|<br>|1|3|<br>|2|5|<br>|3|7|<br>|4|9|<br>|…|…|<br>|r|(r*2 + 1)|<br>|Height|loop finishes|</p>
+<p>The table shows that when the program writes the <strong>r</strong>th row, it needs to write asterisks in a total number of <strong>r*2 + 1</strong>.<br>It also shows that the number of columns is <strong>height*2 - 1</strong>.     </p>
+<p>For the hollow triangle shapes, there are two types of rows: the first type is rows filled only by asterisks such as the first row and the last row; another type is rows formed by blanks with two asterisks located at both ends of the blanks. The table gives the pattern in the numbers of blanks of the rows. </p>
+<p>| The <strong>r</strong>th Row| The number of blanks in each row |<br>| :—: | :—: | :—: |<br>|0|0|<br>|1|1|<br>|2|3|<br>|3|5|<br>|4|7|<br>|…|…|<br>|r|((r-1)*2 + 1)|<br>|Height|loop finishes|</p>
+<p>Correspondingly, I define variables inside a for loop as below</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r != <span class="built_in">height</span>; ++r)</span><br><span class="line">&#123;    </span><br><span class="line">    <span class="comment">// is it the row of a solid shape, or the first or the last row of the hollow shape</span></span><br><span class="line">    <span class="keyword">if</span> (shapeAppearance == <span class="string">'y'</span> || r == <span class="number">0</span> || r == <span class="built_in">height</span> - <span class="number">1</span>)</span><br><span class="line">    &#123;   </span><br><span class="line">        <span class="comment">// string type 1: full of asterisks</span></span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">asteriskString</span><span class="params">(r*<span class="number">2</span> + <span class="number">1</span>, <span class="string">'*'</span>)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// string type 2: blanks and asterisks</span></span><br><span class="line">        <span class="built_in">string</span> blankString(((r<span class="number">-1</span>)*<span class="number">2</span> + <span class="number">1</span>), <span class="string">' '</span>);</span><br><span class="line">        <span class="built_in">string</span> mixedString = <span class="string">"*"</span> + blankString + <span class="string">"*"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>What we need next is to find the condition for writing each row as each row has different initial position. Before the real start of each row, we only need to output spaces. The table below gives the pattern of the initial column position of each row. </p>
+<p>| The <strong>r</strong>th Row| The column number of the initial position |<br>| :—: | :—: | :—: |<br>|height | loop finishes|<br>|height - 1| 0|<br>|height - 2|1|<br>|…|…|<br>|r|height - r - 1|<br>|…|…|<br>|0|height - 1|</p>
+<p>The table shows that when the loop processes the column number <strong>height - r - 1</strong>, it starts to write the strings that I defined above. When we incorporate the column loops into the row loops, the program becomes</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (shapeType == <span class="number">3</span>)</span><br><span class="line">&#123;   </span><br><span class="line">    <span class="comment">// read the height</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter the height: "</span>;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">height</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; <span class="built_in">height</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write a blank line to separate inputs and outputs</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// loop invariant: we have written r rows now</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r != <span class="built_in">height</span>; ++r)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// loop invariant: we have written c characters so far in the current line</span></span><br><span class="line">        <span class="keyword">int</span> c = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(c != (<span class="built_in">height</span>*<span class="number">2</span> - <span class="number">1</span>))</span><br><span class="line">        &#123;   <span class="comment">// // is it the row of a solid shape, or the first or the last row of the hollow shape</span></span><br><span class="line">            <span class="keyword">if</span> (shapeAppearance == <span class="string">'y'</span> </span><br><span class="line">                            || r == <span class="number">0</span> </span><br><span class="line">                            || r == <span class="built_in">height</span> - <span class="number">1</span>)</span><br><span class="line">            &#123;   </span><br><span class="line">                <span class="comment">// is it time to write the real row?</span></span><br><span class="line">                <span class="keyword">if</span> (c == <span class="built_in">height</span> - r - <span class="number">1</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">// string type 1: full of asterisks</span></span><br><span class="line">                    <span class="function"><span class="built_in">string</span> <span class="title">asteriskString</span><span class="params">(r*<span class="number">2</span> + <span class="number">1</span>, <span class="string">'*'</span>)</span></span>;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; asteriskString;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// maintain the loop invariant</span></span><br><span class="line">                    c += (r*<span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">                    <span class="comment">// maintain the loop invariant</span></span><br><span class="line">                    ++c;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;   </span><br><span class="line">                <span class="comment">// is it time to write the real row?</span></span><br><span class="line">                <span class="keyword">if</span> (c == <span class="built_in">height</span> - r - <span class="number">1</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">// string type 2: blanks and asterisks</span></span><br><span class="line">                    <span class="built_in">string</span> blankString(((r<span class="number">-1</span>)*<span class="number">2</span> + <span class="number">1</span>), <span class="string">' '</span>);</span><br><span class="line">                    <span class="built_in">string</span> mixedString = <span class="string">"*"</span> + blankString + <span class="string">"*"</span>;</span><br><span class="line"></span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; mixedString;</span><br><span class="line">                    <span class="comment">// maintain the loop invariant</span></span><br><span class="line">                    c += ((r<span class="number">-1</span>)*<span class="number">2</span> + <span class="number">1</span> + <span class="number">2</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">                    ++c;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="A-complete-program-and-tests"><a href="#A-complete-program-and-tests" class="headerlink" title="A complete program and tests"></a>A complete program and tests</h3><p>Let’s put all pieces together</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Accelerated C++ Solutions Exercises 2-5</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// using namespace std and names</span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// select a shape</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Select a shape type\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"1. A Square\n2. A Rectangle\n3. A Triangle\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter 1 or 2 or 3: "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the shape type</span></span><br><span class="line">    <span class="keyword">int</span> shapeType;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; shapeType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write a blank line for clarity</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// select appearance</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Do you want a solid shape?\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"yes: a solid shape\nno: a hollow shape\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter y or n: "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the shape appearance</span></span><br><span class="line">    <span class="keyword">char</span> shapeAppearance;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; shapeAppearance;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write a blank line for clarity</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (shapeType == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter the edge length: "</span>;</span><br><span class="line">        <span class="keyword">int</span> edgeLength;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; edgeLength;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// write a blank line to separate inputs and outputs</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// string type 1: full of asterisks</span></span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">asteriskString</span><span class="params">(edgeLength, <span class="string">'*'</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// string type 2: blanks and asterisks</span></span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">blankString</span><span class="params">(edgeLength - <span class="number">2</span>, <span class="string">' '</span>)</span></span>;</span><br><span class="line">        <span class="built_in">string</span> mixedString = <span class="string">"*"</span> + blankString + <span class="string">"*"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r != edgeLength; ++r)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (shapeAppearance == <span class="string">'y'</span> || r == <span class="number">0</span> || r == edgeLength - <span class="number">1</span>)</span><br><span class="line">                <span class="comment">// write a row whose length is the edge length</span></span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; asteriskString &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; mixedString &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (shapeType == <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter the base length and height\n"</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"The base lenght = "</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// read the base length</span></span><br><span class="line">        <span class="keyword">int</span> baseLength;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; baseLength;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"The height = "</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// read the height</span></span><br><span class="line">        <span class="keyword">int</span> <span class="built_in">height</span>;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; <span class="built_in">height</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// write a blank line to separate inputs and outputs</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// string type 1: full of asterisks</span></span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">asteriskString</span><span class="params">(baseLength, <span class="string">'*'</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// string type 2: blanks and asterisks</span></span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">blankString</span><span class="params">(baseLength - <span class="number">2</span>, <span class="string">' '</span>)</span></span>;</span><br><span class="line">        <span class="built_in">string</span> mixedString = <span class="string">"*"</span> + blankString + <span class="string">"*"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r != <span class="built_in">height</span>; ++r)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (shapeAppearance == <span class="string">'y'</span> || r == <span class="number">0</span> || r == <span class="built_in">height</span> - <span class="number">1</span>)</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; asteriskString &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; mixedString&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (shapeType == <span class="number">3</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter the height: "</span>;</span><br><span class="line">        <span class="keyword">int</span> <span class="built_in">height</span>;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; <span class="built_in">height</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// write a blank line to separate inputs and outputs</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// loop invariant: we have written r rows now</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r != <span class="built_in">height</span>; ++r)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// loop invariant: we have written c characters so far in the current line</span></span><br><span class="line">            <span class="keyword">int</span> c = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span>(c != (<span class="built_in">height</span>*<span class="number">2</span> - <span class="number">1</span>))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (shapeAppearance == <span class="string">'y'</span> || r == <span class="number">0</span> || r == <span class="built_in">height</span> - <span class="number">1</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (c == <span class="built_in">height</span> - r - <span class="number">1</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="comment">// string type 1: full of asterisks</span></span><br><span class="line">                        <span class="function"><span class="built_in">string</span> <span class="title">asteriskString</span><span class="params">(r*<span class="number">2</span> + <span class="number">1</span>, <span class="string">'*'</span>)</span></span>;</span><br><span class="line">                        <span class="built_in">cout</span> &lt;&lt; asteriskString;</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// maintain the loop invariant</span></span><br><span class="line">                        c += (r*<span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="built_in">cout</span> &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">                        <span class="comment">// maintain the loop invariant</span></span><br><span class="line">                        ++c;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (c == <span class="built_in">height</span> - r - <span class="number">1</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="comment">// string type 2: blanks and asterisks</span></span><br><span class="line">                        <span class="built_in">string</span> blankString(((r<span class="number">-1</span>)*<span class="number">2</span> + <span class="number">1</span>), <span class="string">' '</span>);</span><br><span class="line">                        <span class="built_in">string</span> mixedString = <span class="string">"*"</span> + blankString + <span class="string">"*"</span>;</span><br><span class="line"></span><br><span class="line">                        <span class="built_in">cout</span> &lt;&lt; mixedString;</span><br><span class="line">                        <span class="comment">// maintain the loop invariant</span></span><br><span class="line">                        c += ((r<span class="number">-1</span>)*<span class="number">2</span> + <span class="number">1</span> + <span class="number">2</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="built_in">cout</span> &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">                        ++c;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Note that I used the same variables names <strong>asteriskString</strong>, <strong>blankString</strong> and <strong>mixedString</strong> in all three branches, but it does not matter the correctness as each branch is an independent block. I did three tests and the program works as expected. Please see the results below</p>
+<p><strong>Test 1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Select a shape type</span><br><span class="line">1. A Square</span><br><span class="line">2. A Rectangle</span><br><span class="line">3. A Triangle</span><br><span class="line">Please enter 1 or 2 or 3: 1</span><br><span class="line"></span><br><span class="line">Do you want a solid shape?</span><br><span class="line">yes: a solid shape</span><br><span class="line">no: a hollow shape</span><br><span class="line">Please enter y or n: y</span><br><span class="line"></span><br><span class="line">Please enter the edge length: 5</span><br><span class="line"></span><br><span class="line">*****</span><br><span class="line">*****</span><br><span class="line">*****</span><br><span class="line">*****</span><br><span class="line">*****</span><br></pre></td></tr></table></figure>
+<p><strong>Test 2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Select a shape type</span><br><span class="line">1. A Square</span><br><span class="line">2. A Rectangle</span><br><span class="line">3. A Triangle</span><br><span class="line">Please enter 1 or 2 or 3: 2</span><br><span class="line"></span><br><span class="line">Do you want a solid shape?</span><br><span class="line">yes: a solid shape</span><br><span class="line">no: a hollow shape</span><br><span class="line">Please enter y or n: n</span><br><span class="line"></span><br><span class="line">Please enter the base length and height</span><br><span class="line">The base lenght &#x3D; 8</span><br><span class="line">The height &#x3D; 4</span><br><span class="line"></span><br><span class="line">********</span><br><span class="line">*      *</span><br><span class="line">*      *</span><br><span class="line">********</span><br></pre></td></tr></table></figure>
+<p><strong>Test 3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Select a shape type</span><br><span class="line">1. A Square</span><br><span class="line">2. A Rectangle</span><br><span class="line">3. A Triangle</span><br><span class="line">Please enter 1 or 2 or 3: 3</span><br><span class="line"></span><br><span class="line">Do you want a solid shape?</span><br><span class="line">yes: a solid shape</span><br><span class="line">no: a hollow shape</span><br><span class="line">Please enter y or n: n</span><br><span class="line"></span><br><span class="line">Please enter the height: 6</span><br><span class="line"></span><br><span class="line">     *     </span><br><span class="line">    * *    </span><br><span class="line">   *   *   </span><br><span class="line">  *     *  </span><br><span class="line"> *       * </span><br><span class="line">***********</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>To be continued. </p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Liam
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://quantein.com/2018/02/25/Accelerated-C-Solutions-to-Exercises-Chapter-2-Part2/" title="Accelerated C++ Solutions to Exercises (Chapter 2 Part2)">http://quantein.com/2018/02/25/Accelerated-C-Solutions-to-Exercises-Chapter-2-Part2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Accelerated-C-Solutions/" rel="tag"># Accelerated C++ Solutions</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/02/23/C-Looping-and-counting/" rel="prev" title="C++ - Looping and counting">
+      <i class="fa fa-chevron-left"></i> C++ - Looping and counting
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/03/01/Accelerated-C-Solutions-to-Exercises-Chapter-2-Part3/" rel="next" title="Accelerated C++ Solutions to Exercises (Chapter 2 Part3)">
+      Accelerated C++ Solutions to Exercises (Chapter 2 Part3) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-2-4"><span class="nav-number">1.</span> <span class="nav-text">Exercise 2-4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results"><span class="nav-number">1.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis"><span class="nav-number">1.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-2-5"><span class="nav-number">2.</span> <span class="nav-text">Exercise 2-5</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution &amp; Results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-design-ideas"><span class="nav-number">2.1.1.</span> <span class="nav-text">The design ideas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Primary-Structure"><span class="nav-number">2.1.2.</span> <span class="nav-text">The Primary Structure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Algorithms"><span class="nav-number">2.1.3.</span> <span class="nav-text">Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-square-shape"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">A square shape</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-rectangle-shape"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">A rectangle shape</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-triangle-shape"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">A triangle shape</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-complete-program-and-tests"><span class="nav-number">2.1.4.</span> <span class="nav-text">A complete program and tests</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam</p>
+  <div class="site-description" itemprop="description">Stochastic Modelling Notes; Programming Notes</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/quantliam" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;quantliam" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/yanshijiutu@gmail.com" title="E-Mail → yanshijiutu@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">NaN:aN</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

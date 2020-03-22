@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Times New Roman:300,300italic,400,400italic,700,700italic|Courier New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"quantein.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":60,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Generic algorithms for operations on stringscopyRecalling the vcat function described in Vertical concatenation: 1234for (vector&lt;string&gt;::const_iterator i &#x3D; bottom.begin(); i !&#x3D; bottom.end(); ++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ - Using library algorithms (Part 1)">
+<meta property="og:url" content="http://quantein.com/2018/03/21/C-Using-library-algorithms/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="Generic algorithms for operations on stringscopyRecalling the vcat function described in Vertical concatenation: 1234for (vector&lt;string&gt;::const_iterator i &#x3D; bottom.begin(); i !&#x3D; bottom.end(); ++">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-03-21T06:39:48.000Z">
+<meta property="article:modified_time" content="2018-03-22T10:12:08.000Z">
+<meta property="article:author" content="Liam">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Notes">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://quantein.com/2018/03/21/C-Using-library-algorithms/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>C++ - Using library algorithms (Part 1) | Liam's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/quantliam" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://quantein.com/2018/03/21/C-Using-library-algorithms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="Stochastic Modelling Notes; Programming Notes">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ - Using library algorithms (Part 1)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-21 14:39:48" itemprop="dateCreated datePublished" datetime="2018-03-21T14:39:48+08:00">2018-03-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-03-22 18:12:08" itemprop="dateModified" datetime="2018-03-22T18:12:08+08:00">2018-03-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Generic-algorithms-for-operations-on-strings"><a href="#Generic-algorithms-for-operations-on-strings" class="headerlink" title="Generic algorithms for operations on strings"></a>Generic algorithms for operations on strings</h1><h2 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h2><p>Recalling the <strong>vcat</strong> function described in <a href="http://quanttour.com/14/03/2018/C-Sequential-Containers-Part-2/" target="_blank" rel="noopener">Vertical concatenation</a>:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::const_iterator i = bottom.<span class="built_in">begin</span>(); i != bottom.<span class="built_in">end</span>(); ++i)</span><br><span class="line">&#123;</span><br><span class="line">    ret.push_back((*i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Using a <strong>for</strong> loop, all elements of <strong>vector<string> bottom</strong> are copied and appended to the end of the <strong>vector<string> ret</strong>.<br>An alternative method is to use the <strong>insert</strong> function: </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ret.insert(ret.<span class="built_in">end</span>(), bottom.<span class="built_in">begin</span>(), bottom.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
+<p>These two methods rely on the member functions of a specified container. A more general solution, using generic algorithm <strong>copy</strong>, to solve the same question,</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy(bottom.<span class="built_in">begin</span>(), bottom.<span class="built_in">end</span>(), back_inserter(ret));</span><br></pre></td></tr></table></figure>
+<p>The generic algorithms provided in the standard library implement classic algorithms via iterator operations. They do not depend on any specific type of container. The <strong>copy</strong> algorithm is an algorithm that writes elements to a container. It takes three iterators, of which, the first two iterators indicates the input range while the third iterator denotes the starting point of the destination sequence. </p>
+<p><strong>back_inserter()</strong> is a <strong>iterator adaptor</strong> which is a function that returns an appropriate iterator (has type of <strong>back_insert_iterator</strong>) according to the argument. All <strong>intertor adaptors</strong> are defined in header <iterator>. In this case, <strong>back_inserter()</strong> takes a container as its arguments and yields an <strong>iterator</strong> that, when used as a destination, appends values to the container. But noting that</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy(bottom.<span class="built_in">begin</span>(), bottom.<span class="built_in">end</span>(), ret.<span class="built_in">end</span>())</span><br></pre></td></tr></table></figure>
+<p>is not allowed as there is no element at <strong>ret.end</strong>.</p>
+<p>After this function completes, the size of <strong>ret</strong> increases by <strong>bottom.size()</strong>. The <strong>copy</strong> function returns an iterator ((has type of <strong>back_insert_iterator</strong>) that refers to the next postion of the last element of <strong>ret</strong>.</p>
+<h2 id="find-if-algorithm"><a href="#find-if-algorithm" class="headerlink" title="find_if algorithm"></a>find_if algorithm</h2><p>Now, using another generic algorithm <strong>find_if</strong>, we can simplify the <strong>split</strong> function described in <a href="http://quanttour.com/13/03/2018/C-Sequential-Containers/" target="_blank" rel="noopener">Taking strings apart</a>.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// true if the argument is whitespace, false otherwise</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">space</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">isspace</span>(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// false is the argument is whitespace, true otherwise</span></span><br><span class="line"><span class="function">book <span class="title">not_space</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="built_in">isspace</span>(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">split</span><span class="params">(const_string &amp;str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">string</span>::const_iterator iter;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ret;</span><br><span class="line"></span><br><span class="line">    iter i = str.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="keyword">while</span>(i != str.<span class="built_in">end</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// ignore leading blanks</span></span><br><span class="line">        i = find_if(i, str.<span class="built_in">end</span>(), not_space)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// find end of next word</span></span><br><span class="line">        iter j = find_if(i, str.<span class="built_in">end</span>(), space);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// copy the characters in [i, j)</span></span><br><span class="line">        <span class="keyword">if</span>(i != str.<span class="built_in">end</span>())</span><br><span class="line">            ret.push_back(<span class="built_in">string</span>(i, j));</span><br><span class="line">        i = j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>First, in this function, we use iterators instead of indices. The core algorithm is that use <strong>find_if</strong> to firstly find a nonwhiltespace character and a whitespace that closely follows, which determines the range of a word. </p>
+<p><strong>find_if</strong> algorithm takes three arguments, of which, first two are iterators that denotes a sequence while the third one is a predicate on characters. The algorithm calls the predicate to test each element starting from <strong>*i</strong>, and stops when the predicate returns <strong>true</strong>, i.e. the character is not whitespace in this case. It returns an iterator that refers to the first element that satisfies the predicate. If <strong>find_if</strong> failed to find an element that satifies the predicate, it returns its second arguments, i.e. <strong>str.end()</strong> in this case.</p>
+<p>It has been observed that we didn’t use <strong>isspace()</strong> directly instead we write our own functions. This is because that <strong>isspace()</strong> is overloaded depending on arguments and can’t be passed as an argument to a template function. </p>
+<p>Another new usage is <strong>string(i,j)</strong>, which constructs a new string that copies the value from the range [i, j).</p>
+<h2 id="equal-algorithm"><a href="#equal-algorithm" class="headerlink" title="equal algorithm"></a>equal algorithm</h2><p>Now we introduce another algorithm <strong>equal</strong>, which can simplify the <strong>isPalindromes</strong> function described in <a href="http://quanttour.com/20/03/2018/Accelerated-C-Solutions-to-Exercise-Chapter-5-Part-4/" target="_blank" rel="noopener">Exercise 5-10</a>.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_palindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> equal(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>(), s.rbegin());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>It is consise enough compared with the one I wrote before. The <strong>equal</strong> algorithm takes three iterators, of which first two indicate the range of the first sequence while the third iterator denotes the inital position of the second sequence. It compares these two sequence and returns <strong>true</strong> otherwise returns <strong>false</strong>.</p>
+<p>It is known that <strong>begin()</strong> returns an iterator that refers to the first element in a container. On the contrary, <strong>rbegin()</strong> returns an reverse iterator that refers to the last element in a container. Similarly, <strong>rend()</strong> returns to an iterator that refers to the position that before the first element. </p>
+<h2 id="Finding-URLs"><a href="#Finding-URLs" class="headerlink" title="Finding URLs"></a>Finding URLs</h2><p><em>Considering that one or more <strong>URLs</strong> are embedded in a <strong>string</strong>, we are requested to write a function that finds each <strong>URL</strong>. A <strong>URL</strong> is a sequence of characters of the form</em>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protocol-name:&#x2F;&#x2F;resource-name</span><br></pre></td></tr></table></figure>
+<p><em>where protocol-name contains only letters, and resource-name may consist of letters, digits, and certain punctuation characters</em>(Koenig and Moo 2000).</p>
+<p>To some extent, this exercise is similar to the <strong>split</strong> function. Though determining the range of such a string is much complex than finding the range for a word, the idea is the same. The strategy can be divided into three steps:</p>
+<ol>
+<li>looking for the characters <strong>://</strong> that might be a part of a <strong>URL</strong>.</li>
+<li>if we find these characters, then it looks backward to find the protocol-name and determines the begining position of the <strong>URL</strong>; then, it looks forward to find the resource-name and determines the ending position of the <strong>URL</strong>. </li>
+<li>finally, we store the <strong>URL</strong> according the two positions and continue searching for next <strong>URL</strong> until we finishes the whole document held in the single string. </li>
+</ol>
+<p>We starts from the last step, providing the first two steps have been completed.</p>
+<p><strong>function to find URLs</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">find_urls</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ret;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">string</span>::const_iterator iter;</span><br><span class="line">    iter b = s.<span class="built_in">begin</span>(), e = s.<span class="built_in">end</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// look through the entire input</span></span><br><span class="line">    <span class="keyword">while</span> (b != e)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// look for one or more letters followed by ://</span></span><br><span class="line">        b = url_beg(b, e);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if we found it</span></span><br><span class="line">        <span class="keyword">if</span>(b != e)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// get the rest of the URL</span></span><br><span class="line">            iter after = url_end(b, e);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// remember the URL</span></span><br><span class="line">            ret.push_back(<span class="built_in">string</span>(b, after));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// advance b and check for more URLs on this line</span></span><br><span class="line">            b = after;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Function <strong>url_beg</strong> responsibles for finding the <strong>://</strong> and then finding the begining position of the <strong>URL</strong> accordingly. <strong>url_end</strong> responsibles for finding the end position of the <strong>URL</strong> based on the results of <strong>url_beg</strong>. </p>
+<p>As mentioned earlier, <strong>string(b, after)</strong> constructs the <strong>URL</strong> with two iterators which denotes a range [b, after) of a sequence, i.e. the <strong>URL</strong>. In other words, <strong>b</strong> is the interator that denotes the first element of the <strong>URL</strong> while <strong>after</strong> denotes the position that one past the last element in the <strong>URL</strong>. After stores the <strong>URL</strong> into <strong>vector<string> ret</strong>, we set the initial position for finding next <strong>URL</strong> as the end of the previous <strong>URL</strong>, with setting <strong>b = after</strong>.</p>
+<p>Now we consider <strong>url_end</strong> function first, providing that the begining position of a <strong>URL</strong> has been found. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span>::const_iterator  <span class="title">url_end</span><span class="params">(<span class="built_in">string</span>::const_iterator b, <span class="built_in">string</span>::const_iterator e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> find_if(b, e, not_url_char);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>We have explained the <strong>find_if</strong> algorithm in above. It calls the precidate <strong>not_url_char</strong> and test each element starting from the position where <strong>b</strong> denotes, and stops until finds the element that makes the predicate returns <strong>true</strong>. It returns an iterator that refers to the first element that satifies the predicate, and returns its second arguments <strong>e</strong> if can’t find an element that satisfies the predicate. Now let’s write the predicate:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">not_url_char</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// characters, in addition to alphanumerics, that can appear in a URL</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">string</span> url_ch = <span class="string">"~;/?:@=&amp;$-_.+!*'(),"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// see whether c can appear in a URL and return the negative</span></span><br><span class="line">    <span class="keyword">return</span> !(<span class="built_in">isalnum</span>(c) || <span class="built_in">find</span>(url_ch.<span class="built_in">begin</span>(), url_ch.<span class="built_in">end</span>(), c) != url_ch.<span class="built_in">end</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Yeah, the statements in the function body seems to be both compact and informative. The first statement defines a <strong>const string</strong> that contains all punctuation characters that can appear in a <strong>URL</strong>. What’s new here is the <em>storage class specifier</em> <strong>static</strong>. Local variables that declaraed with specifier <strong>static</strong> have static storage duration and are initialized only the first time. On all other calls, the declarations are skipped. In other words, the variable exists starting from the first time declaration to when the program finishes. By doing so, the <strong>const string url_ch</strong> avoids being declared each time when the predicate is called.</p>
+<p>The return statement contains three expressions:</p>
+<ul>
+<li>expression 1: <strong>isalnum(c)</strong>. It returns <strong>true</strong> is c is a letter or digits, otherwise returns false.</li>
+<li>expression 2: <strong>find(url_ch.begin(), url_ch.end(), c) != url_ch.end()</strong>. <strong>find</strong> algorithm takes three arguments, of which the first two are interators that denote the input sequence while the third one is a value to search for in the range. It returns an iterator to the first element in the range that compares equal to the value. If no such element is found, it returns the second arguments. In this case, if any character that equals to <strong>c</strong>, the expression is evaluated to true. If no character that matches with <strong>c</strong>, the expression is evaluated to false. </li>
+<li>expression 3: <strong>!(expression 1 || expression 2)</strong>. If and only if both expressions are evaluated to <strong>false</strong>, the expression 3 is evaluated to <strong>true</strong>.</li>
+</ul>
+<p>In brief, if the scanned character is not a letter, not a digit, and not any punctuation character that can appear in a <strong>URL</strong>, it is regarded as not a <strong>URL</strong> character and it is the element that one past the last element of the <strong>URL</strong>. </p>
+<p>Finally, we return to the first step, writing the function <strong>url_beg</strong> to find the initial position of the <strong>URL</strong>. One concern we have is that <strong>://</strong> may not guaranntee a <strong>URL</strong>, for example, in the case that these characters appear at the end of a string. Therefore, we also need to make sure that there at least one or more letters before <strong>://</strong> and at lease one character follows it.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span>::const_iterator <span class="title">url_beg</span><span class="params">(<span class="built_in">string</span>::const_iterator b, <span class="built_in">string</span>::const_iterator e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">string</span> sep = <span class="string">"://"</span>;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">string</span>::const_iterator iter;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// i marks where the separator was found</span></span><br><span class="line">    iter i = b;</span><br><span class="line">    <span class="keyword">while</span>((i = search(i, e, sep.<span class="built_in">begin</span>(), sep.<span class="built_in">end</span>())) != e)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// make sure the seperator isn't at the begining of the proticol-name</span></span><br><span class="line">        <span class="keyword">if</span>(i != b &amp;&amp; i + sep.<span class="built_in">size</span>() != e)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// beg marks the begining of the protocol-name</span></span><br><span class="line">            iter beg = i;</span><br><span class="line">            <span class="keyword">while</span>(beg != b &amp;&amp; <span class="built_in">isalpha</span>(beg[<span class="number">-1</span>]))</span><br><span class="line">                --beg;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// is there at least one appropriate character before and after the sep</span></span><br><span class="line">            <span class="keyword">if</span> (beg != i &amp;&amp; !not_url_char(i[sep.<span class="built_in">size</span>()]))</span><br><span class="line">                <span class="keyword">return</span> beg;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// the seperator we found wasn't part of a URL advance i past this separator</span></span><br><span class="line">        i += sep.<span class="built_in">size</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Let’s analyse from the <strong>while</strong> loop. There appears a new algorithm <strong>search</strong> in the condition:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(i &#x3D;&#x3D; search(i, e, sep.begin(), sep.end())) !&#x3D; e</span><br></pre></td></tr></table></figure>
+<p>The <strong>search</strong> algorithm takes four iterators, of which the first two indicate the sequence while the last two denotes the initial and final positions of the sequence to be searched for. It returns an iterator the refers to the first element of [sep.begin(), sep.end()) if such sequence can be found in [i, e), otherwise it returns <strong>e</strong>. Now we know the condition is evaluated to <strong>true</strong> if <strong>://</strong> can be found in the range of [i, e). </p>
+<p>Assuming that <strong>://</strong> is found in the first iteration, <strong>i</strong> is assigned the iterator that denotes <strong>:</strong>. To make sure <strong>://</strong> reveals a valid <strong>URL</strong>, we need to make sure it is neither the start of <strong>s</strong> nor the ending of <strong>s</strong>. This is managed by the first <strong>if statement</strong> inside of the <strong>while</strong> loop. The next is to find the begining position of the <strong>URL</strong> using following statements. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iter beg = i;</span><br><span class="line"><span class="keyword">while</span>(beg != b &amp;&amp; <span class="built_in">isalpha</span>(beg[<span class="number">-1</span>]))</span><br><span class="line">    --beg;</span><br></pre></td></tr></table></figure>
+<p><strong>beg[-1]</strong> accesses the element that before the one denoted by <strong>beg</strong>, it has the same effect as </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*(beg - 1)</span><br></pre></td></tr></table></figure>
+<p>If the element denoted by <strong>beg</strong> is a letter within the range of [b, i), the loop continues with taking one position back each iteration. After the loop finishes, we got the initial position of the <strong>URL</strong>. However, the while body may fail to be executed even once, if the condition is evaluated to <strong>false</strong> the first time. Therefore, we need to verify another condition to make sure there exists at least one appropriate character before and after the sep.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (beg != i &amp;&amp; !not_url_char(i[sep.<span class="built_in">size</span>]))</span><br><span class="line">    <span class="keyword">return</span> beg;</span><br></pre></td></tr></table></figure>
+<p>The first expression <strong>beg != i</strong> ensures that there is at least one letter before <strong>:</strong>. In other words, the <strong>while</strong> loop above is executed at least once. </p>
+<p>The sencond expression <strong>!not_url_char(i[sep.size])</strong> ensures that there is at least one appropriate character follows <strong>://</strong>. <strong>i[sep.size()]</strong> has the same effect as</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*(i + sep.<span class="built_in">size</span>())</span><br></pre></td></tr></table></figure>
+<p>which denotes the first character after <strong>sep</strong> (i.e. “://“). </p>
+<p>At this phase, if the condition is evaluated to <strong>true</strong>, then the function returns the “qualified” iterator to the function caller, otherwise, the function keeps looking untill the last character. </p>
+<h2 id="A-complete-program"><a href="#A-complete-program" class="headerlink" title="A complete program"></a>A complete program</h2><p>The files below show the complete program. A simple test can also be found after the program. </p>
+<p><strong>mainfunction.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"find_urls.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; urls;</span><br><span class="line">	<span class="built_in">string</span> doc&#123;<span class="string">"A typical URL could have the form https://en.wikipedia.org/wiki/URL, "</span></span><br><span class="line">			<span class="string">"which indicates a protocol (http), a hostname (www.example.com), "</span></span><br><span class="line">			<span class="string">"and a file name (index.html). http://www.cplusplus.com/reference/algorithm/search/?kw=search"</span>&#125;;</span><br><span class="line">	urls = find_urls(doc);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::const_iterator iter = urls.<span class="built_in">begin</span>(); iter != urls.<span class="built_in">end</span>(); ++iter)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; *iter &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>find_urls.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function that finds and returns an URL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"find_urls.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"delimit.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">find_urls</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ret;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">string</span>::const_iterator iter;</span><br><span class="line">    iter b = s.<span class="built_in">begin</span>(), e = s.<span class="built_in">end</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// look through the entire input</span></span><br><span class="line">    <span class="keyword">while</span> (b != e)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// look for one or more letters followed by ://</span></span><br><span class="line">        b = url_beg(b, e);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if we found it</span></span><br><span class="line">        <span class="keyword">if</span>(b != e)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// get the rest of the URL</span></span><br><span class="line">            iter after = url_end(b, e);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// remember the URL</span></span><br><span class="line">            ret.push_back(<span class="built_in">string</span>(b, after));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// advance b and check for more URLs on this line</span></span><br><span class="line">            b = after;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>find_urls.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_FINDINGURLS_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_FINDINGURLS_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; <span class="title">find_urls</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* GUARD_FINDINGURLS_H */</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>delimit.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// contains three functions: not_url_char, url_beg, url_end</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"delimit.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">find</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::find_if;	<span class="keyword">using</span> <span class="built_in">std</span>::search;</span><br><span class="line"></span><br><span class="line"><span class="comment">// predicate on a char, check whether it is a char that can appear in a URL</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">not_url_char</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// characters, in addition to alphanumerics, that can appear in a URL</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">string</span> url_ch = <span class="string">"~;/?:@=&amp;$-_.+!*'(),"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// see whether c can appear in a URL and return the negative</span></span><br><span class="line">    <span class="keyword">return</span> !(<span class="built_in">isalnum</span>(c) || <span class="built_in">find</span>(url_ch.<span class="built_in">begin</span>(), url_ch.<span class="built_in">end</span>(), c) != url_ch.<span class="built_in">end</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// function that returns an iterator that refers to the first element of a URL</span></span><br><span class="line"><span class="function"><span class="built_in">string</span>::const_iterator <span class="title">url_beg</span><span class="params">(<span class="built_in">string</span>::const_iterator b, <span class="built_in">string</span>::const_iterator e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">string</span> sep = <span class="string">"://"</span>;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">string</span>::const_iterator iter;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// i marks where the separator was found</span></span><br><span class="line">    iter i = b;</span><br><span class="line">    <span class="keyword">while</span>((i = search(i, e, sep.<span class="built_in">begin</span>(), sep.<span class="built_in">end</span>())) != e)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// make sure the seperator isn't at the begining of the proticol-name</span></span><br><span class="line">        <span class="keyword">if</span>(i != b &amp;&amp; i + sep.<span class="built_in">size</span>() != e)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// beg marks the begining of the protocol-name</span></span><br><span class="line">            iter beg = i;</span><br><span class="line">            <span class="keyword">while</span>(beg != b &amp;&amp; <span class="built_in">isalpha</span>(beg[<span class="number">-1</span>]))</span><br><span class="line">                --beg;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// is there at least one appropriate character before and after the sep</span></span><br><span class="line">            <span class="keyword">if</span> (beg != i &amp;&amp; !not_url_char(i[sep.<span class="built_in">size</span>()]))</span><br><span class="line">                <span class="keyword">return</span> beg;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// the seperator we found wasn't part of a URL advance i past this separator</span></span><br><span class="line">        i += sep.<span class="built_in">size</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> e;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// function that returns an iterator that denotes the postion one past the last element</span></span><br><span class="line"><span class="function"><span class="built_in">string</span>::const_iterator  <span class="title">url_end</span><span class="params">(<span class="built_in">string</span>::const_iterator b, <span class="built_in">string</span>::const_iterator e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> find_if(b, e, not_url_char);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>delimit.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_DELIMIT_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_DELIMIT_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">not_url_char</span><span class="params">(<span class="keyword">char</span>)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function"><span class="built_in">string</span>::const_iterator <span class="title">url_beg</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">string</span>::const_iterator, <span class="built_in">std</span>::<span class="built_in">string</span>::const_iterator)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function"><span class="built_in">string</span>::const_iterator <span class="title">url_end</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">string</span>::const_iterator, <span class="built_in">std</span>::<span class="built_in">string</span>::const_iterator)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* GUARD_DELIMIT_H */</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Test results</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;URL,</span><br><span class="line">http:&#x2F;&#x2F;www.cplusplus.com&#x2F;reference&#x2F;algorithm&#x2F;search&#x2F;?kw&#x3D;search</span><br></pre></td></tr></table></figure>
+<p>The program just has function to roughly grab the URLs, but works as expected.</p>
+<hr>
+<p>To be continued.</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Liam
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://quantein.com/2018/03/21/C-Using-library-algorithms/" title="C++ - Using library algorithms (Part 1)">http://quantein.com/2018/03/21/C-Using-library-algorithms/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/Notes/" rel="tag"># Notes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/03/20/Accelerated-C-Solutions-to-Exercise-Chapter-5-Part-4/" rel="prev" title="Accelerated C++ Solutions to Exercises(Chapter 5 Part 4)">
+      <i class="fa fa-chevron-left"></i> Accelerated C++ Solutions to Exercises(Chapter 5 Part 4)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/03/22/C-Using-library-algorithms-Part-2/" rel="next" title="C++ - Using library algorithms (Part 2)">
+      C++ - Using library algorithms (Part 2) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Generic-algorithms-for-operations-on-strings"><span class="nav-number">1.</span> <span class="nav-text">Generic algorithms for operations on strings</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#copy"><span class="nav-number">1.1.</span> <span class="nav-text">copy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find-if-algorithm"><span class="nav-number">1.2.</span> <span class="nav-text">find_if algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#equal-algorithm"><span class="nav-number">1.3.</span> <span class="nav-text">equal algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-URLs"><span class="nav-number">1.4.</span> <span class="nav-text">Finding URLs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-complete-program"><span class="nav-number">1.5.</span> <span class="nav-text">A complete program</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam</p>
+  <div class="site-description" itemprop="description">Stochastic Modelling Notes; Programming Notes</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/quantliam" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;quantliam" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/yanshijiutu@gmail.com" title="E-Mail → yanshijiutu@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">NaN:aN</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

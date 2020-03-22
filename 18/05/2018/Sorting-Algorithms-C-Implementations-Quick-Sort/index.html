@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C++,Algorithms," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Quick Sort1234567891011121314151617181920212223242526272829303132333435363738394041424344454647/*-----------------------------------------------------------------------------  * main.cpp || Created on">
+<meta name="keywords" content="C++,Algorithms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sorting Algorithms C++ Implementations - Quick Sort">
+<meta property="og:url" content="http://www.quanttour.com/18/05/2018/Sorting-Algorithms-C-Implementations-Quick-Sort/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="Quick Sort1234567891011121314151617181920212223242526272829303132333435363738394041424344454647/*-----------------------------------------------------------------------------  * main.cpp || Created on">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-05-18T14:32:39.659Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sorting Algorithms C++ Implementations - Quick Sort">
+<meta name="twitter:description" content="Quick Sort1234567891011121314151617181920212223242526272829303132333435363738394041424344454647/*-----------------------------------------------------------------------------  * main.cpp || Created on">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.quanttour.com/18/05/2018/Sorting-Algorithms-C-Implementations-Quick-Sort/"/>
+
+
+
+
+
+  <title>Sorting Algorithms C++ Implementations - Quick Sort | Liam's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/18/05/2018/Sorting-Algorithms-C-Implementations-Quick-Sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Sorting Algorithms C++ Implementations - Quick Sort</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-18T22:13:16+08:00">
+                18-05-2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithms/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,280
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Quick-Sort"><a href="#Quick-Sort" class="headerlink" title="Quick Sort"></a>Quick Sort</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*----------------------------------------------------------------------------- </span></span><br><span class="line"><span class="comment"> * main.cpp || Created on: 18 May 2018 || Author: Liam</span></span><br><span class="line"><span class="comment"> *-----------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * this program tests three implementations of the quick sort algorithm</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Logic:</span></span><br><span class="line"><span class="comment"> * 1. select an element from the sequence as the pivot and rearrange the</span></span><br><span class="line"><span class="comment"> *    sequence such that all elements less than the pivot are towards the left</span></span><br><span class="line"><span class="comment"> * of it and all elements greater than the pivot are towards the right of it.</span></span><br><span class="line"><span class="comment"> * 2. above process is called partitioning of the sequence. we recursively</span></span><br><span class="line"><span class="comment"> *    partition the sequence till that there is only one element left in each</span></span><br><span class="line"><span class="comment"> *    segment.</span></span><br><span class="line"><span class="comment"> * 3. for convenience, we can always select the last element as the pivot. If</span></span><br><span class="line"><span class="comment"> *    so, we may encounter the case that the position of the pivot</span></span><br><span class="line"><span class="comment"> *    is still at the end (or begining) of the rearranged sequence. Such case is</span></span><br><span class="line"><span class="comment"> *    the worst case and the time complexity is O(n^). To achieve an average</span></span><br><span class="line"><span class="comment"> *    case, in which the time complexity is O(nlogn), we can randomly select</span></span><br><span class="line"><span class="comment"> *    the pivot and then put the pivot at the end of the sequence for the</span></span><br><span class="line"><span class="comment"> *    rearangement.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *  Complexity analysis:</span></span><br><span class="line"><span class="comment"> *  time complexity:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *  Best case: always be balanced at the midpoint in each partition</span></span><br><span class="line"><span class="comment"> *  T(n) = 2T(n/2) + cn</span></span><br><span class="line"><span class="comment"> *  	 = 2^k T(n/2^k) + kcn</span></span><br><span class="line"><span class="comment"> *  	 where k = logn</span></span><br><span class="line"><span class="comment"> *  	 therefore = O(nlogn)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *  Average case: when randomly selected as any one of the position,</span></span><br><span class="line"><span class="comment"> *  	          the partition index or iterator is an average index</span></span><br><span class="line"><span class="comment"> *  T(n) = T(n - i) + T(i - 1) + cn</span></span><br><span class="line"><span class="comment"> *  	 = 1/n * summation(T(n - i) + T(i - 1)) + cn</span></span><br><span class="line"><span class="comment"> *  	 = O(nlogn)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *  Worst case: unblanced in each partition</span></span><br><span class="line"><span class="comment"> *  T(n) = T(n - 1) + cn</span></span><br><span class="line"><span class="comment"> *  	 = T(n - 2) + c(n - 1) + cn</span></span><br><span class="line"><span class="comment"> *  	 = T(n - k) + c(n - k + 1 + ... + n)</span></span><br><span class="line"><span class="comment"> *  	 where k = n-1</span></span><br><span class="line"><span class="comment"> *  	 therefore</span></span><br><span class="line"><span class="comment"> *  	 T(n) = T(1) + c*(2 + 3 + ... + n)</span></span><br><span class="line"><span class="comment"> *  	 	  = O(n^2)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * auxiliary space: (non-stable) worst-case = O(1)</span></span><br><span class="line"><span class="comment"> *-----------------------------------------------------------------------------      </span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<p> <strong>Implementations</strong><br> <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#<span class="meta-keyword">ifndef</span> SORTINGALGORITHMS_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SORTINGALGORITHMS_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctime&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstddef&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iterator&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// array-based version, first always is the index to indicate the</span></span><br><span class="line"><span class="comment">// first position of a sequence, last is the index to indicate the</span></span><br><span class="line"><span class="comment">// last position of a sequence. partitionIndex is the split point</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="built_in">std</span>::<span class="keyword">size_t</span> Partition(T*p, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="keyword">size_t</span> first, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="keyword">size_t</span> last)&#123;</span><br><span class="line">    T pivot = p[last];</span><br><span class="line">    <span class="built_in">std</span>::<span class="keyword">size_t</span> partitionIndex = first;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">std</span>::<span class="keyword">size_t</span> i = first; i != last; ++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(p[i] &lt;= pivot)&#123;</span><br><span class="line">            T temp = p[i];</span><br><span class="line">            p[i] = p[partitionIndex];</span><br><span class="line">            p[partitionIndex] = temp;</span><br><span class="line">            ++partitionIndex;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    T temp = p[partitionIndex];</span><br><span class="line">    p[partitionIndex] = p[last];</span><br><span class="line">    p[last] = temp;</span><br><span class="line">    <span class="keyword">return</span> partitionIndex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QuickSort</span><span class="params">(T*p, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="keyword">size_t</span> first, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="keyword">size_t</span> last)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(first &gt;= last) <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="keyword">size_t</span> partitionIndex = Partition(p, first, last);</span><br><span class="line">    <span class="keyword">if</span>(partitionIndex != <span class="number">0</span>)&#123;</span><br><span class="line">        QuickSort(p, first, partitionIndex - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    QuickSort(p, partitionIndex + <span class="number">1</span>, last);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// iterator-based version STL style (C++11)</span></span><br><span class="line"><span class="comment">// partitionIter denotes the position of the</span></span><br><span class="line"><span class="comment">// split point</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> BidirrectionalIterator&gt;</span><br><span class="line"><span class="function">BidirrectionalIterator <span class="title">Partition</span><span class="params">(BidirrectionalIterator begin,</span></span></span><br><span class="line"><span class="function"><span class="params">		BidirrectionalIterator end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> pivot = <span class="built_in">std</span>::prev(end);</span><br><span class="line">    <span class="keyword">auto</span> partitionIter = begin;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> iter = begin; iter != pivot; ++iter)&#123;</span><br><span class="line">        <span class="keyword">if</span>(*iter &lt;= *pivot)&#123;</span><br><span class="line">            <span class="built_in">std</span>::iter_swap(iter, partitionIter);</span><br><span class="line">            ++partitionIter;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::iter_swap(partitionIter, pivot);</span><br><span class="line">    <span class="keyword">return</span> partitionIter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> BidirrectionalIterator&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QuickSort</span><span class="params">(BidirrectionalIterator begin, BidirrectionalIterator end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">std</span>::distance(begin, end) &lt;= <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">auto</span> partitionIter = Partition(begin, end);</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">std</span>::prev(partitionIter) != begin)&#123;</span><br><span class="line">        QuickSort(begin, partitionIter);</span><br><span class="line">    &#125;</span><br><span class="line">    QuickSort(<span class="built_in">std</span>::next(partitionIter), end);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// user-defined comparator + improved using random selected pivot</span></span><br><span class="line"><span class="comment">// return a random integer in the range [0, n)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">nrand</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">0</span> || n &gt; RAND_MAX)</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">std</span>::domain_error(<span class="string">"Argument to nrand is out of range"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> bucket_size = RAND_MAX /n;</span><br><span class="line">    <span class="keyword">int</span> r;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span> r = rand() / bucket_size;</span><br><span class="line">    <span class="keyword">while</span>(r &gt;= n);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> BidirrectionalIterator, <span class="keyword">typename</span> Comparator&gt;</span><br><span class="line"><span class="function">BidirrectionalIterator <span class="title">Partition</span><span class="params">(BidirrectionalIterator begin,</span></span></span><br><span class="line"><span class="function"><span class="params">		BidirrectionalIterator end, Comparator comp)</span></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::srand (<span class="built_in">std</span>::time(<span class="literal">nullptr</span>));</span><br><span class="line">    <span class="keyword">auto</span> randomIndex = nrand(<span class="built_in">std</span>::distance(begin, end));</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; randomIndex &lt;&lt; <span class="string">"nihao"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">auto</span> pivot = <span class="built_in">std</span>::prev(end);</span><br><span class="line">    <span class="built_in">std</span>::iter_swap(pivot, <span class="built_in">std</span>::next(begin, randomIndex));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> partitionIter = begin;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> iter = begin; iter != pivot; ++iter)&#123;</span><br><span class="line">        <span class="keyword">if</span>(comp(*iter, *pivot))&#123;</span><br><span class="line">            <span class="built_in">std</span>::iter_swap(iter, partitionIter);</span><br><span class="line">            ++partitionIter;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::iter_swap(partitionIter, pivot);</span><br><span class="line">    <span class="keyword">return</span> partitionIter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> BidirrectionalIterator, <span class="keyword">typename</span> Comparator&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QuickSort</span><span class="params">(BidirrectionalIterator begin, BidirrectionalIterator end,</span></span></span><br><span class="line"><span class="function"><span class="params">        Comparator comp)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">std</span>::distance(begin, end) &lt;= <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">auto</span> partitionIter = Partition(begin, end, comp);</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">std</span>::prev(partitionIter) != begin)&#123;</span><br><span class="line">        QuickSort(begin, partitionIter, comp);</span><br><span class="line">    &#125;</span><br><span class="line">    QuickSort(<span class="built_in">std</span>::next(partitionIter), end, comp);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* SORTINGALGORITHMS_H_ */</span></span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Test program-main.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;	// std::cout, endl</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;	// std::string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;		// std::list</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;	// std::vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"SortingAlgorithms.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">list</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// struct defined for testing</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">student</span>&#123;</span></span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// comparator 1</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">bool</span> <span class="title">compare_age</span>(<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">x</span>, <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">y</span>)&#123;</span></span><br><span class="line">    <span class="keyword">return</span> x.age &lt; y.age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// comparator 2</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">bool</span> <span class="title">compare_name</span>(<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">x</span>, <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">y</span>)&#123;</span></span><br><span class="line">    <span class="keyword">return</span> x.name &lt; y.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// test 1: array-based version</span></span><br><span class="line">    <span class="keyword">double</span> arr[<span class="number">10</span>] = &#123;<span class="number">10</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    QuickSort(arr, <span class="number">0</span>, <span class="number">9</span>);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Sorted array: "</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i != <span class="number">10</span>; ++i)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; arr[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// test 2: iterator-based version</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">str</span><span class="params">(<span class="string">"eclipseworkspace"</span>)</span></span>;</span><br><span class="line">    QuickSort(str.begin(), str.end());</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Sorted string "</span> &lt;&lt; str &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; l&#123;<span class="number">10</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    QuickSort(l.begin(), l.end());</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Sorted list: "</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i: l)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// test 3: user-defined comparator</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;student&gt; students;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span>)&#123;</span><br><span class="line">        student temp;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; temp.name &gt;&gt; temp.age;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">cin</span>)</span><br><span class="line">            students.push_back(temp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QuickSort(students.begin(), students.end(), compare_age&lt;student&gt;);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Sorted vector according to age:\n"</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> i: students)</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; i.name &lt;&lt; <span class="string">" "</span> &lt;&lt; i.age &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line"></span><br><span class="line">    QuickSort(students.begin(), students.end(), compare_name&lt;student&gt;);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Sorted vector according to name:\n"</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> i: students)</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; i.name &lt;&lt; <span class="string">" "</span> &lt;&lt; i.age &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>Outputs:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Sorted array: 1 2 3 4 5 6 7 8 9 10 </span><br><span class="line">Sorted string acceeeiklopprssw</span><br><span class="line">Sorted list: 1 2 3 4 5 6 7 8 9 10 </span><br><span class="line">John 18</span><br><span class="line">Mike 16</span><br><span class="line">Liam 23</span><br><span class="line">Anna 26</span><br><span class="line">Bobo 21</span><br><span class="line">2nihao</span><br><span class="line">1nihao</span><br><span class="line">1nihao</span><br><span class="line">Sorted vector according to age:</span><br><span class="line">Mike 16</span><br><span class="line">John 18</span><br><span class="line">Bobo 21</span><br><span class="line">Liam 23</span><br><span class="line">Anna 26</span><br><span class="line">2nihao</span><br><span class="line">1nihao</span><br><span class="line">Sorted vector according to name:</span><br><span class="line">Anna 26</span><br><span class="line">Bobo 21</span><br><span class="line">John 18</span><br><span class="line">Liam 23</span><br><span class="line">Mike 16</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/Algorithms/" rel="tag"># Algorithms</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/17/05/2018/Sorting-Algorithms-C-Implementations-Merge-Sort/" rel="next" title="Sorting Algorithms C++ Implementations - Merge Sort">
+                <i class="fa fa-chevron-left"></i> Sorting Algorithms C++ Implementations - Merge Sort
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/19/05/2018/C-Implementations-Singly-Linked-List/" rel="prev" title="C++ Implementations: Singly Linked List">
+                C++ Implementations: Singly Linked List <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Liam</p>
+              <p class="site-description motion-element" itemprop="description">Stochastic Modelling Notes; Programming Notes</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/quantliam" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yanshijiutu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Quick-Sort"><span class="nav-number">1.</span> <span class="nav-text">Quick Sort</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">129.6k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

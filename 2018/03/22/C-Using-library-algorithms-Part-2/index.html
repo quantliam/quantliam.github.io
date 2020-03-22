@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Times New Roman:300,300italic,400,400italic,700,700italic|Courier New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"quantein.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":60,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Revisit the grading programThis section redesigns the grading program described in Organizing programs with data structures. The new program is required to include extra two grading schemes(Koenig and">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ - Using library algorithms (Part 2)">
+<meta property="og:url" content="http://quantein.com/2018/03/22/C-Using-library-algorithms-Part-2/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="Revisit the grading programThis section redesigns the grading program described in Organizing programs with data structures. The new program is required to include extra two grading schemes(Koenig and">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-03-22T10:12:46.000Z">
+<meta property="article:modified_time" content="2018-03-25T10:05:52.000Z">
+<meta property="article:author" content="Liam">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Notes">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://quantein.com/2018/03/22/C-Using-library-algorithms-Part-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>C++ - Using library algorithms (Part 2) | Liam's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/quantliam" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://quantein.com/2018/03/22/C-Using-library-algorithms-Part-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="Stochastic Modelling Notes; Programming Notes">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ - Using library algorithms (Part 2)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-22 18:12:46" itemprop="dateCreated datePublished" datetime="2018-03-22T18:12:46+08:00">2018-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-03-25 18:05:52" itemprop="dateModified" datetime="2018-03-25T18:05:52+08:00">2018-03-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Revisit-the-grading-program"><a href="#Revisit-the-grading-program" class="headerlink" title="Revisit the grading program"></a>Revisit the grading program</h1><p>This section redesigns the grading program described in <a href="http://quanttour.com/08/03/2018/Organizing-programs-and-data-Part-2/" target="_blank" rel="noopener">Organizing programs with data structures</a>. The new program is required to include extra two grading schemes(Koenig and Moo 2000):</p>
+<p><em>1. using the average instead of the median, and treating those assignments that the student failed to turn in as zero.</em><br><em>2. using the median of only the assignments that the student actually submitted.</em></p>
+<p>Further, the program should solve following problems based on these grading schemes:</p>
+<p><em>1. reading all the student records, separating the students who did all the homework from the others.</em><br><em>2. apply each of the grading schemes to all the students in each group, and report the median grade of each group.</em></p>
+<p>Now, let’s follow the instructions and finish this program step by step.</p>
+<h2 id="Reading-and-Separating-the-students-records"><a href="#Reading-and-Separating-the-students-records" class="headerlink" title="Reading and Separating the students records"></a>Reading and Separating the students records</h2><p>According to the first problem, we need to read and separate the students records into two groups, one group of which includes students who did all homeworks, and another group includes students who didn’t submit all homeworks. The <strong>read</strong> function has been introduced before and hence no further analysis. What is the next is to use a predict on students’ records and store the records separately based on the check results.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">did_all_hw</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="built_in">find</span>(s.homework.<span class="built_in">begin</span>(), s.homework.<span class="built_in">end</span>(), <span class="number">0</span>)) == s.homework.<span class="built_in">end</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The return statements in the function body means that if none of the homework grades equal to 0, the function returns <strong>true</strong>. The idea behind it is that overdue homeworks are given 0 grades. </p>
+<p>Now this part can be accomplished with following code:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// to hold two groups of students records</span></span><br><span class="line"><span class="built_in">vector</span>&lt;Student_info&gt; did, didnt;   </span><br><span class="line">Student_info student;</span><br><span class="line"></span><br><span class="line"><span class="comment">// read all the records and separating them based on whether all homework was done</span></span><br><span class="line"><span class="keyword">while</span>(<span class="built_in">read</span>(<span class="built_in">cin</span>, student))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(did_all_hw(student))</span><br><span class="line">        did.push_back(student);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        didnt.push_back(student);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// check that both groups contain dada</span></span><br><span class="line"><span class="keyword">if</span> (did.empty())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"No student did all the homework!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (didnt.empty())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Every student did all the homework!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Three-grading-schemes"><a href="#Three-grading-schemes" class="headerlink" title="Three grading schemes"></a>Three grading schemes</h2><p>Before we go into the second problem, we need to solve three grading schemes first. All schemes compute the final grade as the weighted average of midterm exam grade, final exam grade, and homework grade. The grade function below returns the final grade if it is called. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> <span class="keyword">final</span>, <span class="keyword">double</span> homework)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.2</span>*midterm + <span class="number">0.4</span>*<span class="keyword">final</span> + <span class="number">0.4</span>*homework;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Midterm grade and final exam grade are fixed values once the information are read in. However, the homework grade can be computed using different methods depending on the grading schemes. Specifically:</p>
+<ol>
+<li>scheme 1: computes the homework grade as the median value of homework grades.</li>
+<li>scheme 2: computes the homework grade as the average value of homework grades.</li>
+<li>scheme 3: computes the homework grade as the median value of homework grades excluding the zero grades (i.e. grades for overdue homeworks). </li>
+</ol>
+<p>In addition, if one did not do homework at all, his homework grade would be set to 0. </p>
+<p>Fundamentally, there are two types of homework grade, one is the median value and another is the average value. Here are the two functions that return the median value and average value of a sequence of double values stored in a <strong>vector<double></strong>,  respectively. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fundermental functions 1: returns the median value of vector&lt;double&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// get the size of the vector</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::size_type vec_size;</span><br><span class="line">    vec_size <span class="built_in">size</span> = vec.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check whether the empty is empty</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">size</span> == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"median of an empty vector"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sort the grades</span></span><br><span class="line">    sort(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute the median homework grade</span></span><br><span class="line">    vec_size mid = <span class="built_in">size</span>/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">size</span> % <span class="number">2</span> == <span class="number">0</span> ? (vec[mid] + vec[mid - <span class="number">1</span>])/<span class="number">2</span> : vec[mid];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// fundermental functions 2: returns the average value of vector&lt;double&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">average</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// check whether the empty is empty</span></span><br><span class="line">    <span class="keyword">if</span> (v.empty())</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"average of an empty vector"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> accumulate(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>(), <span class="number">0.0</span>) / v.<span class="built_in">size</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>What’s the new idea in above functions is that we compute the average using the <strong>accumulate</strong> algorithm. The <strong>accomulate</strong> is defined in the staandard header <numeric>. It takes three arguments, the first two of which denotes a range of values to be summed while the third arguments gives the initial value for the summation. It is worth noting that we uses <strong>0.0</strong> rather than <strong>0</strong> due to the fact the type of the resulted sum is the type of the third argument. </p>
+<p>Note that I slightly changes the <strong>average</strong> function provided in the book for the purpose of avoiding the case that <strong>v.size() == 0</strong>. As mentioned earlier, if one did not submit one or more homeworks, he would get 0 grades for the corresponding homeworks. But, the program may encounter the case that there is no any inputs for the homeworks, e.g.  when someone did not do homeworks at all. To response this case, the homework grade is set to 0 directly. We need to catch the exception and handle the case in next step. </p>
+<h3 id="The-median-grading-scheme"><a href="#The-median-grading-scheme" class="headerlink" title="The median grading scheme"></a>The <strong>median</strong> grading scheme</h3><p>We are familar with the first grading scheme, that is, the original scheme we used to compute the final grade, in previous chapters. For convenience sake, I renamed the original functions <strong>grade</strong> as <strong>median_grade</strong> (as shown below). </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/ grading scheme <span class="number">1</span>: <span class="keyword">final</span> grade is based on the median homework grade</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> median_grade(s.midterm, s.<span class="keyword">final</span>, s.homework);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grading scheme 1: overloaded median_grade function</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> <span class="keyword">final</span>, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (hw.<span class="built_in">size</span>() == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"student has done no homework"</span>);</span><br><span class="line">    <span class="keyword">return</span> grade(midterm, <span class="keyword">final</span>, median(hw));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grading scheme 1: auxiliary median_grade function</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_grade_aux</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> median_grade(s);</span><br><span class="line">	&#125;<span class="keyword">catch</span> (domain_error)&#123;</span><br><span class="line">		<span class="comment">// students who did no homework at all, get 0 homework grade</span></span><br><span class="line">		<span class="keyword">return</span> grade(s.midterm, s.<span class="keyword">final</span>, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>It can be observed that a new function, <strong>median_grade_aux</strong> ,is included for the <strong>median</strong> grading scheme. The reason is that we’ll pass the <strong>median_gade</strong> as an argument, however, we cann’t pass an overloaded function easily. Therefore, we define an auxiliary function and handle the exception in this function. As analysed above, the function return a <strong>0</strong> homework grade once catches an exception. </p>
+<h3 id="The-average-grading-scheme"><a href="#The-average-grading-scheme" class="headerlink" title="The average grading scheme"></a>The <strong>average</strong> grading scheme</h3><p>The <strong>average</strong> based final grade is computed exactly the same as the <strong>median</strong> version as long as we replace the <strong>median</strong> value as the <strong>average</strong> value. The function handles the exception in the same manner.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// grading scheme 2: final grade is based on average homework grades</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">average_grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> grade(s.midterm, s.<span class="keyword">final</span>, average(s.homework));</span><br><span class="line">    &#125;<span class="keyword">catch</span> (domain_error)&#123;</span><br><span class="line">        <span class="comment">// students who did no homework at all, get 0 homework grade</span></span><br><span class="line">        <span class="keyword">return</span> grade(s.midterm, s.<span class="keyword">final</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="The-optimistic-median-grading-scheme"><a href="#The-optimistic-median-grading-scheme" class="headerlink" title="The optimistic_median grading scheme"></a>The <strong>optimistic_median</strong> grading scheme</h3><p>The third grading scheme is named as <strong>optimistic median</strong> as it ignores the zero homework grades and consequently improves students’ overall performances. Following code shows how this function works.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// grading scheme 3: final grade is based on median of the completed homework grades,</span></span><br><span class="line"><span class="comment">// and students who did no homework at all will get 0 homework grade</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">optimistic_median</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; nonzero;</span><br><span class="line">    remove_copy(s.homework.<span class="built_in">begin</span>(), s.homework.<span class="built_in">end</span>(), back_inserter(nonzero), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(nonzero.empty())</span><br><span class="line">        <span class="keyword">return</span> grade(s.midterm, s.<span class="keyword">final</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> grade(s.midterm, s.<span class="keyword">final</span>, median(nonzero));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>remove_copy</strong> algorithm takes four arguments. It searches from the range denoted by first two iterators, and finds all values that match a value given by its fourth argument. Then, these values are “removed” and the remaining elements are copied into a new <strong>vector<double> nonzero</strong>. It doesn’t change the input sequence. In addition, <strong>back_inserter</strong> is applied to append the copied values to the new vector, which ensures that the space is enough for holding all the elements.</p>
+<h2 id="Analyze-the-grades"><a href="#Analyze-the-grades" class="headerlink" title="Analyze the grades"></a>Analyze the grades</h2><p>The next step is to apply each of above schemes to each group, that is, to compute the median of each group. Let’s have a look at the function that returns the median grade of a <strong>vector<Student_info> students</strong> based on the median homework grade. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;students)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; grades;</span><br><span class="line"></span><br><span class="line">	transform(students.<span class="built_in">begin</span>(), students.<span class="built_in">end</span>(), back_inserter(grades), median_grade_aux);</span><br><span class="line">	<span class="keyword">return</span> median(grades);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The function introduces a new algorithm <strong>transform</strong> which calls <strong>median_grade_aux</strong>, namely the transform function, and stores the result into a new vector. The first two iterators specify a range of elements to transform. <strong>back_inserter</strong> provides the destination and ensures that there is enough for the elements. Finally, the function returns the median value of the final grades.</p>
+<p>Analogously, we can define another two functions that return average homework grade based median grade and optimistic median homework grade based median grade. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// average</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">average_analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;students)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; grades;</span><br><span class="line"></span><br><span class="line">	transform(students.<span class="built_in">begin</span>(), students.<span class="built_in">end</span>(), back_inserter(grades), average_grade);</span><br><span class="line">	<span class="keyword">return</span> median(grades);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// median of the completed homework</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">optimistic_median_analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;students)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; grades;</span><br><span class="line">	transform(students.<span class="built_in">begin</span>(), students.<span class="built_in">end</span>(), back_inserter(grades), optimistic_median);</span><br><span class="line">	<span class="keyword">return</span> median(grades);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Report-the-analysis"><a href="#Report-the-analysis" class="headerlink" title="Report the analysis"></a>Report the analysis</h2><p>As described above, we need to compute three types of median grade for both two groups. In addition, we would better to generate a report such that we can compare two groups regarding to one specific type of median grade. The code below shows how we incorporate these driven factors into a analysis function:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write_analysis</span><span class="params">(ostream &amp;out, <span class="keyword">const</span> <span class="built_in">string</span> &amp;name,</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="keyword">double</span> analysis(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;),</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;did,</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;didnt)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	out &lt;&lt; name &lt;&lt; <span class="string">": median(did) = "</span> &lt;&lt; analysis(did)</span><br><span class="line">			&lt;&lt; <span class="string">": median(didnt) = "</span> &lt;&lt; analysis(didnt) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This function takes four arguments, of which: the first is an object of the <strong>outstream</strong>; the second is a function; the third and fourth arguments are two objects of <strong>vector<Student_info></strong>. What’ new here is that when passing a function as a parameter, we declare the parameter exactly as the same as ddeclare the function itself. Apparently, we’ll pass three analysis function defined above to this write analysis function. </p>
+<h2 id="A-complete-program"><a href="#A-complete-program" class="headerlink" title="A complete program"></a>A complete program</h2><p>Now, we can complete the main function:</p>
+<p><strong>mainfunction.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;	    // to get the declaration of cin, cout, endl</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;	    // to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span>   <span class="comment">// to get the declaration of Student_info</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"did_all_hw.h"</span>	    <span class="comment">// to get the declatation of the predicate on students' records</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"grades_analysis.h"</span><span class="comment">// to get the declaration of three analysis function</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"write_analysis.h"</span> <span class="comment">// to get the declaration of write_analysis function</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// students who did and didn't do all their homework</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;Student_info&gt; did, didnt;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the student records and partition time</span></span><br><span class="line">    Student_info student;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">read</span>(<span class="built_in">cin</span>, student))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(did_all_hw(student))</span><br><span class="line">            did.push_back(student);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            didnt.push_back(student);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// verify thatthe analyses will show us something</span></span><br><span class="line">    <span class="keyword">if</span>(did.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"No student did all the homework!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(didnt.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Every student did all the homework!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// do the analysis</span></span><br><span class="line">    write_analysis(<span class="built_in">cout</span>, <span class="string">"median"</span>, median_analysis, did, didnt);</span><br><span class="line">    write_analysis(<span class="built_in">cout</span>, <span class="string">"average"</span>, average_analysis, did, didnt);</span><br><span class="line">    write_analysis(<span class="built_in">cout</span>, <span class="string">"median of homework turned in"</span>, optimistic_median_analysis, did, didnt);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>I had seperate other functions into different files according to my own preference:</p>
+<ol>
+<li><p><strong>mainfunction.cpp</strong> (as shown above).</p>
+</li>
+<li><p><strong>did_all_hw.cpp</strong>, <strong>did_all_hw.h</strong>: including the function <strong>did_all_hw</strong>.</p>
+</li>
+<li><p><strong>gradingSchemes.cpp</strong>, <strong>gradingSchemes.h</strong>: covering following functions</p>
+<ul>
+<li><strong>grade, median, average, median_grade, median_grade_aux, average_grade, optimistic_median</strong>.</li>
+</ul>
+</li>
+<li><p><strong>grades_analysis.cpp</strong>, <strong>grades_analysis.h</strong>: covering following functions</p>
+<ul>
+<li><strong>median_analysis, average_analysis, optimistic_grade_median</strong>.</li>
+</ul>
+</li>
+<li><p><strong>write_analysis.cpp, write_analysis.h</strong>: including the function <strong>write_analysis</strong>.</p>
+</li>
+<li><p><strong>Student_info.cpp, Stuent_info.h</strong>: covering following functions</p>
+<ul>
+<li><strong>compare, read, read_hw</strong>.</li>
+</ul>
+</li>
+</ol>
+<p>All profiles are presented below in order.</p>
+<p><strong>did_all_hw.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;		// to get the declaration of find</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span>	<span class="comment">// to get the declaration of Student_info</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"did_all_hw.h"</span>		<span class="comment">// to get the declaration of did_all_hw itself</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">find</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">did_all_hw</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="built_in">find</span>(s.homework.<span class="built_in">begin</span>(), s.homework.<span class="built_in">end</span>(), <span class="number">0</span>)) == s.homework.<span class="built_in">end</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>did_all_hw.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_DID_ALL_HW_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_DID_ALL_HW_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">did_all_hw</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* GUARD_DID_ALL_HW_H */</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>gradingSchemes.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;	    // to get the declaration of remove_copy</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;numeric&gt;	    // to get the declaration of accumulate</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;	    // to get the declaration of domain_error</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;	    // to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span>   <span class="comment">// to get the declaration of Student_info</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"gradingSchemes.h"</span> <span class="comment">// to get the declaration of all functions here to keep consistent</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::domain_error;  <span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;        <span class="keyword">using</span> <span class="built_in">std</span>::sort;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::accumulate;</span><br><span class="line"></span><br><span class="line"><span class="comment">// final grade function returns weighted average of midterm exam grade,</span></span><br><span class="line"><span class="comment">// final exam grade, and homework grade which will be computed</span></span><br><span class="line"><span class="comment">// using different methods depending on grading schemes</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> <span class="keyword">final</span>, <span class="keyword">double</span> homework)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.2</span>*midterm + <span class="number">0.4</span>*<span class="keyword">final</span> + <span class="number">0.4</span>*homework;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// fundermental functions 1: returns the median value of vector&lt;double&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// get the size of the vector</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::size_type vec_size;</span><br><span class="line">    vec_size <span class="built_in">size</span> = vec.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check whether the empty is empty</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">size</span> == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"median of an empty vector"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sort the grades</span></span><br><span class="line">    sort(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute the median homework grade</span></span><br><span class="line">    vec_size mid = <span class="built_in">size</span>/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">size</span> % <span class="number">2</span> == <span class="number">0</span> ? (vec[mid] + vec[mid - <span class="number">1</span>])/<span class="number">2</span> : vec[mid];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// fundermental functions 2: returns the average value of vector&lt;double&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">average</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// check whether the empty is empty</span></span><br><span class="line">    <span class="keyword">if</span> (v.empty())</span><br><span class="line">    &#123;   <span class="keyword">throw</span> domain_error(<span class="string">"average of an empty vector"</span>);&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> accumulate(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>(), <span class="number">0.0</span>) / v.<span class="built_in">size</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// grading scheme 1: final grade is based on the median homework grade</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> median_grade(s.midterm, s.<span class="keyword">final</span>, s.homework);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grading scheme 1: overloaded median_grade function</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> <span class="keyword">final</span>, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (hw.<span class="built_in">size</span>() == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"student has done no homework"</span>);</span><br><span class="line">    <span class="keyword">return</span> grade(midterm, <span class="keyword">final</span>, median(hw));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grading scheme 1: auxiliary median_grade function</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_grade_aux</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> median_grade(s);</span><br><span class="line">    &#125;<span class="keyword">catch</span> (domain_error)&#123;</span><br><span class="line">        <span class="comment">// students who did no homework at all, get 0 homework grade</span></span><br><span class="line">        <span class="keyword">return</span> grade(s.midterm, s.<span class="keyword">final</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grading scheme 2: final grade is based on average homework grades</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">average_grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> grade(s.midterm, s.<span class="keyword">final</span>, average(s.homework));</span><br><span class="line">    &#125;<span class="keyword">catch</span> (domain_error)&#123;</span><br><span class="line">        <span class="comment">// students who did no homework at all, get 0 homework grade</span></span><br><span class="line">        <span class="keyword">return</span> grade(s.midterm, s.<span class="keyword">final</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grading scheme 3: final grade is based on median of the completed homework grades,</span></span><br><span class="line"><span class="comment">// and students who did no homework at all will get 0 homework grade</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">optimistic_median</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; nonzero;</span><br><span class="line">    remove_copy(s.homework.<span class="built_in">begin</span>(), s.homework.<span class="built_in">end</span>(), back_inserter(nonzero), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(nonzero.empty())</span><br><span class="line">        <span class="keyword">return</span> grade(s.midterm, s.<span class="keyword">final</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> grade(s.midterm, s.<span class="keyword">final</span>, median(nonzero));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>gradingScheme.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_GRADING_SCHEMES_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_GRADING_SCHEMES_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> <span class="keyword">final</span>, <span class="keyword">double</span> homework)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">average</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;v)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> <span class="keyword">final</span>, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_grade_aux</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">average_grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">optimistic_median</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* GUARD_GRADING_SCHEMES_H */</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>grades_analysis.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;		// to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iterator&gt;		// to get the declaration of back_inserter</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;		// to get the declaration of domain_error</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;		// to get the declaration of transform</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span>	<span class="comment">// to get the declaration of Student_info</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"grades_analysis.h"</span>    <span class="comment">// to get the declaration of all functions here to keep consistent</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"gradingSchemes.h"</span>     <span class="comment">// to get the declaration of median_grade_aux, average_grade, optimistic_median</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;			<span class="keyword">using</span> <span class="built_in">std</span>::transform;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::domain_error;	<span class="keyword">using</span> <span class="built_in">std</span>::back_inserter;</span><br><span class="line"></span><br><span class="line"><span class="comment">// median</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;students)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; grades;</span><br><span class="line"></span><br><span class="line">    transform(students.<span class="built_in">begin</span>(), students.<span class="built_in">end</span>(), back_inserter(grades), median_grade_aux);</span><br><span class="line">    <span class="keyword">return</span> median(grades);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// average</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">average_analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;students)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; grades;</span><br><span class="line"></span><br><span class="line">    transform(students.<span class="built_in">begin</span>(), students.<span class="built_in">end</span>(), back_inserter(grades), average_grade);</span><br><span class="line">    <span class="keyword">return</span> median(grades);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// median of the completed homework</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">optimistic_median_analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;students)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; grades;</span><br><span class="line">    transform(students.<span class="built_in">begin</span>(), students.<span class="built_in">end</span>(), back_inserter(grades), optimistic_median);</span><br><span class="line">    <span class="keyword">return</span> median(grades);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>grades_analysis.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_GRADES_ANALYSIS_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_GRADES_ANALYSIS_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median_analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;students)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">average_analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;students)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">optimistic_median_analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;students)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* GUARD_GRADES_ANALYSIS_H */</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>write_analysis.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;		// to get the declaration of cout, endl, ostream</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;		// to get the declaration of string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;		// to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span>	<span class="comment">// to get the declatation of Student_info</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"write_analysis.h"</span>	<span class="comment">// to get the declatation of write_analysis itself</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::ostream;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write_analysis</span><span class="params">(ostream &amp;out, <span class="keyword">const</span> <span class="built_in">string</span> &amp;name,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">double</span> analysis(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;),</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;did,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;didnt)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    out &lt;&lt; name &lt;&lt; <span class="string">": median(did) = "</span> &lt;&lt; analysis(did)</span><br><span class="line">            &lt;&lt; <span class="string">": median(didnt) = "</span> &lt;&lt; analysis(didnt) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>write_analysis.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_WRITE_ANALYSIS_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_WRITE_ANALYSIS_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write_analysis</span><span class="params">(<span class="built_in">std</span>::ostream &amp;out, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;name,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">double</span> analysis(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;),</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;did,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;didnt)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* GUARD_WRITE_ANALYSIS_H */</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Student_info.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>; 	<span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"></span><br><span class="line"><span class="comment">// argument to the function sort</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> Student_info &amp;x, <span class="keyword">const</span> Student_info &amp;y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x.name &lt; y.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// read the info</span></span><br><span class="line"><span class="function">istream &amp; <span class="title">read</span><span class="params">(istream &amp;is, Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// reads and store the student's name, midterm and final exam grades</span></span><br><span class="line">    is &gt;&gt; s.name &gt;&gt; s.midterm &gt;&gt; s.<span class="keyword">final</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reads and store all homework grades</span></span><br><span class="line">    read_hw(is, s.homework);</span><br><span class="line">    <span class="keyword">return</span> is;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// read all homework grades</span></span><br><span class="line"><span class="function">istream &amp; <span class="title">read_hw</span><span class="params">(istream &amp;in, <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (in)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//get rid of previous contents</span></span><br><span class="line">        hw.<span class="built_in">clear</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// read homework grades</span></span><br><span class="line">        <span class="keyword">double</span> x;</span><br><span class="line">        <span class="keyword">while</span>(in &gt;&gt; x)</span><br><span class="line">            hw.push_back(x);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// clear the stream so that input will work for the next student</span></span><br><span class="line">        in.<span class="built_in">clear</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> in;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Student_info.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_Student_info</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_Student_info</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student_info</span>&#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">double</span> midterm, <span class="keyword">final</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; homework;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> Student_info &amp;, <span class="keyword">const</span> Student_info &amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">std</span>::istream &amp; <span class="title">read</span><span class="params">(<span class="built_in">std</span>::istream &amp;, Student_info &amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">std</span>::istream &amp; <span class="title">read_hw</span><span class="params">(<span class="built_in">std</span>::istream &amp;, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;)</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="A-simple-Test"><a href="#A-simple-Test" class="headerlink" title="A simple Test"></a>A simple Test</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">Inputs:</span><br><span class="line"></span><br><span class="line">Xxzrz 87.1414 3.48485 18 58 0</span><br><span class="line">Oketl 98.0909 57.7273 92 38 22</span><br><span class="line">Gzqrc 91.1515 88.5657 34 2 11</span><br><span class="line">Ojway 86.7576 33.697 16 44 42</span><br><span class="line">Psajl 99.5758 76.9293 12 75 89</span><br><span class="line">Aovlz 88.0101 89.5556 85 2 23</span><br><span class="line">Cpwsr 57.3232 32.697 89 21 54</span><br><span class="line">Izcob 55.3434 49.4141 60 45 12</span><br><span class="line">Ijtvd 96.8788 29.4949 49 66 37</span><br><span class="line">Ldvgy 5.88889 82.5556 1 14 34</span><br><span class="line">Mborx 55.8586 53.1212 45 32 8</span><br><span class="line">Xohgm 82.8182 44.9697 61 29 22</span><br><span class="line">Xotog 59.9293 39.5354 10 54 24</span><br><span class="line">Nfetc 22.6869 18.8788 91 58 5</span><br><span class="line">Kljug 24.3434 74.7273 70 33 59</span><br><span class="line">Zjenp 70.6364 68.9293 80 2 85</span><br><span class="line">Pjsrd 25.4343 24.2323 81 61 72</span><br><span class="line">Lchhb 31.9293 42.2222 0 64 86</span><br><span class="line">Zobiw 70.3535 33.1111 67 96 60</span><br><span class="line">Fsksr 24.1919 25.7677 2 58 94</span><br><span class="line">Dcyzj 84.1818 64.1919 87 0 52</span><br><span class="line">Qcozi 15.7677 27.4343 9 64 58</span><br><span class="line">Eeddp 74.2525 27.2929 20 23 28</span><br><span class="line">Mmtat 61.9596 25.6465 16 2 60</span><br><span class="line">Muvnp 47.5354 20.9091 63 88 24</span><br><span class="line">Azuxm 13.5859 78.6566 0 77 7</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line">median: median(did) &#x3D; 46.1475: median(didnt) &#x3D; 42.9273</span><br><span class="line">average: median(did) &#x3D; 45.4202: median(didnt) &#x3D; 44.3273</span><br><span class="line">median of homework turned in: median(did) &#x3D; 46.1475: median(didnt) &#x3D; 52.1273</span><br></pre></td></tr></table></figure>
+
+<h2 id="Merging-three-analysis-functions-into-one-single-function"><a href="#Merging-three-analysis-functions-into-one-single-function" class="headerlink" title="Merging three analysis functions into one single function"></a>Merging three analysis functions into one single function</h2><p>It has been observed that three analysis functions are in fact defined in the same manner. The only difference between them is the statements:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transform(students.<span class="built_in">begin</span>(), students.<span class="built_in">end</span>(), back_inserter(grades), <span class="comment">//transform function to be passed);</span></span><br></pre></td></tr></table></figure>
+<p>Therefore, we can redefine the analysis function such that the <strong>transform</strong> function can be passed to the analysis function as an argument. We have learned how to do this from the <strong>write_analysis</strong> function. Now let’s define it:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;students, <span class="keyword">double</span> grading_scheme(<span class="keyword">const</span> Student_info &amp;s))</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; grades;</span><br><span class="line"></span><br><span class="line">	transform(students.<span class="built_in">begin</span>(), students.<span class="built_in">end</span>(), back_inserter(grades), grading_scheme);</span><br><span class="line">	<span class="keyword">return</span> median(grades);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>For example, if we want to compute the average based median grade, we would call this function like:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">analysis(did, average_grade);</span><br></pre></td></tr></table></figure>
+<p>Correspondingly, we need to change the <strong>write_analysis</strong> function as well. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write_analysis</span><span class="params">(ostream &amp;out, <span class="keyword">const</span> <span class="built_in">string</span> &amp;name,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">double</span> grading_scheme(<span class="keyword">const</span> Student_info &amp;s),</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;did,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;didnt)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    out &lt;&lt; name &lt;&lt; <span class="string">": median(did) = "</span> &lt;&lt; analysis(did, grading_scheme)</span><br><span class="line">            &lt;&lt; <span class="string">": median(didnt) = "</span> &lt;&lt; analysis(didnt, grading_scheme) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>I define the new <strong>write_analysis</strong> function such that it takes the <strong>grading_scheme</strong> functions as its second arguments. To qualify the use of the <strong>analysis</strong> function, I add <strong>#include “grade_analysis.h”</strong> into <strong>write_analysis.cpp</strong>. In addition, I add <strong>#include “gradingSchemes.h”</strong> into <strong>mainfunction.cpp</strong> for qualifing the use of three <strong>grading_scheme</strong> functions. Please find the revised files shown in below.</p>
+<p><strong>modified file 1: grades_analysis.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;		// to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iterator&gt;		// to get the declaration of back_inserter</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;		// to get the declaration of domain_error</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;		// to get the declaration of transform</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span>	<span class="comment">// to get the declaration of Student_info</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"grades_analysis.h"</span>    <span class="comment">// to get the declaration of all functions here to keep consistent</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"gradingSchemes.h"</span>     <span class="comment">// to get the declaration of the median function</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;			<span class="keyword">using</span> <span class="built_in">std</span>::transform;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::domain_error;	<span class="keyword">using</span> <span class="built_in">std</span>::back_inserter;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;students, <span class="keyword">double</span> grading_scheme(<span class="keyword">const</span> Student_info &amp;s))</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; grades;</span><br><span class="line"></span><br><span class="line">    transform(students.<span class="built_in">begin</span>(), students.<span class="built_in">end</span>(), back_inserter(grades), grading_scheme);</span><br><span class="line">    <span class="keyword">return</span> median(grades);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>modified file 2: grades_analysis.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_GRADES_ANALYSIS_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_GRADES_ANALYSIS_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;students,</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="keyword">double</span> grading_scheme(<span class="keyword">const</span> Student_info &amp;s))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* GUARD_GRADES_ANALYSIS_H */</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>modified file 3: write_analysis.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;		// to get the declaration of cout, endl, ostream</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;		// to get the declaration of string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;		// to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span>	<span class="comment">// to get the declatation of Student_info</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"write_analysis.h"</span>	<span class="comment">// to get the declatation of write_analysis itself</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"grades_analysis.h"</span>    <span class="comment">// to get the declaration of analysis function</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::ostream;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write_analysis</span><span class="params">(ostream &amp;out, <span class="keyword">const</span> <span class="built_in">string</span> &amp;name,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">double</span> grading_scheme(<span class="keyword">const</span> Student_info &amp;s),</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;did,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;didnt)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    out &lt;&lt; name &lt;&lt; <span class="string">": median(did) = "</span> &lt;&lt; analysis(did, grading_scheme)</span><br><span class="line">            &lt;&lt; <span class="string">": median(didnt) = "</span> &lt;&lt; analysis(didnt, grading_scheme) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>modified file 4: write_analysis.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_WRITE_ANALYSIS_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_WRITE_ANALYSIS_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write_analysis</span><span class="params">(<span class="built_in">std</span>::ostream &amp;out, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;name,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">double</span> grading_scheme(<span class="keyword">const</span> Student_info &amp;s),</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;did,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;didnt)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* GUARD_WRITE_ANALYSIS_H */</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>modified file 5: mainfunction.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;		// to get the declaration of cin, cout, endl</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;		// to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span>	<span class="comment">// to get the declaration of Student_info</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"did_all_hw.h"</span>		<span class="comment">// to get the declatation of the predicate on students' records</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"write_analysis.h"</span>	<span class="comment">// to get the declaration of write_analysis function</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"gradingSchemes.h"</span> <span class="comment">// to get the declaration of three grading functions</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// students who did and didn't do all their homework</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;Student_info&gt; did, didnt;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the student records and partition time</span></span><br><span class="line">    Student_info student;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">read</span>(<span class="built_in">cin</span>, student))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(did_all_hw(student))</span><br><span class="line">            did.push_back(student);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            didnt.push_back(student);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// verify thatthe analyses will show us something</span></span><br><span class="line">    <span class="keyword">if</span>(did.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"No student did all the homework!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(didnt.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Every student did all the homework!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// do the analysis</span></span><br><span class="line">    write_analysis(<span class="built_in">cout</span>, <span class="string">"median"</span>, median_grade_aux, did, didnt);</span><br><span class="line">    write_analysis(<span class="built_in">cout</span>, <span class="string">"average"</span>, average_grade, did, didnt);</span><br><span class="line">    write_analysis(<span class="built_in">cout</span>, <span class="string">"median of homework turned in"</span>, optimistic_median, did, didnt);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>I tested this program using the same inputs as I used in the original program. They work exactly the same and yield same outputs. </p>
+<hr>
+<p>To be continued. </p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Liam
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://quantein.com/2018/03/22/C-Using-library-algorithms-Part-2/" title="C++ - Using library algorithms (Part 2)">http://quantein.com/2018/03/22/C-Using-library-algorithms-Part-2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/Notes/" rel="tag"># Notes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/03/21/C-Using-library-algorithms/" rel="prev" title="C++ - Using library algorithms (Part 1)">
+      <i class="fa fa-chevron-left"></i> C++ - Using library algorithms (Part 1)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/03/25/C-Using-library-algorithms-Part-3/" rel="next" title="C++ - Using library algorithms (Part 3)">
+      C++ - Using library algorithms (Part 3) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Revisit-the-grading-program"><span class="nav-number">1.</span> <span class="nav-text">Revisit the grading program</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reading-and-Separating-the-students-records"><span class="nav-number">1.1.</span> <span class="nav-text">Reading and Separating the students records</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Three-grading-schemes"><span class="nav-number">1.2.</span> <span class="nav-text">Three grading schemes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-median-grading-scheme"><span class="nav-number">1.2.1.</span> <span class="nav-text">The median grading scheme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-average-grading-scheme"><span class="nav-number">1.2.2.</span> <span class="nav-text">The average grading scheme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-optimistic-median-grading-scheme"><span class="nav-number">1.2.3.</span> <span class="nav-text">The optimistic_median grading scheme</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-the-grades"><span class="nav-number">1.3.</span> <span class="nav-text">Analyze the grades</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Report-the-analysis"><span class="nav-number">1.4.</span> <span class="nav-text">Report the analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-complete-program"><span class="nav-number">1.5.</span> <span class="nav-text">A complete program</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-simple-Test"><span class="nav-number">1.6.</span> <span class="nav-text">A simple Test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Merging-three-analysis-functions-into-one-single-function"><span class="nav-number">1.7.</span> <span class="nav-text">Merging three analysis functions into one single function</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam</p>
+  <div class="site-description" itemprop="description">Stochastic Modelling Notes; Programming Notes</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/quantliam" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;quantliam" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/yanshijiutu@gmail.com" title="E-Mail → yanshijiutu@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">NaN:aN</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

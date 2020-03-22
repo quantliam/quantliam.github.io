@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C++,Data Structures,Algorithms," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Logical ViewHow to efficiently store a sequence of values (aka. a List) of a given type is crucial for any non-trivial program due to the limited memory. The way we store or organsize data introduces">
+<meta name="keywords" content="C++,Data Structures,Algorithms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ Implementations: Singly Linked List">
+<meta property="og:url" content="http://www.quanttour.com/19/05/2018/C-Implementations-Singly-Linked-List/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="Logical ViewHow to efficiently store a sequence of values (aka. a List) of a given type is crucial for any non-trivial program due to the limited memory. The way we store or organsize data introduces">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://www.quanttour.com/images/insertatbegining.PNG">
+<meta property="og:updated_time" content="2018-05-28T03:17:20.933Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ Implementations: Singly Linked List">
+<meta name="twitter:description" content="Logical ViewHow to efficiently store a sequence of values (aka. a List) of a given type is crucial for any non-trivial program due to the limited memory. The way we store or organsize data introduces">
+<meta name="twitter:image" content="http://www.quanttour.com/images/insertatbegining.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.quanttour.com/19/05/2018/C-Implementations-Singly-Linked-List/"/>
+
+
+
+
+
+  <title>C++ Implementations: Singly Linked List | Liam's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/19/05/2018/C-Implementations-Singly-Linked-List/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++ Implementations: Singly Linked List</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-19T15:26:10+08:00">
+                19-05-2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithms/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  4,053
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  25
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Logical-View"><a href="#Logical-View" class="headerlink" title="Logical View"></a>Logical View</h1><p>How to efficiently store a sequence of values (aka. a List) of a given type is crucial for any non-trivial program due to the limited memory. The way we store or organsize data introduces an important concept, that is, data structures. A data structure is proposed to manage data in a specific way so that we can use it efficiently according to specific needs. </p>
+<p>In C++/C, the most common facility we use is so called built-in <strong>array</strong>, which stores a given number of elements in a contiguous memory block. All elements are stored in certain order indicated by their addresses. When we want to access any one of the elements, we pass the order of that element to the computer. Then the computer will calculate the address of that element based on the initial address of the array, and then return us the associated value. Since the addresses are contiguous and the size of memory occupied by the given type is fixed, we can always get any element in constant time: there is only one arithmetic operation needed. Naturally, we can modify any one of elements in constant time as well. However, the shortingcoming is obvious: an array has fixed length. There are two ways to solve this problem, one is that we can preset a large enough size for the array, however, doing so is very inefficient in terms of memory usage. Another way is to dynamically allocated an array when it is needed. However, doing so possibly invalidates all pointers/iterators as all elements are moved to a new allocated storage, which is also very inefficient in terms of time cost(O(n)). Even if the allocated storage is sufficient, any modifications of the array, such as, insert or delete element, also invalidates parts or all of the pointers/iterators, and hence these operations have high time cost: O(n). </p>
+<p>An alternative data structure is named <strong>Linked List</strong>, which stores data in a noncontinuous memory space through a manner that each element are connected and ordered by pointers. More specific, an element of a singly linked list is an single object (aka. Linked Node) that contains two members: one is the data stored in the object, and the other is the address (i.e. a pointer variable) of the next element. </p>
+<h1 id="Basic-Operations"><a href="#Basic-Operations" class="headerlink" title="Basic Operations"></a>Basic Operations</h1><p>The entrance of a singly linked list is a pointer to the <strong>Head Node</strong>, i.e. the first Linked Node. If the linked list is empty, the pointer to the <strong>Head Node</strong> is a <strong>nullptr</strong>. To access one element, we have to start from the <strong>Head Node</strong> and move one <strong>Node</strong> by one <strong>Node</strong>. Therefore, unlike the array, the time to access elements of the linked list is proportational to the size of the linked list, that is, the time complexity is O(n). Naturally if we want to insert or delete one element into/from the list, we have to find the position or the specific element first. The time complexity is also O(n). One advantage compared to the array is that it doesn’t worry about the size of the storage. We do not need to preset the length of the list and hence no extra memory is wasted. But it does need extra memory for storing the pointer variable in each <strong>Linked Node</strong>. Another advantage is that the operations such as insert or delete doesn’t change other elements, which is crucial for us when we manipulate an object by pointers or iterators. Now let’s briefly summarize these two elementary data structures: Array and Linked List.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">Array</th>
+<th style="text-align:left">Linked List</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Cost of accessing an element of an element</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">Memory requirement</td>
+<td style="text-align:left">Fixed size: used memory and unused memory</td>
+<td style="text-align:left">No unused memory but need extra memory for pointer variables</td>
+</tr>
+<tr>
+<td style="text-align:left">Cost of Inserting or deleting an element</td>
+<td style="text-align:left">Inserting at beging: O(n); Insering at the end: O(1) if there exists unused memory but O(n) is the array is full; Inserting at middle: O(n)</td>
+<td style="text-align:left">Inserting at begining:O(1); Inserting at the end: O(n); Inserting at middle: O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">Source:<a href="https://www.youtube.com/watch?v=hNP72JdOIgY&amp;index=17&amp;list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P" target="_blank" rel="noopener">mycodeschool</a></td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<p>From above table, we can see that whether to use an array or a linked list depends on that what is the most frequent operation the program performs and what is the size of the data structure.</p>
+<h1 id="Implementations"><a href="#Implementations" class="headerlink" title="Implementations"></a>Implementations</h1><p>To define a abstract data type based on the <strong>singly linked list</strong>, the first step is to write the <strong>Linked Node</strong>:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">    T data;</span><br><span class="line">    Node* next;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>The <strong>Node</strong> struct is templated for satisfying different underlying types. It contains two items: one is named <strong>data</strong> which for storing values of <strong>T</strong> type and ther other named <strong>next</strong> which is a pointer to a <strong>Node</strong> object. Next we define the class type based on the singly linked list model described above. In fact, we can incorporate the <strong>Node</strong> type into our singly linked list class as a private member for the purpose of hidding the implementation details. As mentioned above, the only information we know is the pointer to the <strong>Head Node</strong>, therefore, I declare a private member <strong>ptrToHead</strong> to indicate the address of the <strong>Head Node</strong>. Also, I define a unsigned integer to count the number of elements stored in a linked list. For the sake of convenience, I write a private function <strong>create</strong> to create a Node with a particular value. Following code shows the full view of the <strong>SinglyLinkedList</strong> class template. Noting that this implementation is not a <strong>STL</strong> style implementation. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SinglyLinkedList</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>;</span> <span class="comment">// forward declaration</span></span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> X&gt;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">reverse</span><span class="params">(SinglyLinkedList&lt;X&gt;&amp;, </span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">typename</span> SinglyLinkedList&lt;X&gt;::Node*)</span></span></span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">    SinglyLinkedList(): ptrToHead(<span class="literal">nullptr</span>), count(<span class="number">0</span>) &#123;              <span class="comment">// create an empty linked_list</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"default constructor"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">    explicit SinglyLinkedList(const size_type, const T&amp; val = T()); // create an linked list with size</span><br><span class="line">    SinglyLinkedList(<span class="keyword">const</span> SinglyLinkedList&amp;);                      <span class="comment">// copy constructor</span></span><br><span class="line">    SinglyLinkedList&amp; <span class="keyword">operator</span>= (<span class="keyword">const</span> SinglyLinkedList&amp;);          <span class="comment">// assignment operator   </span></span><br><span class="line">    ~SinglyLinkedList();                                            <span class="comment">// destructor</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;                                                   <span class="comment">// clear  </span></span><br><span class="line">    <span class="function">Node* <span class="title">begin</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> ptrToHead; &#125;                             <span class="comment">// get pointer to Head Node</span></span><br><span class="line">    <span class="function"><span class="keyword">const</span> Node* <span class="title">begin</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> ptrToHead; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> ptrToHead == <span class="literal">nullptr</span>; &#125;             <span class="comment">// check whether is empty    </span></span><br><span class="line">    <span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> count; &#125;                        <span class="comment">// get the size of the list</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push_front</span><span class="params">(<span class="keyword">const</span> T&amp;)</span></span>;                                      <span class="comment">// insert at begining</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">const</span> T&amp;)</span></span>;                                       <span class="comment">// insert at the end</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(size_type, <span class="keyword">const</span> T&amp;)</span></span>;                               <span class="comment">// insert at the nth position</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop_front</span><span class="params">()</span></span>;                                               <span class="comment">// delete at the begining</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop_back</span><span class="params">()</span></span>;                                                <span class="comment">// delete the last element</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">erase</span><span class="params">(size_type)</span></span>;                                          <span class="comment">// delete at nth position</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">()</span></span>;                                                 <span class="comment">// reverse the order iteratively   </span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">const</span> T&amp;)</span></span>;                                          <span class="comment">// remove elements with specific values</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// nested Node type</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">        T data;</span><br><span class="line">        Node* next;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// data members</span></span><br><span class="line">    Node* ptrToHead;</span><br><span class="line">    size_type count;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create a new Node</span></span><br><span class="line">    <span class="function">Node* <span class="title">create</span><span class="params">(<span class="keyword">const</span> T&amp; val)</span></span>&#123;</span><br><span class="line">        Node* new_node = <span class="keyword">new</span> Node;</span><br><span class="line">        new_node-&gt;data = val;</span><br><span class="line">        new_node-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="keyword">return</span> new_node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Let’s define the special members first:</p>
+<h2 id="constructors"><a href="#constructors" class="headerlink" title="constructors"></a>constructors</h2><p>The default constructor initializes the <strong>ptrToHead</strong> to <strong>nullptr</strong> and <strong>count</strong> to 0, hence constructs an empty linked list. The second constructor constructs a linked list with a size and a value of <strong>T</strong> type. If no value supplied, the <strong>data</strong> member in each <strong>Node</strong> will be default-initialized or value-initialized depending on whether there exists a user-defined <strong>default constructor</strong> in the definition of <strong>T</strong> type. Also I specify this constructor as <strong>explicit</strong> to avoid potential type conversion. To validate my implementation, I instrument these special members by adding outputs when these members are called. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// constructor that takes a size and a value: O(n)</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:SinglyLinkedList(size_type n, <span class="keyword">const</span> T&amp; val)&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"constructor with parameters"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">if</span>(n &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        ptrToHead = create(val);</span><br><span class="line">        count = <span class="number">1</span>;</span><br><span class="line">        Node* temp = ptrToHead;</span><br><span class="line">        <span class="keyword">while</span>(count != n)&#123;</span><br><span class="line">            temp-&gt;next = create(val);</span><br><span class="line">            temp = temp-&gt;next;</span><br><span class="line">            ++count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The logic is simple: first create the <strong>Head Node</strong> and store its address into <strong>ptrToHead</strong>, at the same time, update the count to 1 representing that currently we have one element in our linked list; Then, create the rest Nodes and link one by one. We use a temporary pointer to move forward as we don’t want to modify the <strong>ptrToHead</strong>. The time cost is proportional to the length of the linked list and therefore the time complexity is big oh of n, where n represents the number of elements stored in the linked list.</p>
+<p>Next is the copy constructor which controls the copy operation. The definition is similar to above constructor except that, the copy constructor constructs an object using values stored in the argument. If the argument is an empty linked list, we construct an empty linked list as well through the initialization list.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// copy constructor: O(n)</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:SinglyLinkedList(<span class="keyword">const</span> SinglyLinkedList&amp; l): ptrToHead(<span class="literal">nullptr</span>), count(<span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"copy constructor"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">if</span>(!l.empty())&#123;</span><br><span class="line">        ptrToHead = create(l.begin()-&gt;data);</span><br><span class="line">        count = <span class="number">1</span>;</span><br><span class="line">        Node* temp1 = ptrToHead;</span><br><span class="line">        <span class="keyword">const</span> Node* temp2 = l.begin();</span><br><span class="line">        <span class="keyword">while</span>(count != l.size())</span><br><span class="line">        &#123;</span><br><span class="line">            temp1-&gt;next = create(temp2-&gt;next-&gt;data);</span><br><span class="line">            temp1 = temp1-&gt;next;</span><br><span class="line">            temp2 = temp2-&gt;next;</span><br><span class="line">            ++count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The assignment operator is similar to our copy costructor except that it needs to obliterate the old values stored in the left-hand side operand. If the argument is an empty linked list, we only need to execute the <strong>clear()</strong> function to delete all nodes (if exist) to get an empty linked list.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// assignment operator: O(n)</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">SinglyLinkedList</span>&lt;T&gt;&amp; <span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:<span class="keyword">operator</span>= (<span class="keyword">const</span> SinglyLinkedList&amp; l)&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"assignment operator"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">if</span>(&amp;l != <span class="keyword">this</span>)&#123;</span><br><span class="line">        clear();</span><br><span class="line">        <span class="keyword">if</span>(!l.empty())&#123;</span><br><span class="line">            ptrToHead = create(l.begin()-&gt;data);</span><br><span class="line">            count = <span class="number">1</span>;</span><br><span class="line">            Node* temp1 = ptrToHead;</span><br><span class="line">            <span class="keyword">const</span> Node* temp2 = l.begin();</span><br><span class="line">            <span class="keyword">while</span>(count != l.size())</span><br><span class="line">            &#123;</span><br><span class="line">                temp1-&gt;next = create(temp2-&gt;next-&gt;data);</span><br><span class="line">                temp1 = temp1-&gt;next;</span><br><span class="line">                temp2 = temp2-&gt;next;</span><br><span class="line">                ++count;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="destructor-amp-clear-member"><a href="#destructor-amp-clear-member" class="headerlink" title="destructor &amp; clear member"></a>destructor &amp; clear member</h2><p>The destructor is implemented by executing the <strong>clear()</strong> function.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// destructor</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:~SinglyLinkedList() &#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"destructor"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    clear();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// clear function: the time complexity O(n)</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:clear()&#123;</span><br><span class="line">    Node* current = ptrToHead;</span><br><span class="line">    <span class="keyword">while</span>(current != <span class="literal">nullptr</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ptrToHead = ptrToHead-&gt;next;</span><br><span class="line">        <span class="keyword">delete</span> current;</span><br><span class="line">        current = ptrToHead;</span><br><span class="line">        --count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Due to the <strong>ptrToHead</strong> is the only entrance for us, we cannot delete it directly. Therefore, we do it by virtue of a temporary pointer, which points to the Node to be deleted. For example, let it points to the Head Node, then we can release the <strong>ptrToHead</strong> and let the <strong>ptrToHead</strong> points to our next Node, and then we clear the Head Node by delete the temporary pointer. </p>
+<h2 id="push-front-push-back-insert"><a href="#push-front-push-back-insert" class="headerlink" title="push_front, push_back, insert"></a>push_front, push_back, insert</h2><p>The <strong>push_front</strong> means that we can add a new element at the very begining of our linked list. It is simple to do this, making the <strong>ptrToHead</strong> points to our new Node. But noting that when the linked list is not empty, we should stores the address of the original Head Node into the <strong>next</strong> member of our new Node.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// insert at begining: O(1)</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:push_front(<span class="keyword">const</span> T&amp; val) &#123;</span><br><span class="line">	Node* new_node = create(val);</span><br><span class="line">	<span class="keyword">if</span>(ptrToHead != <span class="literal">nullptr</span>)</span><br><span class="line">		new_node-&gt;next = ptrToHead;</span><br><span class="line">	ptrToHead = new_node;</span><br><span class="line">	++count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The case of appending a new Node at the end of the linked list is a little bit complex. The function is shown below.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// insert at the end: O(n)</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:push_back(<span class="keyword">const</span> T&amp; val) &#123;</span><br><span class="line">	Node* new_node = create(val);</span><br><span class="line">	<span class="keyword">if</span>(ptrToHead == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">		ptrToHead = new_node;</span><br><span class="line">		++count;</span><br><span class="line">		pointToHead-&gt;data &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Node* temp = ptrToHead;</span><br><span class="line">	<span class="keyword">while</span>(temp-&gt;next != <span class="literal">nullptr</span>)</span><br><span class="line">		temp = temp-&gt;next;</span><br><span class="line">	temp-&gt;next = new_node;</span><br><span class="line">	++count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>If the linked list is empty, we simply create a new Node and let <strong>ptrToHead</strong> points to the new Node. If the linked list is not empty, we need to let the <strong>next</strong> member of the last Node points to the newly created Node. To find the address of the last Node, we use the condition:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">temp-&gt;next == <span class="literal">nullptr</span></span><br></pre></td></tr></table></figure></p>
+<p>This condition stops the while loop and by then, <strong>temp</strong> is the address of the last Node. </p>
+<p>Now we consider the case that inserting a new Node at the <strong>n</strong>th position, where <strong>n</strong> is in the range [1, size()]. The case that we insert a new Node at the first position can be tanckled by the <strong>push_front</strong> function. </p>
+<p>The graph below illustrate a 5-Node linked list and the case that we intend to insert the new Node at a non-Head position. For example, we insert at the third position, that is, when n == 3:</p>
+<p><img src="/images/insertatbegining.PNG" alt="Singly Linked List Example"></p>
+<p>We can observe that:</p>
+<ol>
+<li>the newly created Node becomes the third Node and the original third Node becomes the fourth Node.</li>
+<li><p>before inserting </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add2-&gt;next == add2</span><br></pre></td></tr></table></figure>
+<p> after inserting</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add2-&gt;next == addx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>to link following Nodes, we let</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addx-&gt;next == add3</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Now everything is clear: if we want to insert at the <strong>n</strong>th position, we have to find the <strong>n-1</strong> position and link the <strong>n-1</strong>th Node to the newly created Node. Let’s starting from the <strong>ptrToHead</strong> and show the relations between Nodes, Addresses and Iteration times:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        counter i       Address         Node</span><br><span class="line">when    i = 0           ptrToHead       1st Node</span><br><span class="line">        i = 1           add2            2ed Node</span><br><span class="line">        i = 2           add3            3ed Node</span><br><span class="line">        ...             ...             ...</span><br><span class="line">        i = n - 2       add(n - 1)      n - 1 Node</span><br><span class="line">        i = n - 1       addn            n Node</span><br></pre></td></tr></table></figure></p>
+<p>Obviously, we will stop our loop when <strong>i == n - 2</strong> and by then we can manipulate the <strong>n - 1</strong> Node. Following code shows a full view of the <strong>insert</strong> function.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// insert at the nth position, n belongs to [1, size()]: O(n)</span></span><br><span class="line"><span class="comment">// the positions means that we add the new node after (n-1)th position</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:insert(size_type position, <span class="keyword">const</span> T&amp; val)&#123;</span><br><span class="line">    <span class="keyword">if</span>(position &lt; <span class="number">1</span> || position &gt; size())</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">std</span>::domain_error(<span class="string">"Invalid Position"</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(position == <span class="number">1</span>)</span><br><span class="line">        push_front(val);</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        Node* new_node = create(val);</span><br><span class="line">        Node* temp = ptrToHead;</span><br><span class="line">        <span class="keyword">for</span>(size_type i = <span class="number">0</span>; i != position - <span class="number">2</span>; ++i)</span><br><span class="line">            temp = temp-&gt;next;</span><br><span class="line">        new_node-&gt;next = temp-&gt;next;</span><br><span class="line">        temp-&gt;next = new_node;</span><br><span class="line">        ++count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="pop-front-pop-back-erase"><a href="#pop-front-pop-back-erase" class="headerlink" title="pop_front, pop_back, erase"></a>pop_front, pop_back, erase</h2><p>The idea behind these three functions are similar to the inserting operations described above. Hence no further discussion here.<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// delete at the begining: O(1)</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:pop_front()&#123;</span><br><span class="line">	<span class="keyword">if</span>(ptrToHead == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="built_in">std</span>::domain_error(<span class="string">"Empty Linked List"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Node* temp = ptrToHead;</span><br><span class="line">	ptrToHead = ptrToHead-&gt;next;</span><br><span class="line">	<span class="keyword">delete</span> temp;</span><br><span class="line">	--count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// delete the last element: O(n)</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:pop_back()&#123;</span><br><span class="line">	<span class="keyword">if</span>(ptrToHead == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="built_in">std</span>::domain_error(<span class="string">"Empty Linked List"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">    erase(size());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// delete at nth position: O(n)</span></span><br><span class="line"><span class="comment">// n belongs to [1, size()], the position after n - 1</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:erase(size_type position)&#123;</span><br><span class="line">	<span class="keyword">if</span>(position &lt; <span class="number">1</span> || position &gt; size())</span><br><span class="line">		<span class="keyword">throw</span> <span class="built_in">std</span>::domain_error(<span class="string">"Invalid Position"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(position == <span class="number">1</span>)</span><br><span class="line">		pop_front();</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		Node* current = ptrToHead;</span><br><span class="line">		<span class="keyword">for</span> (size_type i = <span class="number">0</span>; i != position<span class="number">-2</span>; ++i)</span><br><span class="line">			current = current-&gt;next;</span><br><span class="line">		Node* temp = current-&gt;next;</span><br><span class="line">		current-&gt; next = temp-&gt;next;</span><br><span class="line">		<span class="keyword">delete</span> temp;</span><br><span class="line">		--count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#<span class="meta"># remove</span></span><br><span class="line"><span class="comment">// remove elements with specific values: O(n^2)</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">SinglyLinkedList</span>&lt;T&gt;:</span>:remove(<span class="keyword">const</span> T&amp; val)&#123;</span><br><span class="line">	Node* current = ptrToHead;</span><br><span class="line">	size_type i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(current != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(current-&gt;data == val)&#123;</span><br><span class="line">			current = current-&gt;next;</span><br><span class="line">			erase(i + <span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			current = current-&gt;next;</span><br><span class="line">			++i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">The remove function allows us to remove all elements that contains data values equal to a supplied value. My solution is to find the positions of the Nodes that should be removed and then call the **erase** function by passing the position. Taking an example(see below graph), suppose one want to remove any element that has value **v3**, we should find the previous position, that is, **2ed Node**, and then break the link and rebuilt the link between **2ed Node** and **4th Node** through:</span><br></pre></td></tr></table></figure></p>
+<p>temp = add2-&gt;next<br>temp = temp-&gt;next<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![Remove operation](/images/remove.PNG)</span><br><span class="line"></span><br><span class="line">If we loop through the linked list starting from the **ptrToHead**, the mapping relations are as follows:</span><br></pre></td></tr></table></figure></p>
+<pre><code>counter i       values           position
+</code></pre><p>when    i = 0           v1               1<br>        i = 1           v2               2<br>        i = 2           v3               3<br>        …             …              …<br>        i = n - 2       v(n - 1)         n - 1<br>        i = n - 1       vn               n<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">When i == 2, the position that should be deleted is positioned at **i+1**. Therefore, we pass **i+1** to the **erase** function. But noting that before we delete the Node, we should let **current** points to the Node that closely followed the Node to be deleted. In addition, we should not advance the counter **i** as now the Node pointed by **current** hasn&apos;t be checked. But if a Node doesn&apos;t satisfy the condition, we move forward the **current** as well as the counter **i**. </span><br><span class="line"></span><br><span class="line">## reverse</span><br><span class="line">In our **SinglyLinkedList**, we define two **reverse** functions, one of which is a member defined based on iteration while the other one is a non-member function defined based on recursion. </span><br><span class="line">```c++</span><br><span class="line">// reverse the order: iteration version O(n)</span><br><span class="line">template &lt;class T&gt;</span><br><span class="line">void SinglyLinkedList&lt;T&gt;::reverse()&#123;</span><br><span class="line">	Node* prev = nullptr;</span><br><span class="line">	Node* current = ptrToHead;</span><br><span class="line">	Node* next;</span><br><span class="line">	while(current != nullptr)&#123;</span><br><span class="line">		next = current-&gt;next;</span><br><span class="line">		current-&gt;next = prev;</span><br><span class="line">		prev = current;</span><br><span class="line">		current = next;</span><br><span class="line">	&#125;</span><br><span class="line">	ptrToHead = prev;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The basic idea behind the <strong>reverse</strong> function is that let each Node stores the address of the previous Node.<br>The initial information is that: </p>
+<ol>
+<li>the previous address for the Head Node is <strong>nullptr</strong></li>
+<li>the current address for the Head Node is <strong>ptrToHead</strong></li>
+</ol>
+<p>There are four steps in each iteration:</p>
+<ol>
+<li>temporarily stores the address of next Node as <strong>next = current-&gt;next</strong> will be rewrite </li>
+<li>rewrite the <strong>current-&gt;next</strong> with the previous address</li>
+<li>in next iteration, the previous address is the current address in this iteration, hence let <strong>prev = current</strong></li>
+<li>in next iteration, the current address is the next address in this iteration, hence let <strong>current = next</strong></li>
+</ol>
+<p>The recursive version starts from the last Node but still uses the same idea. Don’t forget to add this function template as the friend of our <strong>SinglyLinkedList</strong> class.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// reverse the order: recursion version O(n)</span></span><br><span class="line"><span class="comment">// space complexity: O(n)</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> X&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(SinglyLinkedList&lt;X&gt;&amp; l, <span class="keyword">typename</span> SinglyLinkedList&lt;X&gt;::Node* p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p-&gt;next == <span class="literal">nullptr</span> || l.empty())&#123;</span><br><span class="line">		l.ptrToHead = p;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	reverse(l, p-&gt;next);</span><br><span class="line">	<span class="keyword">typename</span> SinglyLinkedList&lt;X&gt;::Node* q = p-&gt;next;</span><br><span class="line">	q-&gt;next = p;</span><br><span class="line">	p-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>I have tested every member in this class template and the results show that this <strong>SinglyLinkedList</strong> works perfectly. Please find the test program and results below:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * this program tests all operations that provided by the</span></span><br><span class="line"><span class="comment"> * SinglyLinkedList&lt;T&gt; class</span></span><br><span class="line"><span class="comment"> * created by Liam on: 28 Apr 2018</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"SinglyLinkedList.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">print</span>(<span class="title">T</span>&amp; <span class="title">l</span>)&#123;</span></span><br><span class="line">    <span class="keyword">auto</span> it = l.begin();</span><br><span class="line">    <span class="keyword">for</span>(; it != <span class="literal">nullptr</span>; it = it-&gt;next)&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; it-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#123;	<span class="comment">// construct an empty linked list</span></span><br><span class="line">    SinglyLinkedList&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">    <span class="keyword">if</span>(s.empty())</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"s is an empty linked list\n"</span></span><br><span class="line">                <span class="string">"the size of s1 is: "</span> &lt;&lt; s.size()  &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// call destructor once reaches the end of this block</span></span><br><span class="line">&#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#123;	<span class="comment">// construct a linked  list that contains 10 elements, all values are 100</span></span><br><span class="line">    SinglyLinkedList&lt;<span class="keyword">int</span>&gt; s(<span class="number">10</span>, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// construct a linked list by copying from s</span></span><br><span class="line">    SinglyLinkedList&lt;<span class="keyword">int</span>&gt; s_copy(s);</span><br><span class="line">    <span class="keyword">if</span>(!s.empty() &amp;&amp; !s_copy.empty())&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"the size of s is: "</span> &lt;&lt; s.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"the size of s_copy is: "</span> &lt;&lt; s_copy.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// print the contents of s</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"all elements in s: "</span>;</span><br><span class="line">    print(s);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// call destructor twice</span></span><br><span class="line">&#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#123;	<span class="comment">// assignment</span></span><br><span class="line">    SinglyLinkedList&lt;<span class="keyword">int</span>&gt; s(<span class="number">10</span>, <span class="number">100</span>);</span><br><span class="line">    SinglyLinkedList&lt;<span class="keyword">int</span>&gt; s_copy;</span><br><span class="line">    s_copy = s;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// print the contents of s</span></span><br><span class="line">&#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#123;	<span class="comment">// push front</span></span><br><span class="line">    SinglyLinkedList&lt;<span class="keyword">double</span>&gt; s;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">5</span>; i != <span class="number">0</span>; --i)</span><br><span class="line">        s.push_front(i);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"after adding elements at front, s becomes: "</span>;</span><br><span class="line">    print(s);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// push back</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">5</span>; i != <span class="number">0</span>; --i)</span><br><span class="line">        s.push_back(i);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"after adding elements at the end, s becomes: "</span>;</span><br><span class="line">        print(s);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// insert at position 5</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">5</span>; i != <span class="number">0</span>; --i)</span><br><span class="line">        s.insert(i, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"after inserting elements in-between, s becomes: "</span>;</span><br><span class="line">            print(s);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// delete from the begining</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">5</span>; i != <span class="number">0</span>; --i)</span><br><span class="line">        s.pop_front();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"after deleting from the begining, s becomes: "</span>;</span><br><span class="line">    print(s);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// delete from the end</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">5</span>; i != <span class="number">0</span>; --i)</span><br><span class="line">        s.pop_back();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"after deleting from the end, s becomes: "</span>;</span><br><span class="line">    print(s);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// erase at in-between positions</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i != <span class="number">0</span>; --i)</span><br><span class="line">        s.erase(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"after deleting from other positions, s becomes: "</span>;</span><br><span class="line">        print(s);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#123;	<span class="comment">// remove</span></span><br><span class="line">    SinglyLinkedList&lt;<span class="keyword">int</span>&gt; s(<span class="number">5</span>, <span class="number">5</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">5</span>; i != <span class="number">0</span>; --i)</span><br><span class="line">        s.insert(<span class="number">5</span>, i);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"at present, s contains following elements: "</span>;</span><br><span class="line">    print(s);</span><br><span class="line"></span><br><span class="line">    s.remove(<span class="number">5</span>);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"after removing all elements equal 5, s becomes: "</span>;</span><br><span class="line">    print(s);</span><br><span class="line">&#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#123;	<span class="comment">// test reverse function</span></span><br><span class="line">    SinglyLinkedList&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i != <span class="number">10</span>; ++i)</span><br><span class="line">        s.push_back(i);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"at present, s contains following elements: "</span>;</span><br><span class="line">        print(s);</span><br><span class="line"></span><br><span class="line">    s.reverse();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"reverse: "</span>;</span><br><span class="line">        print(s);</span><br><span class="line"></span><br><span class="line">    s.reverse();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"reverse again: "</span>;</span><br><span class="line">        print(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>Outputs:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">default constructor</span><br><span class="line">s is an empty linked list</span><br><span class="line">the size of s1 is: 0</span><br><span class="line">destructor</span><br><span class="line"></span><br><span class="line">constructor with parameters</span><br><span class="line">copy constructor</span><br><span class="line">the size of s is: 10</span><br><span class="line">the size of s_copy is: 10</span><br><span class="line">all elements in s: 100 100 100 100 100 100 100 100 100 100 </span><br><span class="line">destructor</span><br><span class="line">destructor</span><br><span class="line"></span><br><span class="line">constructor with parameters</span><br><span class="line">default constructor</span><br><span class="line">assignment operator</span><br><span class="line">destructor</span><br><span class="line">destructor</span><br><span class="line"></span><br><span class="line">default constructor</span><br><span class="line">after adding elements at front, s becomes: 1 2 3 4 5 </span><br><span class="line">after adding elements at the end, s becomes: 1 2 3 4 5 5 4 3 2 1 </span><br><span class="line">after inserting elements in-between, s becomes: 0 1 0 2 0 3 0 4 0 5 5 4 3 2 1 </span><br><span class="line">after deleting from the begining, s becomes: 3 0 4 0 5 5 4 3 2 1 </span><br><span class="line">after deleting from the end, s becomes: 3 0 4 0 5 </span><br><span class="line">after deleting from other positions, s becomes: 3 0 </span><br><span class="line">destructor</span><br><span class="line"></span><br><span class="line">constructor with parameters</span><br><span class="line">at present, s contains following elements: 5 5 5 5 1 2 3 4 5 5 </span><br><span class="line">after removing all elements equal 5, s becomes: 1 2 3 4 </span><br><span class="line">destructor</span><br><span class="line"></span><br><span class="line">default constructor</span><br><span class="line">at present, s contains following elements: 0 1 2 3 4 5 6 7 8 9 </span><br><span class="line">reverse: 9 8 7 6 5 4 3 2 1 0 </span><br><span class="line">reverse again: 0 1 2 3 4 5 6 7 8 9 </span><br><span class="line">destructor</span><br></pre></td></tr></table></figure></p>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/Data-Structures/" rel="tag"># Data Structures</a>
+          
+            <a href="/tags/Algorithms/" rel="tag"># Algorithms</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/18/05/2018/Sorting-Algorithms-C-Implementations-Quick-Sort/" rel="next" title="Sorting Algorithms C++ Implementations - Quick Sort">
+                <i class="fa fa-chevron-left"></i> Sorting Algorithms C++ Implementations - Quick Sort
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/26/05/2018/C-Implementations-Doubly-Linked-List/" rel="prev" title="C++ Implementations: Doubly Linked List">
+                C++ Implementations: Doubly Linked List <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Liam</p>
+              <p class="site-description motion-element" itemprop="description">Stochastic Modelling Notes; Programming Notes</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/quantliam" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yanshijiutu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Logical-View"><span class="nav-number">1.</span> <span class="nav-text">Logical View</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Operations"><span class="nav-number">2.</span> <span class="nav-text">Basic Operations</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Implementations"><span class="nav-number">3.</span> <span class="nav-text">Implementations</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#constructors"><span class="nav-number">3.1.</span> <span class="nav-text">constructors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#destructor-amp-clear-member"><span class="nav-number">3.2.</span> <span class="nav-text">destructor &amp; clear member</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#push-front-push-back-insert"><span class="nav-number">3.3.</span> <span class="nav-text">push_front, push_back, insert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pop-front-pop-back-erase"><span class="nav-number">3.4.</span> <span class="nav-text">pop_front, pop_back, erase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test"><span class="nav-number">3.5.</span> <span class="nav-text">Test</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">129.6k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

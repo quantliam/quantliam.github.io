@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C++,Notes," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="The program we have accomplished in last chapter is good enough for computing one students’ final grade, however, is unpractical in reality when it comes to generating a final grade report for a class">
+<meta name="keywords" content="C++,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ - Organizing programs with data structures">
+<meta property="og:url" content="http://www.quanttour.com/08/03/2018/Organizing-programs-and-data-Part-2/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="The program we have accomplished in last chapter is good enough for computing one students’ final grade, however, is unpractical in reality when it comes to generating a final grade report for a class">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-03-09T14:36:52.089Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ - Organizing programs with data structures">
+<meta name="twitter:description" content="The program we have accomplished in last chapter is good enough for computing one students’ final grade, however, is unpractical in reality when it comes to generating a final grade report for a class">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.quanttour.com/08/03/2018/Organizing-programs-and-data-Part-2/"/>
+
+
+
+
+
+  <title>C++ - Organizing programs with data structures | Liam's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/08/03/2018/Organizing-programs-and-data-Part-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++ - Organizing programs with data structures</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-08T11:31:03+08:00">
+                08-03-2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2,543
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>The program we have accomplished in last chapter is good enough for computing one students’ final grade, however, is unpractical in reality when it comes to generating a final grade report for a class. Assuming that we have a file that records all students’ information including their names, midterm and final exam grades, and homework grades. For example<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Robin 90 87 79 88 81 73 45</span><br><span class="line">Brendan 70 69 88 100 91 75 66</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>The program is required to compute the final grade for each student and generate a report like<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Bredan <span class="number">76.8</span></span><br><span class="line">Robin  <span class="number">84.4</span></span><br></pre></td></tr></table></figure></p>
+<p>In specific, there are three requirements</p>
+<ol>
+<li>in the final grade, the mediter exam grade counts for 20%, the final exam grade counts for 40%, and the median homework grade counts for 40%. </li>
+<li>the output follows an alphabetical order according to the names.</li>
+<li>the final grades are vertically aligned.</li>
+</ol>
+<p>A similar program has been done in <a href="http://quanttour.com/05/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-3-Part-2/" target="_blank" rel="noopener">Exercise 3-5</a>, which can keep track of grades for several students at once though it uses the average homework grade rather than median value. The whole structure is simply a while loop. <a href="http://quanttour.com/06/03/2018/C-Organizing-programs-and-data/" target="_blank" rel="noopener">The program</a> in last chapter teaches us how to fullfill the first requirement with functions. Now we focus on how to meet the second the third requirements.</p>
+<h1 id="Data-struct"><a href="#Data-struct" class="headerlink" title="Data struct"></a>Data <strong>struct</strong></h1><p>Last chapter mainly introdues how to write functions to deal with computations as well as data reading. However, the information such as name, medterm and final exam grades are still left there. If more information such as age, weight and grade need to be added, the program would be bloated. In fact, all these information can be integrated as a user-defined data structures as follows<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student_info</span> &#123;</span></span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">double</span> midterm, final;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; homework;        </span><br><span class="line">&#125; objectName;</span><br></pre></td></tr></table></figure></p>
+<p>The code defines a <strong>struct</strong> that contains a group of data members. <strong>Student_info</strong> is the name of this type. Each data member is declared with a type and a name. <strong>objectName</strong> is an object of such type. Another way to declare an object is<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student_info objectName;</span><br></pre></td></tr></table></figure></p>
+<p>Note that there must be a semicolon at the end of the curly braces when defining a <strong>struct</strong> type. </p>
+<p>It has been observed that each object of such type holds information for one student. We can store all students’ information into a vector, e.g. vector<student_info> record.</student_info></p>
+<h2 id="reading-data"><a href="#reading-data" class="headerlink" title="reading data"></a>reading data</h2><p>The function that an object of <strong>Student_info</strong> reads data is similar to that for a vector.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Student_info record;</span><br><span class="line">read(<span class="built_in">cin</span>, record);</span><br></pre></td></tr></table></figure></p>
+<p>The <strong>read</strong> function<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream &amp; <span class="title">read</span><span class="params">(istream &amp;is, Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="comment">// reads and store the student's name, midterm and final exam grades</span></span><br><span class="line">    is &gt;&gt; s.name &gt;&gt; s.midterm &gt;&gt; s.final;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reads and store all homework grades</span></span><br><span class="line">    read_hw(is, s.homework);</span><br><span class="line">    <span class="keyword">return</span> is;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Since the function is similar to the <strong>read_hw</strong> function defined in <a href="http://quanttour.com/06/03/2018/C-Organizing-programs-and-data/" target="_blank" rel="noopener">this page</a>, no more discussed here. </p>
+<h2 id="grade-function"><a href="#grade-function" class="headerlink" title="grade function"></a><strong>grade</strong> function</h2><p>Now the data have been stored into a sturct and concequently the grade function becomes<br><strong>overloaded function 1</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> grade(s.meterm, s.final, s.homework)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>overloaded function 2</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> final, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (hw.size() == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> domain_error(<span class="string">"student has done no homework"</span>);</span><br><span class="line">	<span class="keyword">return</span> grade(midterm, final, median(hw));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>overloaded function 3</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> final, <span class="keyword">double</span> homework)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0.2</span>*midterm + <span class="number">0.4</span>*final + <span class="number">0.4</span>*homework;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="stores-all-structs-into-a-vector"><a href="#stores-all-structs-into-a-vector" class="headerlink" title="stores all structs into a vector"></a>stores all <strong>struct</strong>s into a vector</h2><p>Once the <strong>record</strong> finishes reading data for inputs, we can store it into a vector.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;Student_info&gt; students;</span><br><span class="line">Student_info record;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(read(<span class="built_in">cin</span>, record))</span><br><span class="line">&#123;</span><br><span class="line">    students.push_back(record);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="alphabetize-students"><a href="#alphabetize-students" class="headerlink" title="alphabetize students"></a>alphabetize <strong>students</strong></h1><p>Up to now, we have finished the code for all computations and data reading. The next step is to sort the <strong>students</strong> in an alphabetical order according to students’ names. In previous chapters, we uses the standard algorithm <strong>sort</strong> to accomplish sorting the <strong>homework</strong>. It can also be used to sort the <strong>students</strong>, but before we apply it we need to learn how it works on the <strong>homework</strong>.</p>
+<p><strong>homework</strong> is a vector that contains all values of homework grades. The <strong>sort</strong> function compares objects in the vector using <strong>&lt;</strong>. It is clear when using <strong>&lt;</strong> to compare two numerical values but doesn’t works for the element type of a <strong>struct</strong>. Regarding to this case, the <strong>sort</strong> function provides an optional argument, a <strong>predicate</strong>, for us to define the ways to compare elements.</p>
+<p>A <strong>predicate</strong> is a function that typically yields a true value of type <strong>bool</strong>. Let’s see how is it defined<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> Student_info &amp;x, <span class="keyword">const</span> Student_info &amp;y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x.name &lt; y.name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The usage of the <strong>sort</strong> function is<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort(students.begin(), students.end, compare);</span><br></pre></td></tr></table></figure></p>
+<p>It means that the <strong>sort</strong> function will compare elements in the <strong>students</strong> only according to its member <strong>name</strong>  rather than using <strong>&lt;</strong> directly. As for the effect of <strong>&lt;</strong> on strings, the expression is evaluated to be true if <strong>x.name</strong> is alphabetically ahead of <strong>y.name</strong>. Specifically, when compare two strings</p>
+<ol>
+<li>the result is the result of comparing the first character at which the strings differ. </li>
+<li>if all characters of one string equal to the corresponding characters of another string, then the shorter one is less than the longer one. </li>
+</ol>
+<h1 id="align-the-final-grade-vertically"><a href="#align-the-final-grade-vertically" class="headerlink" title="align the final grade vertically"></a>align the final grade vertically</h1><p>Now we deal with the third requirement. Each line of outputs is formed by <strong>s.name</strong>, a blank string, and the <strong>grade</strong>. The key to solve this problem is to write a blank string with appropriate length such that all lines have same total length ahead of the final grades while the total length depends on the longest name. The minimum number of spaces between a name and a grade is one. The process can be logically divided into three steps</p>
+<ol>
+<li>find the longest name</li>
+<li>calculate the total length ahead of the grade: the size of the longest name plus one(space).</li>
+<li>Create a blank string for each line with length: the total length minus the size of each name. </li>
+</ol>
+<p>To find the longest name, we use another the <strong>max</strong> function defined in the header <algorithm>. The syntax is<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">max(el, e2);</span><br></pre></td></tr></table></figure></algorithm></p>
+<p>It returns the larger one of two expressions which yield values of the same type. The comparison is similar to <a href="http://quanttour.com/04/03/2018/Accelerated-C-Solutions-to-Exercise-Chapter-3/" target="_blank" rel="noopener">Exercise 3-4 strategy 2</a>. </p>
+<h1 id="A-complete-program"><a href="#A-complete-program" class="headerlink" title="A complete program"></a>A complete program</h1><p>Above steps show the core technicals that deals with three requirements mentioned at the begining. The new program built on <strong>struct</strong> and <strong>functions</strong> is presented as below<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;Student_info&gt; students;</span><br><span class="line">    Student_info record;</span><br><span class="line">    <span class="built_in">string</span>::size_type maxlen = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read and store all the records, and find the length of the longest name</span></span><br><span class="line">    <span class="keyword">while</span>(read(<span class="built_in">cin</span>, record))</span><br><span class="line">    &#123;</span><br><span class="line">        maxlen = max(maxlen, record.name.size());</span><br><span class="line">        students.push_back(record);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// alphabetize the records</span></span><br><span class="line">    sort(students.begin(), students.end(), compare);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write each line of outpurs</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">vector</span>&lt;Student_info&gt;::size_type i = <span class="number">0</span>; i != students.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// write the name, blanks </span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; students[i].name &lt;&lt; <span class="built_in">string</span>(maxlen + <span class="number">1</span> - students[i].name.size(), <span class="string">' '</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// compute and write the final grade</span></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">double</span> final_grade = grade(students[i]);</span><br><span class="line">            streamsize prec = <span class="built_in">cout</span>.precision();</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">3</span>) &lt;&lt; final_grade &lt;&lt; setprecision(prec);</span><br><span class="line">        &#125; <span class="keyword">catch</span>(domain_error e)&#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; e.what();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>In this program, we uses a new function <strong>what</strong> to write the diagnostic message if an exception is thrown. The catch clause named the diagnostic message as <strong>e</strong>, i.e. the object that contains the message. The message can be obtained from <strong>what()</strong>. </p>
+<h1 id="Seperate-compilation"><a href="#Seperate-compilation" class="headerlink" title="Seperate compilation"></a>Seperate compilation</h1><p>Strictly speaking, above program is not a complete program as it doesn’t work when it is executed. Because we haven’t add the functions to be called in this program. It can be done by putting all stuff into a single file, which however may increase complexity and reduce readability. Alternatively, we can seperate the program into several files and compile these files seperately. In fact, we uses seperate compilation since the first program. For example, we can use <strong>IO</strong> class objects by means of including the header and declarations rather than defining the type in our programs. How this is done? Let’s write our own header files!</p>
+<h2 id="header-file-and-source-file"><a href="#header-file-and-source-file" class="headerlink" title="header file and source file"></a>header file and source file</h2><p>To support seperate compilation, C++ distinguishes declarations and definitions which allows muliple files sharing one definition. For example, if we want to seperate the median function from above program, we need to put its definition into a source file named <strong>median.cpp</strong> (depending on your c++ implementations), and put its declarations into a header file named <strong>median.h</strong>. By doing so, the median function is allowed to be accessed in programs as long as we include its header file like<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"median.h"</span></span></span><br></pre></td></tr></table></figure></p>
+<p>The header file is enclosed by double quotes rather than angle brackets, which makes it distinct from the standard library headers. The source file is created as follows<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// source file for median function </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt; // to get declaration of sort</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt; // to get declaration of domain_error</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;    // to get declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;median.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// declarations for names</span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::domain_error;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::sort;</span><br><span class="line"></span><br><span class="line"><span class="comment">// compute the median of vector&lt;double&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// get the size of the vector</span></span><br><span class="line">	<span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::size_type vec_size;</span><br><span class="line">	vec_size size = vec.size();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// check whether the empty is empty</span></span><br><span class="line">	<span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> domain_error(<span class="string">"median of an empty vector"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// sort the grades</span></span><br><span class="line">	sort(vec.begin(), vec.end());</span><br><span class="line"></span><br><span class="line">	<span class="comment">// compute the median homework grade</span></span><br><span class="line">	vec_size mid = size/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">return</span> size % <span class="number">2</span> == <span class="number">0</span> ? (vec[mid] + vec[mid - <span class="number">1</span>])/<span class="number">2</span> : vec[mid];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Note this file includes all needed headers for the median function itself. It contains both the function declarations and definitions, which allows the compiler to check the consistency between the declarations and definitions. The header file can be written as<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_median_h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_median_h</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;)</span></span>;    </span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<p>There are several new points here. First, the file include the needed header <vector>, and use <strong>std::vector</strong> instead of <strong>using std::vector</strong>. This is because we are not sure whether a user want a using declaration in their program as once we add using declaration,  all programs that include this header file get a <strong>using std::vector</strong>. This has been also emphasized in <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a>.<br>Second, <strong>#ifndef</strong> directive responsible for checking whether <strong>GUARD_median_h</strong> is defined. <strong>GUARD_median_h</strong> (aka. header guard) is the name of a preprocessor variable that has two status: defined or not defined. The <strong>#define</strong> directive takes the name and defines it as a preprocessor variable. <strong>ifndef</strong> is true if the preprocessor variable is undefined and the preprocessor will process following contents until encounter <strong>endif</strong>. If <strong>ifndef</strong> is false, subsquent attempts to include <strong>median.h</strong> will be overlooked to avoid multiple inclusion. </vector></p>
+<h1 id="Reorganize-the-final-grade-program"><a href="#Reorganize-the-final-grade-program" class="headerlink" title="Reorganize the final grade program"></a>Reorganize the final grade program</h1><p>The reminder of this post aims to reorganize the final grade program applying the technical, seperate compilation,introduced in this post. Let’s list all functions and data structures needed in this program.</p>
+<ol>
+<li><strong>read</strong> function to read students’ information.</li>
+<li><strong>read_hw</strong> function to read homework grades for each student.</li>
+<li><strong>compare</strong> function as an optional argument in <strong>sort</strong>.</li>
+<li>three <strong>grade functions</strong>(overloaded) to compute the final grade.</li>
+<li><strong>median</strong> function to compute median of homework grades.</li>
+<li>Beyond above functions, we also defined a data structure, <strong>Student_info</strong> to hold student’s information. </li>
+</ol>
+<p>Logically speaking, these entities can be divided into two groups: </p>
+<ul>
+<li>group 1 including 6, 1, 2, 3 deals with information</li>
+<li>group 2 including 4, 5 deals with computation</li>
+</ul>
+<p>Therefore, we can package two groups into two independent files seperately. </p>
+<h2 id="Group-1"><a href="#Group-1" class="headerlink" title="Group 1"></a>Group 1</h2><p><strong>Student_info.h</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_Student_info</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_Student_info</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Student_info.header file</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student_info</span>&#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">double</span> midterm, final;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; homework;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> Student_info &amp;, <span class="keyword">const</span> Student_info &amp;)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">istream &amp; <span class="title">read</span><span class="params">(<span class="built_in">std</span>::istream &amp;, Student_info &amp;)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">istream &amp; <span class="title">read_hw</span><span class="params">(<span class="built_in">std</span>::istream &amp;, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;)</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Student_info.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// source file for Student_info related functions</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>; <span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> Student_info &amp;x, <span class="keyword">const</span> Student_info &amp;y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x.name &lt; y.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">istream &amp; <span class="title">read</span><span class="params">(istream &amp;is, Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="comment">// reads and store the student's name, midterm and final exam grades</span></span><br><span class="line">    is &gt;&gt; s.name &gt;&gt; s.midterm &gt;&gt; s.final;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reads and store all homework grades</span></span><br><span class="line">    read_hw(is, s.homework);</span><br><span class="line">    <span class="keyword">return</span> is;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">istream &amp; <span class="title">read_hw</span><span class="params">(istream &amp;in, <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (in)&#123;</span><br><span class="line">		<span class="comment">//get rid of previous contents</span></span><br><span class="line">		hw.clear();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// read homework grades</span></span><br><span class="line">		<span class="keyword">double</span> x;</span><br><span class="line">		<span class="keyword">while</span>(in &gt;&gt; x)</span><br><span class="line">			hw.push_back(x);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// clear the stream so that input will work for the next student</span></span><br><span class="line">		in.clear();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> in;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Group-2"><a href="#Group-2" class="headerlink" title="Group 2"></a>Group 2</h2><p><strong>grade.h</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_grade_h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_grade_h</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// grade.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span>, <span class="keyword">double</span>, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span>, <span class="keyword">double</span>, <span class="keyword">double</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;)</span></span>;   </span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">**grade.cpp**</span><br><span class="line">```c++</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;    </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"grade.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"student_info.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::domain_error;  <span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;        <span class="keyword">using</span> <span class="built_in">std</span>::sort;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grade function 1</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> grade(s.midterm, s.final, s.homework);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grade function 2</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> final, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (hw.size() == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"student has done no homework"</span>);</span><br><span class="line">    <span class="keyword">return</span> grade(midterm, final, median(hw));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grade function 3</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> final, <span class="keyword">double</span> homework)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.2</span>*midterm + <span class="number">0.4</span>*final + <span class="number">0.4</span>*homework;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// compute the median of vector&lt;double&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// get the size of the vector</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::size_type vec_size;</span><br><span class="line">    vec_size size = vec.size();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check whether the empty is empty</span></span><br><span class="line">    <span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"median of an empty vector"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sort the grades</span></span><br><span class="line">    sort(vec.begin(), vec.end());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute the median homework grade</span></span><br><span class="line">    vec_size mid = size/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> size % <span class="number">2</span> == <span class="number">0</span> ? (vec[mid] + vec[mid - <span class="number">1</span>])/<span class="number">2</span> : vec[mid];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Inputs:</span><br><span class="line"></span><br><span class="line">Robin 90 87 79 88 81 73 45</span><br><span class="line">Brendan 70 69 88 100 91 75 66</span><br><span class="line">Arsenii 99 87 89 88 74 90 70</span><br><span class="line">Liam 83 66 100 76 87 91 78</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">Arsenii 89.8</span><br><span class="line">Brendan 76.8</span><br><span class="line">Liam    77.8</span><br><span class="line">Robin   84.4</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/Notes/" rel="tag"># Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/06/03/2018/C-Organizing-programs-and-data/" rel="next" title="C++ - Organizing programs with functions">
+                <i class="fa fa-chevron-left"></i> C++ - Organizing programs with functions
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/09/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-4/" rel="prev" title="Accelerated C++ Solutions to Exercises(Chapter 4 Part 1)">
+                Accelerated C++ Solutions to Exercises(Chapter 4 Part 1) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Liam</p>
+              <p class="site-description motion-element" itemprop="description">Stochastic Modelling Notes; Programming Notes</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/quantliam" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yanshijiutu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-struct"><span class="nav-number">1.</span> <span class="nav-text">Data struct</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#reading-data"><span class="nav-number">1.1.</span> <span class="nav-text">reading data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grade-function"><span class="nav-number">1.2.</span> <span class="nav-text">grade function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stores-all-structs-into-a-vector"><span class="nav-number">1.3.</span> <span class="nav-text">stores all structs into a vector</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#alphabetize-students"><span class="nav-number">2.</span> <span class="nav-text">alphabetize students</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#align-the-final-grade-vertically"><span class="nav-number">3.</span> <span class="nav-text">align the final grade vertically</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A-complete-program"><span class="nav-number">4.</span> <span class="nav-text">A complete program</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Seperate-compilation"><span class="nav-number">5.</span> <span class="nav-text">Seperate compilation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#header-file-and-source-file"><span class="nav-number">5.1.</span> <span class="nav-text">header file and source file</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reorganize-the-final-grade-program"><span class="nav-number">6.</span> <span class="nav-text">Reorganize the final grade program</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Group-1"><span class="nav-number">6.1.</span> <span class="nav-text">Group 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Group-2"><span class="nav-number">6.2.</span> <span class="nav-text">Group 2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Test"><span class="nav-number">7.</span> <span class="nav-text">Test</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">129.6k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

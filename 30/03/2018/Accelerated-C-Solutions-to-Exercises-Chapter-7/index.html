@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Accelerated C++ Solutions," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Exercise 7-0Compile, execute, and test the programs in this chapter. Solution &amp;amp; ResultsPlease find the programs and detailed analysis in Example 1, 2 and Example 3. Exercise 7-1Extend the program">
+<meta name="keywords" content="Accelerated C++ Solutions">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Accelerated C++ Solutions to Exercises(Chapter 7 Part 1)">
+<meta property="og:url" content="http://www.quanttour.com/30/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-7/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="Exercise 7-0Compile, execute, and test the programs in this chapter. Solution &amp;amp; ResultsPlease find the programs and detailed analysis in Example 1, 2 and Example 3. Exercise 7-1Extend the program">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-03-31T10:00:28.986Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Accelerated C++ Solutions to Exercises(Chapter 7 Part 1)">
+<meta name="twitter:description" content="Exercise 7-0Compile, execute, and test the programs in this chapter. Solution &amp;amp; ResultsPlease find the programs and detailed analysis in Example 1, 2 and Example 3. Exercise 7-1Extend the program">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.quanttour.com/30/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-7/"/>
+
+
+
+
+
+  <title>Accelerated C++ Solutions to Exercises(Chapter 7 Part 1) | Liam's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/30/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Accelerated C++ Solutions to Exercises(Chapter 7 Part 1)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-30T09:40:46+08:00">
+                30-03-2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  3,315
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  21
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Exercise-7-0"><a href="#Exercise-7-0" class="headerlink" title="Exercise 7-0"></a>Exercise 7-0</h1><p>Compile, execute, and test the programs in this chapter.</p>
+<h2 id="Solution-amp-Results"><a href="#Solution-amp-Results" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>Please find the programs and detailed analysis in <a href="http://quanttour.com/27/03/2018/C-Using-associative-containers/" target="_blank" rel="noopener">Example 1, 2</a> and <a href="http://quanttour.com/27/03/2018/C-Using-associative-containers/" target="_blank" rel="noopener">Example 3</a>.</p>
+<h1 id="Exercise-7-1"><a href="#Exercise-7-1" class="headerlink" title="Exercise 7-1"></a>Exercise 7-1</h1><p>Extend the program from §7.2/124 to produce its output sorted by occurrence count.That is, the output should group all the words that occur once, followed by those that occur twice, and so on.</p>
+<h2 id="Solution-amp-Results-1"><a href="#Solution-amp-Results-1" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>The key to the solution is building a map from occurrence numbers to corresponding words. The original program builds a map from each distinct word to its occurrence numbers. Therefore, we can simply inverse the original map. But noting there may be more than one words have the same occurrence numbers. The revised program is shown below:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;		// to get the declaration of cin, cout, endl</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;		// to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;		// to get the declaration of string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;			// to get the declaration of map</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>; 	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">map</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// store each word and an associated counter</span></span><br><span class="line">    <span class="built_in">string</span> s;</span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; counters;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the input, keeping track of each word and how often we see it</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; s)</span><br><span class="line">    &#123;</span><br><span class="line">        ++counters[s];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sort words stored in counters according to the occurence count</span></span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &gt; sorted_counters;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::const_iterator it = counters.begin(); it != counters.end(); ++it)</span><br><span class="line">    &#123;</span><br><span class="line">        sorted_counters[it-&gt;second].push_back(it-&gt;first);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write the words and associated counts</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Words and their associated counts:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::const_iterator it = counters.begin(); it != counters.end(); ++it)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">"\t"</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write a blank line to separate the outputs of two maps</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write occurrence count followed by the corresponding words</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Occurrence count and the  corresponding words:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &gt;::const_iterator it = sorted_counters.begin(); it != sorted_counters.end(); ++it)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; it-&gt;first;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::const_iterator i = (it-&gt;second).begin(); i != (it-&gt;second).end(); ++i)</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt;  <span class="string">' '</span> &lt;&lt; *i;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>It can be observed that the <strong>value</strong>s of the original map are stored into the new map as <strong>key</strong>s while the <strong>key</strong>s are stored as <strong>value</strong>s in the new map. In addition, we specify <strong>vector<string></string></strong> to hold more words that have same occurrence numbers. Now let’s type some words and check the results.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Inputs:</span><br><span class="line"></span><br><span class="line">a dog and a cat</span><br><span class="line">cat is good dog is bad</span><br><span class="line">human is ugly </span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">Words and their associated counts:</span><br><span class="line">a	    2</span><br><span class="line">and	    1</span><br><span class="line">bad	    1</span><br><span class="line">cat	    2</span><br><span class="line">dog	    2</span><br><span class="line">good	1</span><br><span class="line">human	1</span><br><span class="line">is	    3</span><br><span class="line">ugly	1</span><br><span class="line"></span><br><span class="line">Occurrence count and the  corresponding words:</span><br><span class="line">1 and bad good human ugly</span><br><span class="line">2 a cat dog</span><br><span class="line">3 is</span><br></pre></td></tr></table></figure>
+<p>Yeah, it correctly sorts the words according to their occurrence numbers. </p>
+<hr>
+<h1 id="Exercise-7-2"><a href="#Exercise-7-2" class="headerlink" title="Exercise 7-2"></a>Exercise 7-2</h1><p>Extend the program in §4.2.3/64 to assign letter grades by ranges:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A   90-100</span><br><span class="line">B   80-89.99...</span><br><span class="line">C   70-79.99...</span><br><span class="line">D   60-69.99...</span><br><span class="line">F   &lt; 60</span><br></pre></td></tr></table></figure></p>
+<p>The output should list how many students fall into each category.</p>
+<h2 id="Solution-amp-Results-2"><a href="#Solution-amp-Results-2" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>The key to solution is building a map from the letter grades, <strong>A, B, C, D, F</strong>, to the number of students who have the corresponding final grades. Therefore, the map can be defined as:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; grades_count;</span><br></pre></td></tr></table></figure></p>
+<p>The strategy can be divided into four steps:</p>
+<ol>
+<li>read students’ information</li>
+<li>calculate final grade for each student</li>
+<li>check the range of each final grade and get a letter grade (i.e. the <strong>key</strong>)</li>
+<li>increment the <strong>value</strong> associated with the <strong>key</strong> returned in step 3</li>
+</ol>
+<p>Step 1 and step 2 are familar. </p>
+<p>Step 3 needs a function on the final grade. I uses a simple <strong>if-else</strong> statement to complete it:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">letter_grade</span><span class="params">(<span class="keyword">double</span> &amp;grade)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(grade &lt; <span class="number">0</span> || grade &gt; <span class="number">100</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"grade is outside of[0, 100]"</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (grade &gt;= <span class="number">90</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"A"</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(grade &gt;= <span class="number">80</span> &amp;&amp; grade &lt; <span class="number">90</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"B"</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(grade &gt;= <span class="number">70</span> &amp;&amp; grade &lt; <span class="number">80</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"C"</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(grade &gt;= <span class="number">60</span> &amp;&amp; grade &lt; <span class="number">70</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"D"</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"F"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Step 4 is accomplished by the statement:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">++grades_count[letter_grade(final_grade)];</span><br></pre></td></tr></table></figure></p>
+<p><strong>letter_grade(final_grade)</strong> returns a letter grade based on the function above. Then, the map <strong>grades_count</strong> stores (if it is new ) the letter as the key and returns the associated value. Finally, applies <strong>++</strong> operator to increment the associated value, showing the counting process. </p>
+<h3 id="The-complete-program"><a href="#The-complete-program" class="headerlink" title="The complete program"></a>The complete program</h3><p>The complete program is displayed below including files: <strong>mainfunction.cpp, grade.cpp, grade.h, Student_info.cpp and Student_info.h</strong>.</p>
+<p><strong>mainfunction.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;		// to get the declaration of cin, cout, endl</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;		// to get the declaration of domain_error</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;		// to get the declaration of string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;		// to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;			// to get the declaration of map</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span>	<span class="comment">// to get the declaration of Student_info</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"grade.h"</span>		<span class="comment">// to get the declaration of grade</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;			<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;			<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::domain_error;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">map</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">letter_grade</span><span class="params">(<span class="keyword">double</span> &amp;grade)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(grade &lt; <span class="number">0</span> || grade &gt; <span class="number">100</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"grade is outside of[0, 100]"</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (grade &gt;= <span class="number">90</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"A"</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(grade &gt;= <span class="number">80</span> &amp;&amp; grade &lt; <span class="number">90</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"B"</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(grade &gt;= <span class="number">70</span> &amp;&amp; grade &lt; <span class="number">80</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"C"</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(grade &gt;= <span class="number">60</span> &amp;&amp; grade &lt; <span class="number">70</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"D"</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"F"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// read and store all the records</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;Student_info&gt; students;</span><br><span class="line">    Student_info record;</span><br><span class="line">    <span class="keyword">while</span>(read(<span class="built_in">cin</span>, record))</span><br><span class="line">    &#123;</span><br><span class="line">        students.push_back(record);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; grades_count;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">vector</span>&lt;Student_info&gt;::size_type i = <span class="number">0</span>; i != students.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// compute each final grade letter grades and counting the letter grades</span></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">double</span> final_grade = grade(students[i]);</span><br><span class="line">            ++grades_count[letter_grade(final_grade)];</span><br><span class="line">        &#125; <span class="keyword">catch</span>(domain_error e)&#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; e.what();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::const_iterator it = grades_count.begin();</span><br><span class="line">            it != grades_count.end(); ++it)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">'\t'</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>grade.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"grade.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::domain_error;  <span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;        <span class="keyword">using</span> <span class="built_in">std</span>::sort;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grade function 1</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> grade(s.midterm, s.final, s.homework);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grade function 2</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> final, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (hw.size() == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"student has done no homework"</span>);</span><br><span class="line">    <span class="keyword">return</span> grade(midterm, final, median(hw));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grade function 3</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> final, <span class="keyword">double</span> homework)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.2</span>*midterm + <span class="number">0.4</span>*final + <span class="number">0.4</span>*homework;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// compute the median of vector&lt;double&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// get the size of the vector</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::size_type vec_size;</span><br><span class="line">    vec_size size = vec.size();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check whether the empty is empty</span></span><br><span class="line">    <span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"median of an empty vector"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sort the grades</span></span><br><span class="line">    sort(vec.begin(), vec.end());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute the median homework grade</span></span><br><span class="line">    vec_size mid = size/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> size % <span class="number">2</span> == <span class="number">0</span> ? (vec[mid] + vec[mid - <span class="number">1</span>])/<span class="number">2</span> : vec[mid];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>grade.h</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_grade_h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_grade_h</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// grade.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">const</span> Student_info &amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span>, <span class="keyword">double</span>, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span>, <span class="keyword">double</span>, <span class="keyword">double</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;)</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Student.info</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>; <span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> Student_info &amp;x, <span class="keyword">const</span> Student_info &amp;y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x.name &lt; y.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">istream &amp; <span class="title">read</span><span class="params">(istream &amp;is, Student_info &amp;s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// reads and store the student's name, midterm and final exam grades</span></span><br><span class="line">    is &gt;&gt; s.name &gt;&gt; s.midterm &gt;&gt; s.final;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reads and store all homework grades</span></span><br><span class="line">    read_hw(is, s.homework);</span><br><span class="line">    <span class="keyword">return</span> is;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">istream &amp; <span class="title">read_hw</span><span class="params">(istream &amp;in, <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (in)&#123;</span><br><span class="line">        <span class="comment">//get rid of previous contents</span></span><br><span class="line">        hw.clear();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// read homework grades</span></span><br><span class="line">        <span class="keyword">double</span> x;</span><br><span class="line">        <span class="keyword">while</span>(in &gt;&gt; x)</span><br><span class="line">            hw.push_back(x);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// clear the stream so that input will work for the next student</span></span><br><span class="line">        in.clear();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> in;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>Student_info.h</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_Student_info</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_Student_info</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student_info</span>&#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">double</span> midterm, final;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; homework;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> Student_info &amp;, <span class="keyword">const</span> Student_info &amp;)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">istream &amp; <span class="title">read</span><span class="params">(<span class="built_in">std</span>::istream &amp;, Student_info &amp;)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">istream &amp; <span class="title">read_hw</span><span class="params">(<span class="built_in">std</span>::istream &amp;, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;)</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Performance-Test"><a href="#Performance-Test" class="headerlink" title="Performance Test"></a>Performance Test</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Inputs:</span><br><span class="line"></span><br><span class="line">Phqgh 24.7879 58.6263 64.0505</span><br><span class="line">Nlfdx 95.4242 27.3636 91.0404</span><br><span class="line">Cxggb 16.1818 95.4747 26.7172</span><br><span class="line">Uxwfn 35.9495 3.11111 22.3333</span><br><span class="line">Tkjpr 68.4747 44.6263 57.3737</span><br><span class="line">Pnrvy 16.3535 90.4242 88.0606</span><br><span class="line">Syycq 5.90909 29.7071 50.0606</span><br><span class="line">Ffmzn 84.5455 56.404 66.7677</span><br><span class="line">Vwsre 23.3737 38.1818 82.2929</span><br><span class="line">Fxtls 4.30303 77.0606 73.8687</span><br><span class="line">Dpooe 29.7778 73.9798 12.8687</span><br><span class="line">Ejuvp 55.7475 31.5253 50.5051</span><br><span class="line">Poeyl 91.0707 37.5758 87.5354</span><br><span class="line">Jvrvi 21.8889 22.4646 6.30303</span><br><span class="line">Hwqnq 55.101 59.2424 37.4848</span><br><span class="line">Jjloo 91.3636 74.202 96.2121</span><br><span class="line">Whmsn 34.5354 99.1818 38</span><br><span class="line">Sfzkv 48.8384 7.21212 10.1717</span><br><span class="line">Lyjyh 51 49.1919 56.9899</span><br><span class="line">Nkkuf 89.0202 95.8586 93.4343</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">A	1</span><br><span class="line">B	1</span><br><span class="line">C	1</span><br><span class="line">D	5</span><br><span class="line">F	12</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="Exercise-7-3"><a href="#Exercise-7-3" class="headerlink" title="Exercise 7-3"></a>Exercise 7-3</h1><p>The cross-reference program from §7.3/126 could be improved: As it stands, if a word occurs more than once on the same input line, the program will report that line multiple times. Change the code so that it detects multiple occurrences of the same line number and inserts the line number only once. </p>
+<h2 id="Solution-amp-Results-3"><a href="#Solution-amp-Results-3" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>In the original program, we built a map from each distinct word to the line numbers in which the word appears.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; xref(istream &amp;in,</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; find_words(<span class="keyword">const</span> <span class="built_in">string</span> &amp;))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> line;</span><br><span class="line">    <span class="keyword">int</span> line_number = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; ret;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the next line</span></span><br><span class="line">    <span class="keyword">while</span>(getline(in, line))</span><br><span class="line">    &#123;</span><br><span class="line">        ++line_number;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// break the input line into words</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; words = find_words(line);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// remember that each word occurs on the current line</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::const_iterator it = words.begin(); it != words.end();</span><br><span class="line">                ++it)</span><br><span class="line">        &#123;</span><br><span class="line">            ret[*it].push_back(line_number);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>However, the line numbers for each word may repeatedly recorded. To avoid this problem, one solution is to check whether the line number has already been recorded. If the line number has been recorded, we ignore it, otherwise, we store it into the vector. We do not need to check all elements in the vector instead we only check the last stored line number. This is because that if a line number is repeatedly recorded, two elements (i.e. same line numbers) must be adjacent. Therefore, I add <strong>if</strong> statement as follows:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(ret[*it].empty() || *(ret[*it].end() - <span class="number">1</span>) != line_number)</span><br><span class="line">    ret[*it].push_back(line_number);</span><br></pre></td></tr></table></figure>
+<p>I’ll give the complete program as well as test results in next exercise.</p>
+<h1 id="Exercise-7-4"><a href="#Exercise-7-4" class="headerlink" title="Exercise 7-4"></a>Exercise 7-4</h1><p>The output produced by the cross-reference program will be ungainly if the input file is large. Rewrite the program to break up the output if the lines get too long.</p>
+<h2 id="Solution-amp-Results-4"><a href="#Solution-amp-Results-4" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>The key to the solution is managing the length of each line of outputs. Theoretically, the strategy can be divided into three steps:</p>
+<ol>
+<li>convert all line numbers (except the first one) associated with a word into <strong>string</strong>s. </li>
+<li>count the number of characters that have been written.</li>
+<li>when the predetermined length of a line is reached, write a new line. </li>
+</ol>
+<p>The first two steps seems tedious to us. Fortunately, we can use <strong>stringstream</strong> objects to accomplish these easily.</p>
+<p><strong>stringstream</strong> is a stream class defined standard library. It provides <strong>IO</strong> facilities that operate on strings. For example, <strong>ostringstream</strong> object uses a string buffer to hold a sequences of characters for printing all outputs together. In addition, the sequence of characters can be accessed directly as a string object, using member function str. In this case, I define such an object <strong>os</strong> to hold all line numbers as well as additional spaces between two line numbers.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os &lt;&lt; <span class="string">", "</span> &lt;&lt; *line_it;</span><br></pre></td></tr></table></figure></p>
+<p><strong>line_it</strong> is an iterator that refers to one of line numbers stored in a vector.</p>
+<p>Once all line numbers have been stored into <strong>os</strong>, we can access all contents to be written as a string object.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> line_numbers = os.str();</span><br></pre></td></tr></table></figure></p>
+<p>Now, the next is to print all line numbers in one or more lines depending on the predetermined length of one line.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="built_in">string</span>::size_type i = <span class="number">0</span>; i != line_numbers.size(); ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; line_numbers[i];</span><br><span class="line">    <span class="keyword">if</span>((i + <span class="number">1</span>) % line_length == <span class="number">0</span>)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>When <strong>i+1</strong>th element (i.e. <strong>line_number[i]</strong>)<br>is written, the <strong>if statement</strong> check that if the number of characters that have been written equals to the length (or multiple lengths) of a line, a newline character is inserted into the output stream.</p>
+<h3 id="A-complete-program"><a href="#A-complete-program" class="headerlink" title="A complete program"></a>A complete program</h3><p>I integerated the changes described in exercise 7-3 and this exercise into a new program including files: <strong>mainfunction.cpp, xref.cpp, xref.h, split.cpp, split.h</strong>.</p>
+<p><strong>mainfunction.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;		// to get the declaration of map</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;	// to get the declaration of string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;	// to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;	// to get the declaration of cin, cout, endl;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;	// to get the declaration of ostringstream</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cctype&gt;	// to get the declaration of isspace</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"split.h"</span>	<span class="comment">// to get the declaration of function split</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"xref.h"</span>	<span class="comment">// to get the declaration of xref</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">map</span>;				<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;				<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;			<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>:: <span class="built_in">ostringstream</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">isspace</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// call xret using split by default</span></span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; ret = xref(<span class="built_in">cin</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// set the length for each line of outputs</span></span><br><span class="line">    <span class="built_in">string</span>::size_type line_length = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write the result</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt;::const_iterator it = ret.begin(); it != ret.end(); ++it)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// write the word</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">" occurs on line(s):"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// followed by one or more line numbers</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::const_iterator line_it = it-&gt;second.begin();</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *line_it;	<span class="comment">// write the first line number</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// scan the rest line numbers</span></span><br><span class="line">        ++line_it;</span><br><span class="line">        <span class="built_in">ostringstream</span> os;</span><br><span class="line">        <span class="keyword">while</span>(line_it != it-&gt;second.end())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// store line numbers into ostringstream object</span></span><br><span class="line">            os &lt;&lt; <span class="string">", "</span> &lt;&lt; *line_it;</span><br><span class="line">            ++line_it;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// get the contents from line_numbers</span></span><br><span class="line">        <span class="built_in">string</span> line_numbers = os.str();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// write each line of outputs</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">string</span>::size_type i = <span class="number">0</span>; i != line_numbers.size(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; line_numbers[i];</span><br><span class="line">            <span class="keyword">if</span>((i + <span class="number">1</span>) % line_length == <span class="number">0</span>)</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// write a blank line to separate each words</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>xref.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;	// to get the decalration of istream</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;		// to get the declaration of map</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;	// to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;	// to get the declaration of string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"split.h"</span>	<span class="comment">// to get the declaration of split</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"xref.h"</span>	<span class="comment">// to get the declatation of xref</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">map</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"></span><br><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; xref(istream &amp;in,</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; find_words(<span class="keyword">const</span> <span class="built_in">string</span> &amp;))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> line;</span><br><span class="line">    <span class="keyword">int</span> line_number = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; ret;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the next line</span></span><br><span class="line">    <span class="keyword">while</span>(getline(in, line))</span><br><span class="line">    &#123;</span><br><span class="line">        ++line_number;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// break the input line into words</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; words = find_words(line);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// remember that each word occurs on the current line</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::const_iterator it = words.begin(); it != words.end();</span><br><span class="line">                ++it)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(ret[*it].empty() || *(ret[*it].end() - <span class="number">1</span>) != line_number)</span><br><span class="line">                ret[*it].push_back(line_number);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>xref.h</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_XREF_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_XREF_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"split.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; xref(<span class="built_in">std</span>::istream &amp;,</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; find_words(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;) = split);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/*GUARD_XREF_H */</span></span></span><br></pre></td></tr></table></figure></p>
+<p><strong>split.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;		// to get the declarartion of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;		// to get the declaration of string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;	// to get the declaration of find_if</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"split.h"</span>		<span class="comment">// to get the declaration of split</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::find_if;</span><br><span class="line"></span><br><span class="line"><span class="comment">// true if the argument is whitespace, false otherwise</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">space</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">isspace</span>(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// false if the argument is whitesapce, true otherwise</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">not_space</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="built_in">isspace</span>(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// function extracts words from a line of input</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; split(<span class="keyword">const</span> <span class="built_in">string</span> &amp;str)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">string</span>::const_iterator iter;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ret;</span><br><span class="line"></span><br><span class="line">    iter i = str.begin();</span><br><span class="line">    <span class="keyword">while</span> (i != str.end())&#123;</span><br><span class="line">        <span class="comment">// ignore leading blanks</span></span><br><span class="line">        i = find_if(i, str.end(), not_space);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// find end of next word</span></span><br><span class="line">        iter j = find_if(i, str.end(), space);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// copy the characters in [i,j)</span></span><br><span class="line">        <span class="keyword">if</span>(i != str.end())</span><br><span class="line">            ret.push_back(<span class="built_in">string</span>(i, j));</span><br><span class="line">        i = j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>split.h</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_SPLIT_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_SPLIT_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">space</span><span class="params">(<span class="keyword">char</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">not_space</span><span class="params">(<span class="keyword">char</span>)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; split(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* GUARD_SPLIT_H */</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Performance-test"><a href="#Performance-test" class="headerlink" title="Performance test"></a>Performance test</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">Inputs:</span><br><span class="line"></span><br><span class="line">ABC</span><br><span class="line">ABC DEF DEF</span><br><span class="line">ABC</span><br><span class="line">ABC ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line">ABC</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">ABC occurs on line(s):</span><br><span class="line">1, 2, 3, 4, 5, 6, 7, </span><br><span class="line">8, 9, 10, 11, 12, 13</span><br><span class="line">, 14, 15, 16, 17, 18</span><br><span class="line">, 19, 20, 21</span><br><span class="line">DEF occurs on line(s):</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<p>From this test, we observe that</p>
+<ol>
+<li>if one word appears more than one times in the same line, the line number is only recorded once. This shows the change described in exercise 7-3 works well.</li>
+<li>once a line of outputs exceeds 20 characters, it wraps. This verifies the solution given above. </li>
+</ol>
+<p>Noting that I also change the program such that it always writes line numbers starting from a new line. </p>
+<hr>
+<p>To be continued.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Accelerated-C-Solutions/" rel="tag"># Accelerated C++ Solutions</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/28/03/2018/C-Using-associative-containers-Part-2/" rel="next" title="C++ - Using associative containers (Part 2)">
+                <i class="fa fa-chevron-left"></i> C++ - Using associative containers (Part 2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/31/03/2018/Accelerated-C-Solutions-to-Exercises-Chapter-7-Part-2/" rel="prev" title="Accelerated C++ Solutions to Exercises(Chapter 7 Part 2)">
+                Accelerated C++ Solutions to Exercises(Chapter 7 Part 2) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Liam</p>
+              <p class="site-description motion-element" itemprop="description">Stochastic Modelling Notes; Programming Notes</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/quantliam" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yanshijiutu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-7-0"><span class="nav-number">1.</span> <span class="nav-text">Exercise 7-0</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results"><span class="nav-number">1.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-7-1"><span class="nav-number">2.</span> <span class="nav-text">Exercise 7-1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-7-2"><span class="nav-number">3.</span> <span class="nav-text">Exercise 7-2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-2"><span class="nav-number">3.1.</span> <span class="nav-text">Solution &amp; Results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-complete-program"><span class="nav-number">3.1.1.</span> <span class="nav-text">The complete program</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Performance-Test"><span class="nav-number">3.1.2.</span> <span class="nav-text">Performance Test</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-7-3"><span class="nav-number">4.</span> <span class="nav-text">Exercise 7-3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-3"><span class="nav-number">4.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-7-4"><span class="nav-number">5.</span> <span class="nav-text">Exercise 7-4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-4"><span class="nav-number">5.1.</span> <span class="nav-text">Solution &amp; Results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#A-complete-program"><span class="nav-number">5.1.1.</span> <span class="nav-text">A complete program</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Performance-test"><span class="nav-number">5.1.2.</span> <span class="nav-text">Performance test</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">129.6k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

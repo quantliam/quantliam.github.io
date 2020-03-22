@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Times New Roman:300,300italic,400,400italic,700,700italic|Courier New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"quantein.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":60,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="In last chapter, we write a new class named Student_info to encapsulate the pointer to Core so that we do not need to concern about the memory management. Now we’ll further improve our class by sepera">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ - Managing memory (almost) automatically">
+<meta property="og:url" content="http://quantein.com/2018/05/09/C-Managing-memory-almost-automatically/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="In last chapter, we write a new class named Student_info to encapsulate the pointer to Core so that we do not need to concern about the memory management. Now we’ll further improve our class by sepera">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-05-09T14:19:53.000Z">
+<meta property="article:modified_time" content="2018-05-13T15:09:08.000Z">
+<meta property="article:author" content="Liam">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Notes">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://quantein.com/2018/05/09/C-Managing-memory-almost-automatically/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>C++ - Managing memory (almost) automatically | Liam's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/quantliam" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://quantein.com/2018/05/09/C-Managing-memory-almost-automatically/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="Stochastic Modelling Notes; Programming Notes">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ - Managing memory (almost) automatically
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-09 22:19:53" itemprop="dateCreated datePublished" datetime="2018-05-09T22:19:53+08:00">2018-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-05-13 23:09:08" itemprop="dateModified" datetime="2018-05-13T23:09:08+08:00">2018-05-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>In last chapter, we write a new class named <strong>Student_info</strong> to encapsulate the pointer to <strong>Core</strong> so that we do not need to concern about the memory management. Now we’ll further improve our class by seperating the class into two classes: one is a pure interface class and the other is a single pointerlike class which manages the underlying memory. The purpose to do so is that we then can use the pointerlike class with mutiple interface classes. In addition, by doing so, we can avoid copying objects unnecessarily. So what do we mean by saying <strong>copy an object</strong>? If an object <strong>x</strong> refers to an object <strong>y</strong>, does copying <strong>x</strong> cause <strong>y</strong> to be copied too ?</p>
+<ol>
+<li>if <strong>y</strong> is a memer of <strong>x</strong>, the answer must be yes</li>
+<li>if <strong>x</strong> is nothing but a pointer to <strong>y</strong>, the answer is no.</li>
+</ol>
+<p>This chapter defines three versions of our pointerlike class, each of which differs from the others in how it defines copying. </p>
+<h1 id="Handles-that-copy-their-objects"><a href="#Handles-that-copy-their-objects" class="headerlink" title="Handles that copy their objects"></a>Handles that copy their objects</h1><p>It is known that <strong>pointer</strong> is a primitive, low-level data structure. Working with <strong>pointers</strong> directly may leads to severe mistakes due to the fact that <strong>pointers</strong> are independent of the objects to which they point(Koenig and Moo 2000): </p>
+<p><em>1. Copying a pointer doesn’t copy the corresponding object, leading to surprises if two pointers inadvertently point to the same object.</em> </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>);   <span class="comment">// p: pointer to an int object that has value 10</span></span><br><span class="line"><span class="keyword">int</span>* q = p;             <span class="comment">// q: points to the same int object </span></span><br><span class="line">*q = <span class="number">100</span>;               <span class="comment">// if we modify the object pointed by q</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *p;             <span class="comment">// we inevitably changes the object pointed by p</span></span><br><span class="line">                        <span class="comment">// the output is 100</span></span><br></pre></td></tr></table></figure>
+<p><em>2. Destroying a pointer doesn’t destroy its object, leading to memory leaks.</em></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">nameless</span><span class="params">(<span class="keyword">size_t</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span>* p = <span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">// local variable p is destroyed when this function </span></span><br><span class="line">&#125;                       <span class="comment">// finishes, however, the dynamically allocated                                  // array still exists on the heap.</span></span><br></pre></td></tr></table></figure>
+<p><em>3. Deleting an object without destroying a pointer to it leads to a dangling pointer, which causes undefined behavior if the program uses the pointer.</em></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>);   <span class="comment">// p: pointer to an int object that has value 10</span></span><br><span class="line"><span class="keyword">int</span>* q = p;             <span class="comment">// q: points to the same int object </span></span><br><span class="line"><span class="keyword">delete</span> p;               <span class="comment">// destroy the object pointed by p</span></span><br><span class="line">p = <span class="literal">nullptr</span>;            <span class="comment">// p points to nowhere now</span></span><br><span class="line">*q = <span class="number">100</span>;               <span class="comment">// undefined behavior as the object pointed by q has been destroyed.</span></span><br></pre></td></tr></table></figure>
+
+<p><em>4. Creating a pointer without initializing it leaves the pointer unbound, which also causes undefined behavior if the program uses it.</em></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p;                 <span class="comment">// unnitialized variable p, which is unbound to any object</span></span><br><span class="line">*p = <span class="number">100</span>;               <span class="comment">// undefined behavior</span></span><br></pre></td></tr></table></figure>
+<p>The <strong>Student_info</strong> class allows us to use pointers without worrying about above problems. Now we still let <strong>Student_info</strong> to provide the interface, but makes the handle class be independent of the type of the object that it manages. The properties that our class will provide are :</p>
+<p><em>1. A <strong>Handle</strong> is a value that refers to an object.</em></p>
+<p><em>2. We can copy a <strong>Handle</strong> object.</em></p>
+<p><em>3. We can test a <strong>Handle</strong> object to determine whether it is bound to another object.</em></p>
+<p><em>4. We can use a <strong>Handle</strong> to trigger polymorphic behavior when it points to an object of a class that belongs to an inheritance hierarchy. That is, if we call a <strong>virtual</strong> function through our class, we want the implementation to choose the function to run dynamically, just as if we’d called the function through a real pointer.</em></p>
+<p>Our <strong>Handle</strong> class will take over the memory management and therefore, we should attach only one <strong>Handle</strong> to any object, and we should not access the object directly through a built-in pointer. To tackle problems when using a built-in pointer, </p>
+<ol>
+<li>When we copy a <strong>Handle</strong> object, we’ll make a new copy of the object so that each <strong>Handle</strong> points to its own copy, such as what the copy constructor does in the <strong>Student_info</strong> class, calling <strong>clone()</strong> to create a new object. </li>
+<li>When we destroy a <strong>Handle</strong>, it will destroy the associated object, such as what the <strong>destructor</strong> does in the <strong>Student_info</strong>.  </li>
+<li>We allows users to create unbound <strong>Handles</strong> but we will throw an exception if the user attempts to access the object to which an unbound <strong>Handle</strong> refers. Users who want to avoid the exception can test to see whether the <strong>Handle</strong> is bound, for example, the operations defined in the <strong>Student_info</strong> class check whether the handle object was bound to a real object. </li>
+</ol>
+<h2 id="A-generic-Handle-class"><a href="#A-generic-Handle-class" class="headerlink" title="A generic Handle class"></a>A generic Handle class</h2><p>Now, let’s write the <strong>Handle</strong> class:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Handle</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Handle(): p(<span class="number">0</span>) &#123;&#125;</span><br><span class="line">    Handle(<span class="keyword">const</span> Handle&amp; s): p(<span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (s.p) p = s.p-&gt;clone();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Handle&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp; rhs)&#123;</span><br><span class="line">        <span class="keyword">if</span>(&amp;rhs != <span class="keyword">this</span>)&#123;</span><br><span class="line">            <span class="keyword">delete</span> p;</span><br><span class="line">            p = rhs.p ? rhs.p-&gt;clone() : <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ~Handle() &#123; <span class="keyword">delete</span> p; &#125;</span><br><span class="line"></span><br><span class="line">    Handle(T* t): p(t) &#123; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">bool</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> p; &#125; <span class="comment">// type conversion</span></span><br><span class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span>;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T* p;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Firstly, we observe that the <strong>Handle</strong> is a class template and can accommodate to any type. For example, <strong>Handle<Core></strong> holds a pointer to an object of <strong>Core</strong> type. </p>
+<p>The default constructor initializes the pointer to a <strong>nullptr</strong>. The copy constructor lets the <strong>Handle</strong> object refers to a newly created object that has the same value as the object pointed by the passed argument. The <strong>operator=</strong> is samilar to the copy constructor except that it destroyes the original object pointed by the <strong>Handle</strong> object. The destructor is obvious. All these four members are defined exactly the same as those defined in the <strong>Student_info</strong> class. </p>
+<p>The other constructor that takes an argument lets us to bind the pointer to an actual object:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Handle&lt;Core&gt; <span class="title">student</span><span class="params">(<span class="keyword">new</span> Grad)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>Finally, we define three <strong>operator</strong> functions: the first one <strong>operator bool()</strong> tests the value of a <strong>Handle</strong>, and returns <strong>true</strong> if the <strong>Handle</strong> is bound to an object, and false otherwise(in fact converts the Handle type to a bool type value); The other two deine <strong>operator*</strong> and <strong>operator-&gt;</strong> which give access to the object bound to the <strong>Handle</strong>:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span>&amp; <span class="title">Handle</span>&lt;T&gt;:</span>:<span class="keyword">operator</span>* () <span class="keyword">const</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(p)</span><br><span class="line">        <span class="keyword">return</span> *p;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">throw</span> runtime_error(<span class="string">"unbound Handle"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span>* <span class="title">Handle</span>&lt;T&gt;:</span>:<span class="keyword">operator</span>-&gt;() <span class="keyword">const</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(p)</span><br><span class="line">        <span class="keyword">return</span> p;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">throw</span> runtime_error(<span class="string">"unbound Handle"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <strong>operator*</strong> allows us to access <strong>*student.p</strong> by using <strong>*student</strong>. It yields a reference to the bound object.<br>The <strong>-&gt;</strong> operator is used to access a member whose name appears in its right operand from an object named by its left operand. It returns a value that can be treated as a pointer. Therefore, if x is a value that defines <strong>operator-&gt;</strong>, then</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x-&gt;y;</span><br></pre></td></tr></table></figure>
+<p>is equivalent to </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(x.<span class="keyword">operator</span>-&gt;())-&gt;y;</span><br></pre></td></tr></table></figure>
+<p>is equivalent to</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.p-&gt;y; <span class="comment">// p is pointer data member, for example, p is Core*</span></span><br></pre></td></tr></table></figure>
+<p>By doing so, we can use the <strong>Handle</strong> object as if we are using a pointer to the associated object. Both <strong>operator*</strong> and <strong>operator-&gt;</strong> yield either a reference or a pointer, through which we obtain dynamic binding. For example, if we execute <strong>student-&gt;grade()</strong>, we’re calling <strong>grade()</strong> through <strong>student.p</strong>, that is, a pointer. The particular version of <strong>grade</strong> to be run depends on the type of the object to which <strong>student.p</strong> points to. Similarly, if we execute <strong>(*student).grade()</strong>, we’re calling <strong>grade()</strong> through a reference to the object and so the implementation will decide which particular version of the function to call. </p>
+<h2 id="Using-a-generic-Handle"><a href="#Using-a-generic-Handle" class="headerlink" title="Using a generic Handle"></a>Using a generic Handle</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt; Handle&lt;Core&gt; &gt; students;    <span class="comment">// changed type</span></span><br><span class="line">    Handle&lt;Core&gt; record;</span><br><span class="line">    <span class="keyword">char</span> ch;</span><br><span class="line">    <span class="built_in">string</span>::size_type maxlen = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read and store the data</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; ch)&#123;</span><br><span class="line">        <span class="keyword">if</span> (ch == <span class="string">'U'</span>)</span><br><span class="line">            record = <span class="keyword">new</span> Core;    (      <span class="comment">// allocate a Core object</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            record = <span class="keyword">new</span> Grad;          <span class="comment">// allocate a Grad object</span></span><br><span class="line">        record-&gt;<span class="built_in">read</span>(<span class="built_in">cin</span>);              <span class="comment">// Handle&lt;T&gt;::-&gt;, then virtual call to read</span></span><br><span class="line">        maxlen = <span class="built_in">max</span>(maxlen, record-&gt;name().<span class="built_in">size</span>());</span><br><span class="line">        students.push_back(record);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write the names and grades</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">vector</span>&lt; Handle&lt;Core&gt; &gt;::size_type i = <span class="number">0</span>; i != students.<span class="built_in">size</span>(); ++i)&#123;</span><br><span class="line">        <span class="comment">// students[i] is a Handle, which we deference to call the function</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; students[i]-&gt;name()</span><br><span class="line">             &lt;&lt; <span class="built_in">string</span>(maxlen + <span class="number">1</span> - students[i]-&gt;name().<span class="built_in">size</span>(), <span class="string">' '</span>);</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">double</span> final_grade = students[i]-&gt;grade();</span><br><span class="line">            streamsize prec = <span class="built_in">cout</span>.precision();</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">3</span>) &lt;&lt; final_grade</span><br><span class="line">                &lt;&lt; setprecision(prec) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (domain_error e)&#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We can rewrite our <strong>Student_info</strong> class to a pure interface class:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student_info</span>&#123;</span></span><br><span class="line">    Student_info () &#123; &#125; <span class="comment">// calls default constructor of Handle&lt;Core&gt;</span></span><br><span class="line">    Student_info (<span class="built_in">std</span>::istream&amp; is) &#123; <span class="built_in">read</span>(is); &#125;</span><br><span class="line">    <span class="comment">// no copy, assign, or destructor: they're no longer needed</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="built_in">std</span>::istream&amp; <span class="title">read</span><span class="params">(<span class="built_in">std</span>::istream)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">name</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(cp)</span><br><span class="line">            <span class="keyword">return</span> cp-&gt;name();</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">throw</span> runtime_error(<span class="string">"uninitialized Student"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(cp) </span><br><span class="line">            <span class="keyword">return</span> cp-&gt;grade()</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">throw</span> runtime_error(<span class="string">"uninitialized Student"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> Student_info&amp; s1, <span class="keyword">const</span> Student_info&amp; s2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s1.name() &lt; s2.name();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Handle&lt;Core&gt; cp;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Since the **Handle** <span class="class"><span class="keyword">class</span> <span class="title">defines</span> <span class="title">constructor</span>, <span class="title">copy</span> <span class="title">constructor</span>, <span class="title">assignment</span> <span class="title">operator</span>, <span class="title">as</span> <span class="title">well</span> <span class="title">as</span> <span class="title">destructor</span>, <span class="title">we</span> <span class="title">do</span> <span class="title">not</span> <span class="title">need</span> <span class="title">to</span> <span class="title">define</span> <span class="title">these</span> <span class="title">members</span> <span class="title">for</span> <span class="title">our</span> **<span class="title">Student_info</span>** <span class="title">again</span>. <span class="title">Here</span> <span class="title">we</span> <span class="title">need</span> <span class="title">one</span> <span class="title">step</span> <span class="title">more</span>, <span class="title">that</span> <span class="title">is</span>, <span class="title">to</span> <span class="title">redefine</span> <span class="title">the</span> **<span class="title">read</span>** <span class="title">function</span>:</span></span><br><span class="line">```c++</span><br><span class="line"><span class="function">istream&amp; <span class="title">Student_info::read</span><span class="params">(istream&amp; is)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> ch;</span><br><span class="line">    is &gt;&gt; ch;</span><br><span class="line">    <span class="keyword">if</span>(ch == <span class="string">'U'</span>)</span><br><span class="line">        cp = <span class="keyword">new</span> Core(is);  <span class="comment">// implicitly converts from a Core* to a Handle&lt;Core&gt; through Handle::Handle(T*)</span></span><br><span class="line">    <span class="keyword">else</span>                    <span class="comment">// then assigns the value from the temporary Handle object to cp</span></span><br><span class="line">        cp = <span class="keyword">new</span> Grad(is);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> is;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>when we execute the <strong>cp = new Core(is)</strong>, the right-hand side creates a new <strong>Core</strong> object from input stream, which we implicitly convert to a <strong>Handle<Core></strong> using <strong>Handle(T*)</strong> constructor. That <strong>Handle</strong> value is then assigned to <strong>cp</strong> by calling the assignment operator. The assignment constructs and destroys an extra copy of the <strong>Core</strong> object that we created. The reason behind this is that copying or assigning a Handle object always makes a new copy of the object that the <strong>Handle</strong> points to. Doing so can avoid the dangling pointer as each Handle only points to its own object, however, may also make uncessary copies like above assignment operation. </p>
+<h1 id="Reference-counted-handles"><a href="#Reference-counted-handles" class="headerlink" title="Reference-counted handles"></a>Reference-counted handles</h1><p>This section solves above problem by providing a <strong>Handle</strong> class that does not copy the underlying object when the <strong>Handle</strong> itself is copied. To avoid danglling pointer problem, we’ll need to free that object at the point when the last <strong>Handle</strong> that points to it goes away. We’ll use a <strong>reference count</strong> to keep track of how many objects refer to another object. Each time we create a new handle that refers to our target object, we increment the reference count object, while each time a referring object goes away we decrement the reference count. Finally, when the last referring object goes away, we know that it is safe to destroy the target object. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Ref_handle</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// manage reference count as well as pointer</span></span><br><span class="line">    Ref_handle(): refer(<span class="keyword">new</span> <span class="keyword">size_t</span>(<span class="number">1</span>)), p(<span class="number">0</span>) &#123;&#125;</span><br><span class="line">    Ref_handle(T* t): refptr(<span class="keyword">new</span> <span class="keyword">size_t</span>(<span class="number">1</span>)), p(t) &#123;&#125;</span><br><span class="line">    Ref_handle(<span class="keyword">const</span> Ref_handle&amp; h): refptr(h.refptr), p(h.p)&#123;</span><br><span class="line">        ++*refptr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Ref_handle&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Ref_handle&amp;);</span><br><span class="line">    ~Ref_handle();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// as before</span></span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">bool</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> p; &#125;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(p)</span><br><span class="line">            <span class="keyword">return</span> *p;</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"unbound Ref_handle"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    T* <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(p)</span><br><span class="line">            <span class="keyword">return</span> p;</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"unbound Ref_handle"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T* p;</span><br><span class="line">    <span class="keyword">size_t</span>* refptr;     <span class="comment">// newly added</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Above code shows our <strong>Ref_handle</strong> class:</p>
+<ol>
+<li><p>we add a new pointer, <strong>refptr</strong>, to to the new handle class to track the reference count</p>
+</li>
+<li><p>if we default construct a Ref_handle object or construct from an existed T<em>, we initialized *</em>refptr** to 1</p>
+</li>
+<li><p>if we construct a Ref_handle object from another Ref_handle, we do not copy the underlying object but instead only copy the value of the pointer from the passed argument. Then, our <strong>Ref_handle</strong> object points to the same object as the passed argument. In addition, we let the <strong>refptr</strong> points to the counter object pointed by <strong>h.refptr</strong>, then increment the counter value by 1 as there is a new pointer <strong>Ref_handle.p</strong> points to the object pointed by <strong>h.p</strong> now.</p>
+</li>
+<li><p>the assignment operator also modifies the counter object instead of copying the underlying object:</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">Ref_handle</span>&lt;T&gt;&amp; <span class="title">Ref_handle</span>&lt;T&gt;:</span>:<span class="keyword">operator</span>=(<span class="keyword">const</span> Ref_handle&amp; rhs)&#123;</span><br><span class="line">    ++*rhs.refptr;</span><br><span class="line">    <span class="comment">// free the left-hand side, destroy pointers if appropriate</span></span><br><span class="line">    <span class="keyword">if</span>(--*refptr == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">delete</span> refptr;</span><br><span class="line">        <span class="keyword">delete</span> p;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// copy in values from the right-hand side</span></span><br><span class="line">    refptr = rhs.refptr;</span><br><span class="line">    p = rhs.p;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> the assignment operation typically involves obliterating the value of the left-hand side operand. If the operand is a pointer, we execute <strong>delete p</strong> to free the space occupied by the object that pointed by <strong>p</strong>, if there is no other pointers points to the same object. Therefore, we executes <strong>delete p</strong> as well as <strong>delete refptr</strong> conditional on <strong>–*refptr == 0</strong>. If <strong>–*refptr == 0</strong> is false, we do not execute <strong>delete</strong> operation, but we still need to decrement the counter object pointed by <strong>refptr</strong>, which has been done by executing <strong>–*refptr ==0</strong>. However, we also need to avoid self-assignment and hence we increment <strong>*refptr</strong> first. </p>
+<p> The next step is to bind our <strong>Ref_handle</strong> to the object that pointed by the passed argument. Like what the copy constructor does, we copy pointers but don’t copy the underlying object. </p>
+</li>
+<li><p>the destructor checks whether the <strong>Ref_handle</strong> object being destroyed is the last one bound to its <strong>T</strong> object:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">Ref_handle</span>&lt;T&gt;:</span>:~Ref_handle()&#123;</span><br><span class="line">    <span class="keyword">if</span> (--*refptr == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">delete</span> refptr;</span><br><span class="line">        <span class="keyword">delete</span> p;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>This version of <strong>*Ref_handle</strong> class works well for classes that can share state between copies of different objects, however, cannot provide valuelike behavior like the <strong>Handle</strong> class described in last section. It does avoid needless copying, however, avoid all copying even we want to copy the underlying data. Next, we discuss how to write a <strong>Handle</strong> that let us decide when to share data.</p>
+<h1 id="Handles-that-let-you-decide-when-to-share-data"><a href="#Handles-that-let-you-decide-when-to-share-data" class="headerlink" title="Handles that let you decide when to share data"></a>Handles that let you decide when to share data</h1><p>Now we write our last version of <strong>generic handle class</strong>, which not only preserves the performance of <strong>Ref_handle</strong> but also provides the valuelike behavior of <strong>Handle</strong>s. In general, the new handle class, named as <strong>Ptr</strong>, will copy the object if we are about to change the contents, but only if there is another handle attached to the same object. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Ptr</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// new member to copy the object conditionally when needed</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">make_unique</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(*refptr != <span class="number">1</span>)&#123;</span><br><span class="line">            --*refptr;</span><br><span class="line">            refptr = <span class="keyword">new</span> <span class="keyword">size_t</span>(<span class="number">1</span>);</span><br><span class="line">            p = p ? p-&gt;clone() : <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// the rest of the class looks like Ref_handle except for its name</span></span><br><span class="line">    Ptr(): refptr(<span class="keyword">new</span> <span class="keyword">size_t</span>(<span class="number">1</span>)), p(<span class="number">0</span>) &#123;&#125;</span><br><span class="line">    Ptr(T* t): refptr(<span class="keyword">new</span> <span class="keyword">size_t</span>(<span class="number">1</span>)), p(t) &#123;&#125;</span><br><span class="line">    Ptr(<span class="keyword">const</span> Ptr&amp; h): refptr(h.refptr), p(h.p) &#123;</span><br><span class="line">        ++*refptr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Ptr&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Ptr&amp;); </span><br><span class="line">    ~Ptr();</span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">bool</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> p; &#125;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span>;</span><br><span class="line">    T* <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T* p;</span><br><span class="line">    <span class="keyword">size_t</span>* refptr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>This new <strong>Ptr</strong> class has the mostly same members and implementations as the <strong>Ref_handle</strong> class, except that it defines a new <strong>make_unique</strong> function. The <strong>make_unique</strong> function calls the <strong>clone()</strong> function to copy the underlying object only in the condition that the reference count is not 1. More specific, if <strong>*refptr == 1</strong>, then it means that there is no any other <strong>Ptr</strong> objects are bound to the underlying object, and hence there is no need to do a underlying copy again;but if <strong>*refptr != 1</strong>, it means that there still other <strong>Ptr</strong>(s) are bound to the underlying object, and hence it is necessary to make our <strong>Ptr</strong> points to its own object to avoid bring changes to the object pointed by other <strong>Ptr</strong>(s). If we intend to add a function that can change the contents of the underlying object, we should call <strong>make_unique</strong> to make a copy of the underlying object. </p>
+<h1 id="An-improvement-on-controllable-handles"><a href="#An-improvement-on-controllable-handles" class="headerlink" title="An improvement on controllable handles"></a>An improvement on controllable handles</h1><p>There is one problem when we use above <strong>Ptr</strong> to deal with some classes that do not have a member function <strong>clone()</strong>. In such case, we will define an intermediary global function that we can both call and create:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; </span></span><br><span class="line"><span class="class"><span class="title">T</span>* <span class="title">clone</span>(<span class="title">const</span> <span class="title">T</span>* <span class="title">tp</span>)&#123;</span></span><br><span class="line">    <span class="keyword">return</span> tp-&gt;clone();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Then we can change our <strong>make_unique</strong> member to call it</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">Ptr</span>&lt;T&gt;:</span>:make_unique()&#123;</span><br><span class="line">    <span class="keyword">if</span>(*refptr != <span class="number">1</span>)&#123;</span><br><span class="line">        --*refptr;</span><br><span class="line">        refptr = <span class="keyword">new</span> <span class="keyword">size_t</span>(<span class="number">1</span>);</span><br><span class="line">        p = p ? clone(p) : <span class="number">0</span>; <span class="comment">// call global version of clone</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The new clone function does’t make any change to the <strong>make_unique</strong> function and hence works well for our <strong>Student_info</strong> class. Another example, the <strong>Vec<char></strong> doesn’t provide a clone function, how can we define an intermediary function to let the <strong>Ptr&lt; Vec<char> &gt;</strong> work?</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;&gt;</span><br><span class="line"><span class="function">Vec&lt;<span class="keyword">char</span>&gt;* <span class="title">clone</span><span class="params">(<span class="keyword">const</span> Vec&lt;<span class="keyword">char</span>&gt;* vp)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Vec&lt;<span class="keyword">char</span>&gt;(*vp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The novelty here is <strong>template&lt;&gt;</strong>, which indicates a function is a <strong>template specialization</strong>. The <strong>template specialization</strong> means that the template is a particular version of a template function for the argument type. If we pass <strong>clone</strong> a <strong>Vec<char>*</strong>, the compiler will use this specialized version of <strong>clone</strong>. If we pass other types of pointers, it will instantiate the general template form of <strong>clone</strong>. </p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Liam
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://quantein.com/2018/05/09/C-Managing-memory-almost-automatically/" title="C++ - Managing memory (almost) automatically">http://quantein.com/2018/05/09/C-Managing-memory-almost-automatically/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/Notes/" rel="tag"># Notes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/05/08/C-Using-inheritance-and-dynamic-binding/" rel="prev" title="C++ - Using inheritance and dynamic binding">
+      <i class="fa fa-chevron-left"></i> C++ - Using inheritance and dynamic binding
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/05/09/Sorting-Algorithms-C-Implementations/" rel="next" title="Sorting Algorithms C++ Implementations-Selection Sort">
+      Sorting Algorithms C++ Implementations-Selection Sort <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Handles-that-copy-their-objects"><span class="nav-number">1.</span> <span class="nav-text">Handles that copy their objects</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-generic-Handle-class"><span class="nav-number">1.1.</span> <span class="nav-text">A generic Handle class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-a-generic-Handle"><span class="nav-number">1.2.</span> <span class="nav-text">Using a generic Handle</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference-counted-handles"><span class="nav-number">2.</span> <span class="nav-text">Reference-counted handles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Handles-that-let-you-decide-when-to-share-data"><span class="nav-number">3.</span> <span class="nav-text">Handles that let you decide when to share data</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#An-improvement-on-controllable-handles"><span class="nav-number">4.</span> <span class="nav-text">An improvement on controllable handles</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam</p>
+  <div class="site-description" itemprop="description">Stochastic Modelling Notes; Programming Notes</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/quantliam" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;quantliam" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/yanshijiutu@gmail.com" title="E-Mail → yanshijiutu@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">NaN:aN</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

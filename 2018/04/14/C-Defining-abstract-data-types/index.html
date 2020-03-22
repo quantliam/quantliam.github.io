@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Times New Roman:300,300italic,400,400italic,700,700italic|Courier New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"quantein.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":60,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="The vector classThis chapter mainly teaches us about how to define our own “vec” class follwing the standard library vector class template. Specifically, our vec class will provide an interface that a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ - Defining abstract data types (Part 1)">
+<meta property="og:url" content="http://quantein.com/2018/04/14/C-Defining-abstract-data-types/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="The vector classThis chapter mainly teaches us about how to define our own “vec” class follwing the standard library vector class template. Specifically, our vec class will provide an interface that a">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-04-14T12:59:23.000Z">
+<meta property="article:modified_time" content="2018-05-07T01:17:14.000Z">
+<meta property="article:author" content="Liam">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Notes">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://quantein.com/2018/04/14/C-Defining-abstract-data-types/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>C++ - Defining abstract data types (Part 1) | Liam's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/quantliam" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://quantein.com/2018/04/14/C-Defining-abstract-data-types/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="Stochastic Modelling Notes; Programming Notes">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ - Defining abstract data types (Part 1)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-14 20:59:23" itemprop="dateCreated datePublished" datetime="2018-04-14T20:59:23+08:00">2018-04-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-05-07 09:17:14" itemprop="dateModified" datetime="2018-05-07T09:17:14+08:00">2018-05-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="The-vector-class"><a href="#The-vector-class" class="headerlink" title="The vector class"></a>The vector class</h1><p>This chapter mainly teaches us about how to define our own “vec” class follwing the standard library <strong>vector</strong> class template. Specifically, our vec class will provide an interface that allows following operations:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// construct a vector of T type</span></span><br><span class="line"><span class="built_in">vector</span>&lt;T&gt; v;        <span class="comment">// empty vector</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;T&gt; <span class="title">v</span><span class="params">(<span class="number">100</span>)</span></span>;   <span class="comment">// vector with 100 elements</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// obtain the names of the types used by the vector</span></span><br><span class="line"><span class="built_in">vector</span>&lt;T&gt;::const_iterator b, e;</span><br><span class="line"><span class="built_in">vector</span>&lt;T&gt;::size_type i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use size and the index operator to look at each element in the vector</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i != v.<span class="built_in">size</span>(); ++i)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; v[i].name();   <span class="comment">// if T has a member name</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// return iterators positioned on the first and one past the last element</span></span><br><span class="line">b = v.<span class="built_in">begin</span>();</span><br><span class="line">e = v.<span class="built_in">end</span>();</span><br></pre></td></tr></table></figure>
+<h1 id="Implementing-the-Vec-class"><a href="#Implementing-the-Vec-class" class="headerlink" title="Implementing the Vec class"></a>Implementing the Vec class</h1><p>The standard library <strong>vector</strong> is a class template. Similarly, we define a class template to represent our vector to hold various types. We are familar with how to define a function template, now let’s see how to define a class template.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// interface</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// implementation</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Similar to the definition of a function template, a class template begins with the keyword <strong>template</strong> follwed by the template parameters list. In this case, there is one type parameter named <strong>T</strong>. Then we define the class as we did before, assuming that there will be <strong>public</strong> and <strong>private</strong> parts to write our interface and implementation respectively. </p>
+<p>Now we consider the data members for our vector class. Vector is a container that can hold multiple elements. A natural solution goes to a dynamically allocated array. So what information we need for the implementation of our <strong>Vec</strong> class? The functions <strong>begin, end</strong> and <strong>size</strong> imply that we might need to store the address of the initial element, one past the address of the last element  and the number of elements. But once we know the address of the first element and one past the last element, we could compute the size easily. Let’s add two data members:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// interface</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T* data;    <span class="comment">// first element in the Vec</span></span><br><span class="line">    T* limit;   <span class="comment">// one past the last element in the Vec</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Constructors"><a href="#Constructors" class="headerlink" title="Constructors"></a>Constructors</h2><p>From the interface we intend to provide, we know we need to define at least two constructors, </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// construct a vector of T type</span></span><br><span class="line">Vec&lt;T&gt; v;        <span class="comment">// using default constructor</span></span><br><span class="line"><span class="function">Vec&lt;T&gt; <span class="title">v</span><span class="params">(<span class="number">100</span>)</span></span>;   <span class="comment">// using constructor that takes a size</span></span><br></pre></td></tr></table></figure>
+<p>The default constructor leads to an empty <strong>Vec</strong> and hence there is no need to allocate space to hold the elements. Two data members can be initialized to null pointers. For the constructor that takes a size, we should allocate certain amount of storage for holding the elements. Two data members will be initialized to the corresponding addresses of that space. Each element will be initialized to a value given by the default constructor of Type <strong>T</strong>. There is also a case that users provide the initial values for the elements, for example</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Vec&lt;T&gt; <span class="title">v</span><span class="params">(<span class="number">100</span>, <span class="number">1</span>)</span></span>;   <span class="comment">// using constructor that takes a size and an initial value</span></span><br></pre></td></tr></table></figure>
+<p>If so, we would initialize each element with the provided value. The constructor that takes a size and an initial value can be regarded as the special case of the constructor that only takes a size. The code below shows the definition of the constructors:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">    Vec() &#123; create() &#125;;</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Vec</span><span class="params">(size_type n, <span class="keyword">const</span> T&amp; val = T())</span> </span>&#123; create(n, val); &#125;</span><br><span class="line">    <span class="comment">// remaining interface</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T* data</span><br><span class="line">    T* limit;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>As we haven’t talk about how to dynamically allocate space for our object, the details of implementations of each constructor will be discussed later. What we need to know here is that the constructors call another function <strong>create</strong> to initialize our data members and the elements. For the default constructor, <strong>create()</strong> initializes all data members to null pointers. For the second constructor, <strong>create(n, val)</strong> allocates enough space, and initializes all data members as well as each element with size <strong>n</strong> and value <strong>val</strong>. The second constructor takes two arguments, one is the size <strong>n</strong> and another is the value that to use in initializing the elements. </p>
+<p>If there is no user-supplied value, <strong>val</strong> is assigned with an default value given by the default constructor of type <strong>T</strong>. One may speculate that if <strong>T</strong> is built-in type and the vector is allocated at local scope, then the elements are uninitialized as default-initializing an built-in object gives it an undefined value. However, we also know that when we create a standard vector<int> with size only, the compiler initializes each element to 0. So, where there might be problems? Let’s do a simple experiment first.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; 	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">int</span> y = <span class="keyword">int</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">double</span> m;</span><br><span class="line">    <span class="keyword">double</span> n = <span class="keyword">double</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="string">'\n'</span> &lt;&lt; y &lt;&lt; <span class="string">'\n'</span>  &lt;&lt; m &lt;&lt; <span class="string">'\n'</span> &lt;&lt; n &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Outputs</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1954310794</span><br><span class="line">0</span><br><span class="line">-2.2854e+251</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<p>From above example, we observe that a built-in type local variable is undefined in the case of default initialization. In contrast, <strong>int()</strong> and <strong>double()</strong> doesn’t default initialize the corresponding objects, but performs <strong>value-initialization</strong>. This means that <strong>T()</strong> only invokes default constructor if it is user-declared and otherwise it performs value-initialization. If <strong>T</strong> is built-in type, objects are zero initialized. </p>
+<p>It also has been observed that we use a keyword <strong>explicit</strong> as the begining of the definition of the second constructor. This keyword only makes sence when the constructor takes a single argument, that is, the size. It indicates that the compiler will use the constructor only in the case that the user expressly invokes the constructor. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Vec&lt;<span class="keyword">int</span>&gt; <span class="title">v</span><span class="params">(<span class="number">100</span>)</span></span>; <span class="comment">// ok, explicitly construct the Vec from an int</span></span><br><span class="line">Vec&lt;<span class="keyword">int</span>&gt; v = <span class="number">100</span>; <span class="comment">// error: implicitly comstruct the Vec and copy</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">More about the **<span class="keyword">explicit</span>** will be discussed in chapter <span class="number">12.</span> </span><br><span class="line"></span><br><span class="line">## Type definitions</span><br><span class="line">This section defines types <span class="keyword">for</span> our **Vec** <span class="class"><span class="keyword">class</span> <span class="title">including</span> **<span class="title">const_iterator</span>, <span class="title">iterator</span>, <span class="title">size_type</span>** <span class="title">and</span> **<span class="title">value_type</span>**. <span class="title">It</span> <span class="title">is</span> <span class="title">known</span> <span class="title">that</span> <span class="title">our</span> **<span class="title">Vec</span>** <span class="title">class</span> <span class="title">is</span> <span class="title">build</span> <span class="title">upon</span> <span class="title">the</span> <span class="title">dynamic</span> <span class="title">allocated</span> <span class="title">array</span>. <span class="title">In</span> <span class="title">addition</span>, <span class="title">pointers</span> <span class="title">supports</span> <span class="title">the</span> <span class="title">random</span>-<span class="title">access</span>-<span class="title">iterator</span> <span class="title">operations</span>. <span class="title">Therefore</span>, <span class="title">we</span> <span class="title">can</span> <span class="title">define</span> <span class="title">the</span> <span class="title">types</span> **<span class="title">iterator</span>** <span class="title">and</span> **<span class="title">const_iterator</span>** <span class="title">based</span> <span class="title">on</span> <span class="title">pointers</span>. <span class="title">For</span> **<span class="title">size_type</span>**, <span class="title">we</span> <span class="title">can</span> <span class="title">define</span> <span class="title">based</span> <span class="title">on</span> **<span class="title">size_t</span>**. <span class="title">Apparently</span>, <span class="title">The</span> **<span class="title">value_type</span>** <span class="title">is</span> **<span class="title">T</span>**. <span class="title">Now</span> <span class="title">let</span>'<span class="title">s</span> <span class="title">see</span> <span class="title">the</span> <span class="title">code</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">```<span class="title">c</span>++</span></span><br><span class="line"><span class="class"><span class="title">template</span> &lt;class T&gt; <span class="title">class</span> <span class="title">Vec</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> T* iterator;                </span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">const</span> T* const_iterator;   </span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">    <span class="keyword">typedef</span> T value_type;</span><br><span class="line"></span><br><span class="line">    Vec() &#123; create(); &#125; </span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Vec</span><span class="params">(size_type n, <span class="keyword">const</span> T&amp; val = T())</span> </span>&#123; create(n, val); &#125;</span><br><span class="line">    <span class="comment">// remaining interface</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    iterator data;</span><br><span class="line">    iterator limit;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Index-and-size"><a href="#Index-and-size" class="headerlink" title="Index and size"></a>Index and size</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i != v.<span class="built_in">size</span>(); ++i)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; v[i].name();   <span class="comment">// if T has a member name</span></span><br></pre></td></tr></table></figure>
+<p>The <strong>size</strong> function returns a value that represents the number of elements in a <strong>Vec</strong>. </p>
+<p>The indexing operation is supported through the subscript operator <strong>[]</strong> and hence we should define an overloaded operator as we define other function: it has a name, takes arguments, and specifies a return type. </p>
+<p>The name of such operator is obtained by appending the symbol <strong>[]</strong> to the word <strong>operator</strong>, that is, <strong>operator[]</strong>. </p>
+<p>If the operator is a function that is not a member function, then the function has as many arguments as the operator has operands. The first argument is bound to the left bound and the second is bound to the right operand. If the operator is defined as a member function, its left operand is implicitly bound to the object on which the operator invoked. In this case, the subscript operator is typically a member function. We can call it with <strong>v[i]</strong>, meaning that <strong>v</strong> is the object on which it operates and <strong>i</strong> is an argument that should has type <strong>Vec::size_type</strong>.</p>
+<p>As for the return type, the operator function ought to return a reference to the element in the <strong>Vec</strong>. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> T* iterator;                </span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">const</span> T* const_iterator;   </span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">    <span class="keyword">typedef</span> T value_type;</span><br><span class="line"></span><br><span class="line">    Vec() &#123; create(); &#125; </span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Vec</span><span class="params">(size_type n, <span class="keyword">const</span> T&amp; val = T())</span> </span>&#123; create(n, val); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// operations: size and index</span></span><br><span class="line">    <span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> limit - data; &#125;</span><br><span class="line"></span><br><span class="line">    T&amp; <span class="keyword">operator</span>[](size_type i) &#123; <span class="keyword">return</span> data[i]; &#125;</span><br><span class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](size_type i) <span class="keyword">const</span> &#123; <span class="keyword">return</span> data[i] &#125;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    iterator data;</span><br><span class="line">    iterator limit;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>There are sevral key points here:</p>
+<ol>
+<li>the result of (limit - data) has type <strong>ptrdiff_T</strong>, which is converted to <strong>size_type</strong>.</li>
+<li>taking the <strong>size</strong> of a <strong>Vec</strong> doesn’t change the <strong>Vec</strong> and hence we define it as a <strong>const</strong> member. </li>
+<li>we define two version of the operator function: one for <strong>const Vec</strong> objects and the other for nonconst <strong>Vec</strong>. It seems impossible to overload the operator function as both version have same parameter list. However, as mentioned above, the object itself is also an implicit argument to the function. Therefore, one function takes the <strong>const Vec</strong> object as an argument while the other one takes the nonconst <strong>Vec</strong> object as an argument.</li>
+</ol>
+<h2 id="Operations-that-return-iterators"><a href="#Operations-that-return-iterators" class="headerlink" title="Operations that return iterators"></a>Operations that return iterators</h2><p>Next is to define member functions <strong>begin()</strong> and <strong>end()</strong>. Similar to the operator function, we need to define two versions for both functions, one version returns <strong>const_iterator</strong> so that users cannot modify the <strong>Vec</strong> by operating on the iterator; another one returns an iterator that is not restricted by qualifier <strong>const</strong>, so that users can write elements into the <strong>Vec</strong> through the iterator if they want to. The improved code is shown below.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> T* iterator;                </span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">const</span> T* const_iterator;   </span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">    <span class="keyword">typedef</span> T value_type;</span><br><span class="line"></span><br><span class="line">    Vec() &#123; create(); &#125; </span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Vec</span><span class="params">(size_type n, <span class="keyword">const</span> T&amp; val = T())</span> </span>&#123; create(n, val); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// operations: size and index</span></span><br><span class="line">    <span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> limit - data; &#125;</span><br><span class="line"></span><br><span class="line">    T&amp; <span class="keyword">operator</span>[](size_type i) &#123; <span class="keyword">return</span> data[i]; &#125;</span><br><span class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](size_type i) <span class="keyword">const</span> &#123; <span class="keyword">return</span> data[i] &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// function to return iterators</span></span><br><span class="line">    iterator <span class="built_in">begin</span>() &#123; <span class="keyword">return</span> data; &#125;</span><br><span class="line">    <span class="function">const_iterator <span class="title">begin</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> data; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">iterator <span class="title">end</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> limit; &#125;</span><br><span class="line">    <span class="function">const_iterator <span class="title">end</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> limit; &#125;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    iterator data;</span><br><span class="line">    iterator limit;</span><br><span class="line">&#125;;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"># Copy control</span><br><span class="line">In chapter <span class="number">9</span>, we have learned how to initialize a <span class="class"><span class="keyword">class</span> <span class="title">object</span> <span class="title">when</span> <span class="title">it</span> <span class="title">is</span> <span class="title">created</span>. <span class="title">But</span> <span class="title">we</span> <span class="title">haven</span>'<span class="title">t</span> <span class="title">talked</span> <span class="title">about</span> <span class="title">what</span> <span class="title">happens</span> <span class="title">when</span> <span class="title">a</span> <span class="title">class</span> <span class="title">object</span> <span class="title">is</span> <span class="title">copied</span>, <span class="title">assigned</span> <span class="title">and</span> <span class="title">destroyed</span>. <span class="title">When</span> <span class="title">we</span> <span class="title">define</span> <span class="title">the</span> **<span class="title">Student_info</span>** <span class="title">class</span>, <span class="title">we</span> <span class="title">didn</span>'<span class="title">t</span> <span class="title">define</span> <span class="title">these</span> <span class="title">operations</span> <span class="title">as</span> <span class="title">well</span>. <span class="title">We</span> <span class="title">can</span> <span class="title">presume</span> <span class="title">that</span> <span class="title">the</span> <span class="title">compiler</span> <span class="title">will</span> <span class="title">synthesize</span> <span class="title">definitions</span> <span class="title">for</span> <span class="title">us</span>. <span class="title">Now</span> <span class="title">this</span> <span class="title">section</span> <span class="title">focus</span> <span class="title">on</span> <span class="title">how</span> <span class="title">can</span> <span class="title">we</span> <span class="title">define</span> <span class="title">these</span> <span class="title">operations</span> <span class="title">and</span> <span class="title">how</span> <span class="title">the</span> <span class="title">synthesized</span> <span class="title">operations</span> <span class="title">exactly</span> <span class="title">work</span>.</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">## <span class="title">Copy</span> <span class="title">constructor</span></span></span><br><span class="line"><span class="class"><span class="title">Two</span> <span class="title">ways</span> <span class="title">to</span> <span class="title">implicitly</span> <span class="title">copy</span> <span class="title">a</span> <span class="title">class</span> <span class="title">object</span>:</span> one is that passing an object by value to a function; the other way is that returning an object by value. For example</span><br><span class="line">```c++</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line">d = median(v);  <span class="comment">// copy v into the parameter in median</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> <span class="built_in">line</span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; words = split(<span class="built_in">line</span>); <span class="comment">// copy the return from split into words</span></span><br></pre></td></tr></table></figure>
+<p>Sometimes we also explicitly copy an object, for example using it to initialize another object.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;Student_info&gt; vs;</span><br><span class="line"><span class="built_in">vector</span>&lt;Student_info&gt; vs_copy = vs;  <span class="comment">// copy vs into vs_copy</span></span><br></pre></td></tr></table></figure>
+
+<p>Both above copy behaviors are controlled by a special constructor called the <strong>copy constructor</strong>. </p>
+<p><strong>copy constructor</strong> is also a member function that has the same name as the name of class. It takes a single argument that has the same type as the class itself. In addition, the parameter is a const reference to the object to pass due to that the <strong>copy constructor</strong> should not change the object being copied from. Therefore, we can declare the <strong>copy constructor</strong> as shown below</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Vec (<span class="keyword">const</span> Vec&amp; v); <span class="comment">// copy constructor</span></span><br><span class="line">    <span class="comment">// as before</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>When we copy a class object, we’ll need to allocate new space and then copy the contents from the source into the newly allocated storage. This is because we do not intend to change the object being copied from. For example, if we simple copy two data members, we may change the value of the elements due to the fact that the copied pointers still points to the elements contained in the object being copied from. As with the constructors, we will ask the overloaded <strong>create</strong> function to manage the memory and the details of the copy operations.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Vec (<span class="keyword">const</span> Vec&amp; v) &#123; create(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>()); &#125;; </span><br><span class="line">    <span class="comment">// as before</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Assignment"><a href="#Assignment" class="headerlink" title="Assignment"></a>Assignment</h2><p>Like the <strong>subscript operator</strong>, the <strong>assignment operator =</strong> needs to be defined for providing us the assignment operations. The name of the <strong>assignment operator</strong> function is <strong>operator=</strong>. The argument taken by such operator function is as same as the argument taken by copy constructor above. What about the return type? We return a reference to the left operand. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">    Vec&amp; <span class="keyword">operator</span>= (<span class="keyword">const</span> Vec&amp;);</span><br><span class="line">    <span class="comment">// as before</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>It is worth noting the difference between <strong>assignment</strong> and the copy constructor. <strong>assignment</strong> always involves obliterating an existing value of the left-hand side, and then replacing it with a new value, i.e. the right-side hand. What they have in common is that both of them need to assign each of the data values. As mentioned above, we cannot assign the value of pointers to the left-hand side because that doing so would bring potential change for the right-hand side. </p>
+<p>There might be another problem when using the assignment operator, that is how to handle self-assignment. For example:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">x</span><span class="params">(<span class="number">100</span>, <span class="number">10</span>)</span></span>;</span><br><span class="line">x = x;</span><br></pre></td></tr></table></figure>
+<p>The assignment operator function will firstly obliterate the value of left-hand side then assign the value of right-hand side to the left-hand side. However, once we destroy the elements and free the space, we cannot create a new object that has the same value as the right-hand side due to both sides operands refer to the same space. To avoid this case, we add a if statement before implemeting the assignment. The code below gives the implementation of the assignment operator function:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">Vec</span>&lt;T&gt;&amp; <span class="title">Vec</span>&lt;T&gt;:</span>:<span class="keyword">operator</span>= (<span class="keyword">const</span> Vec&amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// check for self-assignment</span></span><br><span class="line">    <span class="keyword">if</span>(&amp;rhs != <span class="keyword">this</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// free the array in the left-hand side</span></span><br><span class="line">        uncreate();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// copy elements from the right-hand to the left-hand side</span></span><br><span class="line">        create(rhs.<span class="built_in">begin</span>(), rhs.<span class="built_in">end</span>());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The code above introduces several new ideas:</p>
+<p>First, the <strong>operator=</strong> is defined as a function template and the type parameter infers from the type parameter of the class template <strong>Vec</strong>. </p>
+<p>Second, the return type as well as the function name are defined explicitly due to that this member function is defined outside the class. The declaration uses <strong>Vec&amp;</strong> rather than <strong>Vec<T>&amp;</strong> is due to that the type parameter is implicit when we are within the scope of the template. This also explains why we use the function name <strong>Vec<T>::operator=</strong>. Once we specifies that the function is a member of class <strong>Vec<T></strong>, we can omit the type parameter when defines its parameter <strong>const Vec&amp; rhs</strong>.</p>
+<p>Third, the if condition uses a keyword <strong>this</strong> to test whether the assigment happens between two same objects. <strong>this</strong> is a pointer that points to the object of which <strong>operator=</strong> is a member. It is valid only inside a member function. Hence, the condition means that if the address of the object (left-hand side) is as same as the address (denoted by &amp;rhs) of the right-hand object, the assignment behavior won’t be executed.</p>
+<p>Forth, if the leff-hand operand and the right-hand operand are not the same object, we destroy the elements and free the space first through <strong>uncreate()</strong> and then allocate new space and copy values from <strong>rhs</strong> like what the <strong>copy constructor</strong> does. </p>
+<p>Finally, it is necessary to explain why we intend to return a reference to the left-side object. Why not return <strong>void</strong> directly? Why don’t we return a value? <a href="https://stackoverflow.com/questions/3105798/why-must-the-copy-assignment-operator-return-a-reference-const-reference?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa" target="_blank" rel="noopener">Move to see more discussion</a>. </p>
+<p>One reason is that to keep consistent with the default setting of the C++ compiler in regarding to the built-assignment operator. Another reason is that setting the return type to <strong>void</strong> doesn’t allow continues assignment. For example,</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">x</span><span class="params">(<span class="number">100</span>, <span class="number">10</span>)</span></span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; y, z;</span><br><span class="line">y = z = x;  <span class="comment">// continues assignment</span></span><br></pre></td></tr></table></figure>
+
+<p>Apparently, we don’t have to return a reference, instead we can return a value. Let’s take an example, </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Vec&lt;<span class="keyword">int</span>&gt; <span class="title">x</span><span class="params">(<span class="number">100</span>, <span class="number">10</span>)</span></span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; y;</span><br><span class="line">y = x; <span class="comment">// calls assignment operator once, calls copy constructor once, calls destructor once</span></span><br></pre></td></tr></table></figure>
+<p>It can be presumed that returning an object involves calling three functions: first, assignment operator function is called and a temporary object is created, then, the return statement calls copy constructor to create a new object, finally, the destructor is called to destroy the temporary value and free the space. We’ll introduce the destructor later and will pose an experiment to verify these expectations. </p>
+<h3 id="Assignment-is-not-initialization"><a href="#Assignment-is-not-initialization" class="headerlink" title="Assignment is not initialization"></a>Assignment is not initialization</h3><p>Now we can summarize the difference between <strong>initialization</strong> and <strong>assignment</strong>. It can be observed that the operator <strong>=</strong> has different effect in various contexts. The default setting of <strong>=</strong> invokes <strong>copy constructor</strong> and then creating a new object,which is another form of <strong>initialization</strong>. The <strong>operator=</strong> described above invokes assignment that always obliterates the privious value first. </p>
+<p>Initialization happens</p>
+<ol>
+<li>In variable declaration<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> y;  <span class="comment">// default initialization</span></span><br></pre></td></tr></table></figure></li>
+<li>For function parameters on entry to a function<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">median(v);  <span class="comment">// the parameter is copy-initialized</span></span><br></pre></td></tr></table></figure></li>
+<li>For the return value of a function on return from the function<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> <span class="built_in">line</span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; words = split(<span class="built_in">line</span>); <span class="comment">// the return value is copy-initialized, the variable is then copy-initialized</span></span><br></pre></td></tr></table></figure></li>
+<li>In constructor initializers<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> url_ch = <span class="string">"@#$%^&amp;**(("</span>;   <span class="comment">// copy initialization</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">spaces</span><span class="params">(url_ch.<span class="built_in">size</span>(), <span class="string">' '</span>)</span></span>; <span class="comment">// direct initialization</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>Let’s see another example</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">split</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp;)</span></span>; <span class="comment">// function declaration</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; v;   <span class="comment">// default initialization</span></span><br><span class="line"></span><br><span class="line">v = split(<span class="built_in">line</span>); <span class="comment">// on entry, initialization of split's parameter from line; on exit, both initialization of the return value and assignment to v</span></span><br></pre></td></tr></table></figure>
+
+<p>The <strong>split</strong> function returns an object of type <strong>vector<string></strong>. As analysed above, it involves calling both copy constructor (at the call site) and the assignment operator function.</p>
+<h2 id="Destructor"><a href="#Destructor" class="headerlink" title="Destructor"></a>Destructor</h2><p>It is known that when we allocate a space with <strong>new</strong>, we should destroy the values and free the space with <strong>delete</strong>. Therefore, it is necessary to define a member function to do the same job. In general, the destructor will be called automatically when:</p>
+<ol>
+<li>a local variable go out of scope.</li>
+<li>members of an object are destryoed when the object of which they are a part is destroyed.</li>
+<li>elements in a container are destoryed when the container is destroyed.</li>
+<li>the delete operator applied to an object.</li>
+<li>temporary objects are destroyed. </li>
+</ol>
+<p>Taking an example, </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">split</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; str)</span></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ret;</span><br><span class="line">    <span class="comment">// split str into words and store in ret</span></span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The variable <strong>ret</strong> is destroyed when the implementation encounters the return statement because it goes out of the scope. Now let’s see how to define a destructor:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">    ~Vec() &#123; uncreate() &#125;;</span><br><span class="line">    <span class="comment">// as before</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The name of the <strong>destructor</strong> is as same as the name of the class itself, but prefixed by a tilde(~). There is no arguments taken by the <strong>destructor</strong>. To destroy the object and free the space, the <strong>destructor</strong> calls the <strong>uncreate()</strong> function, which is similar to the behavior of the <strong>assignment operator</strong> in obliterating the previous value. </p>
+<h1 id="Default-operations"><a href="#Default-operations" class="headerlink" title="Default operations"></a>Default operations</h1><p>What happens if we do not explicitly define a <strong>copy constructor, assignment operator, or destructor</strong>? In such case, the compiler will synthesizes default versions of the unspecified operation. Some general rules(koening and Moo 2000):</p>
+<p><em>1. the default version are defined to operate recursively-copying, assigning or destroying each data element according to the appropriate rules for the type of that data element.</em><br><em>2. Members that are of class type are copied, assigned, or destoryed by calling the constructor, assignment operator, and destructor for the data element</em>.<br><em>3. Members that are of built-in type are copied and assigned by copying or assigning their value. The destructor for built-in types has no work to do-even if the type is a pointer. Destoring a pointer through the default constructor doesn’t free the space at which the pointer points, resulting a memory leak as the occupied space is impossible to free.</em></p>
+<p>Recalling the <strong>Student_info</strong> class defined in chapter 9:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student_info</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Student_info ();						<span class="comment">// default constructor</span></span><br><span class="line">    Student_info (<span class="built_in">std</span>::istream &amp;);				<span class="comment">// constructor with argument</span></span><br><span class="line">    <span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">name</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> n; &#125;			<span class="comment">// inline member function return name</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">valid</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> !homework.empty(); &#125;            <span class="comment">// inline member function check state</span></span><br><span class="line">    <span class="function"><span class="built_in">std</span>::istream &amp; <span class="title">read</span><span class="params">(<span class="built_in">std</span>::istream &amp;)</span></span>;			<span class="comment">// member function read in data</span></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">()</span> <span class="keyword">const</span></span>;					<span class="comment">// member function calculate final grade</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> n;</span><br><span class="line">    <span class="keyword">double</span> midterm, <span class="keyword">final</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; homework;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>If we copy an object of <strong>Student_info</strong>, the synthesized copy constructor copies four data members. It invokes the <strong>string, vector</strong> copy constructors to copy the member <strong>name</strong> and <strong>homework</strong>s respectively. It copies the two <strong>double</strong> values, <strong>midterm, final</strong>, directly. Similar procedures happen when we do assignment. </p>
+<p>Noting that if a class defines any constructor explicitly, either a constructor or a copy constructor, the compiler will not synthesize a default constructor for that class. It is wise to provide a default constructor for the data type that to be used as a data member of a class that relies on the synthsized default constructor. We explicitly provide the default constructor in above class <strong>Student_info</strong>.</p>
+<p>If a class needs a destructor, it almost surely needs a copy constructor as well as assignment operator. To control every copy of object of class T, we should define:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">T::T(); <span class="comment">// one or more constructors, perhaps with arguments</span></span><br><span class="line">T::~T(); <span class="comment">// the destructor</span></span><br><span class="line">T::T(<span class="keyword">const</span> T&amp;); <span class="comment">// the copy constructor</span></span><br><span class="line">T::<span class="keyword">operator</span>= (<span class="keyword">const</span> T&amp;); <span class="comment">// the assignment operator</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Dynamic-Vecs"><a href="#Dynamic-Vecs" class="headerlink" title="Dynamic Vecs"></a>Dynamic Vecs</h1><p>This section focus on designing a dynamic <strong>Vec</strong> class through providing the <strong>push_back</strong> function which we are familiar with when using the standard <strong>vector</strong>. Theoretically, the <strong>push_back</strong> function can allocate new space to hold one more element and then we copy all elements into the new space while constructing a new last element from the argument to <strong>push_back</strong>. However, doing so would be inefficient when we call the <strong>push_back</strong> many times. One strategy is to allocate more storage than we need when necessary, that is, when we exhaust the preallocate storage. Specifically, each time the <strong>push_back</strong> allocate new space, it allocate twice as much as the current space. </p>
+<p>For example, if we create a <strong>Vec</strong> with 100 elements, then call the <strong>push_back</strong> function for the first time, it will allocate a new space that can hold 200 elements. It then copies the original 100 elements into the new space with constructing the last element from the argument. There are still more space left for holding 99 elements more and hence the function do not need to allocate more space in next 99 calls. Moreover, the extral space keep uninitialized. </p>
+<p>What we need to track is the address of the first element, the one past of the last constructed element, and the end of the new allocate storage(i.e. one past the available element). We’ll denote these address with three pointers, <strong>data, avail, limit</strong> respectively. The range [data, avail) contains all elements while the range [avail, limit) is the uninitialized storage. Now let’s write the <strong>push_back</strong> function:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">const</span> T&amp; val)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(avail == limit)      <span class="comment">// get space if needed</span></span><br><span class="line">            grow();</span><br><span class="line">        unchecked_append(val);  <span class="comment">// append the new element</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        iterator data;  <span class="comment">// as before, the pointer to the first element in the Vec</span></span><br><span class="line">        iterator avail; <span class="comment">// pointer to one past the last constructed element</span></span><br><span class="line">        iterator limit; <span class="comment">// now points to one past the available element</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// rest of the class interface and implementation as before</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>grow()</strong> will double the space for us. <strong>unchecked_append(val)</strong> constructs the last element from the argument to <strong>push_back</strong> function. Correspondingly, we refresh the data members.</p>
+<h1 id="Flexible-memory-management"><a href="#Flexible-memory-management" class="headerlink" title="Flexible memory management"></a>Flexible memory management</h1><p>We have basically completed the design of our <strong>Vec</strong> class template. However, we haven’t talked about the real implementation, that is, how exactly allocate new space. As memtioned in chapter 10, we can dynamically manage memory through built-in operators <strong>new</strong> and <strong>delete</strong> (or <strong>new[]</strong> and <strong>delete[]</strong>). However, there are several shortcomings if we use such operators to manage memory for our <strong>Vec</strong> class.</p>
+<ol>
+<li>if we use <strong>new[]</strong>, it always initialize every element of a <strong>T</strong> array by using <strong>T::T()</strong>. If we want to initialize ourselves, we would have to initialize each element twice. </li>
+<li>if <strong>push_back</strong> allocates new space, we want to keep the range [avail, limit) uninitialized. However, if we use <strong>new[]</strong>, we cannot control this anymore. </li>
+</ol>
+<p>The standard header <memory> provides a class named <strong>allocator<T></strong>, that allocates a block of uninitialized memory that intended to contain objects of type <strong>T</strong> and returns a pointer to the initial element of that memory. In addition, <strong>allocator<T></strong> also defines members including functions to construct objects, destroy obejcts and deallocate the memory. Therefore, programmers can manage the allocated space directly and determine the unitialized space. Here introduces four member functions and two non-member functions of the <strong>allocator</strong> class:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">allocator</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">T* <span class="title">allocate</span><span class="params">(<span class="keyword">size_t</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deallocator</span><span class="params">(T*, <span class="keyword">size_t</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">construct</span><span class="params">(T*, <span class="keyword">const</span> T&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">destroy</span><span class="params">(T*)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line">template&lt;class Out, class T&gt; void uninitialized_fill(Out, Out, const T&amp;);</span><br><span class="line">template&lt;class In, class Out&gt; Out uninitialized_copy(In, In, Out);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>the <strong>allocate</strong> member allocates typed but uninitialized storage to hold the requested number of elements. It returns a pointer that has type <strong>T</strong> and denotes the initial address of the storage. </p>
+</li>
+<li><p>the <strong>deallocator</strong> frees this uninitialized storage with taking the pointer given by <strong>allocate</strong> and the size.</p>
+</li>
+<li><p><strong>construct</strong> and <strong>destroy</strong>  construct or destroy a single object in the uninitialized space. </p>
+</li>
+<li><p>the first algorithm <strong>uninitialized_fill</strong> fills this uninitialized space with value from the third argument. The first two arguments denote the range of the space that to be filled. </p>
+</li>
+<li><p>the second algorithm <strong>uninitialized_copy</strong> copies values from a sequence specified by the first two arguments into a target sequence denoted by the third argument. The range pointed by the third argument should large enough to hold all elements contained in the range specified by the first two arguments. It finally returns a pointer to one past the last constructed element. </p>
+</li>
+<li><p>both two algorithms assumes that the target range contains raw storage rather than elements that already hold values. </p>
+</li>
+</ol>
+<p>To obtain an <strong>allocator</strong> of the right type at the compiler time, we’ll add to our <strong>Vec</strong> class an <strong>allocator<T></strong> member. By doing so, we can use above member functions to provide efficient and flexible memory management for our <strong>Vec</strong> class. </p>
+<h1 id="The-final-Vec-class"><a href="#The-final-Vec-class" class="headerlink" title="The final Vec class"></a>The final Vec class</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">class</span> <span class="title">Vec</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// member types</span></span><br><span class="line">    <span class="keyword">typedef</span> T* iterator;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">const</span> T* const_iterator;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">    <span class="keyword">typedef</span> T value_type;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// constructors</span></span><br><span class="line">    Vec() &#123; create(); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Vec</span><span class="params">(size_type n, <span class="keyword">const</span> T&amp; t = T())</span> </span>&#123; create(n, t); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// copy constructor, assignment operator, destructor</span></span><br><span class="line">    Vec(<span class="keyword">const</span> Vec&amp; v) &#123; create(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>()); &#125;</span><br><span class="line">    Vec&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Vec&amp;); </span><br><span class="line">    ~Vec() &#123; uncreate(); &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// indexing operator</span></span><br><span class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](size_type i) <span class="keyword">const</span> &#123; <span class="keyword">return</span> data[i]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// push_back function</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">const</span> T&amp; t)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(avail == limit)</span><br><span class="line">            grow();</span><br><span class="line">        unchecked_append(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// size function</span></span><br><span class="line">    <span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> avail - data; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// begin(), end() function</span></span><br><span class="line">    <span class="function">iterator <span class="title">begin</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> data; &#125;</span><br><span class="line">    <span class="function">const_iterator <span class="title">begin</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> data; &#125;</span><br><span class="line">    <span class="function">iterator <span class="title">end</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> avail; &#125;</span><br><span class="line">    <span class="function">const_iterator <span class="title">end</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> avail; &#125;</span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    iterator data;  <span class="comment">// first element in the Vec</span></span><br><span class="line">    iterator avail; <span class="comment">// (one past) the last element in the Vec</span></span><br><span class="line">    iterator limit; <span class="comment">// (one past) the allocated memory</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// facilities for memory allocation</span></span><br><span class="line">    allocator&lt;T&gt; alloc; <span class="comment">// object to handle memory allocation</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// allocate and initialize the underlying array</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">(size_type, <span class="keyword">const</span> T&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">(const_iterator, <span class="keyword">const</span> iterator)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// destroy the elements in the array and free the memory</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">uncreate</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// support functions for push_back</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">grow</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">unchecked_append</span><span class="params">(<span class="keyword">const</span> T&amp;)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>We should note that there are four conditions (aka. <strong>class invariants</strong>) that guarantees a valid <strong>Vec</strong>:</p>
+<ol>
+<li><strong>data</strong> points at our initial element, if we have any, and is zero otherwise.</li>
+<li><strong>data &lt;= avail &lt;= limit</strong>.</li>
+<li>Elements  have been constructed in the range[data, avail).</li>
+<li>Elements have not been constructed in the range[avail, limit).</li>
+</ol>
+<p>Now the next is to write the implementation of different version of <strong>create</strong> functions while maintaining above <strong>class invariants</strong>. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">void</span> <span class="title">Vec</span>&lt;T&gt;:</span>:create()</span><br><span class="line">&#123;</span><br><span class="line">    data = avail = limit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">void</span> <span class="title">Vec</span>&lt;T&gt;:</span>:create(size_type n, <span class="keyword">const</span> T&amp; val)</span><br><span class="line">&#123;</span><br><span class="line">    data = alloc.allocate(n);</span><br><span class="line">    limit = avail = data + n;</span><br><span class="line">    uninitialized_fill(data, limit, val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">void</span> <span class="title">Vec</span>&lt;T&gt;:</span>:create(const_iterator i, const_iterator, j)</span><br><span class="line">&#123;</span><br><span class="line">    data = alloc.allocate(j - i);</span><br><span class="line">    limit = avail = uninitialized_copy(i, j, data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The first version of <strong>create</strong> is used for initializing an empty <strong>Vec</strong>. The second one that takes a size and a value creates a Vec by allocating enough memory to hold <strong>n</strong> elements through <strong>alloc.allocate(n)</strong>, and initializes all elements with <strong>val</strong> by applying the algorithm <strong>uninitialized_fill</strong>. The third version is used for <strong>copy-initialization</strong>, which takes two iterators that denote the sequence from which to copy. It calls <strong>uninitialized_copy</strong> algorithm to copy all values of the elements in [i, j) into [data, avail).</p>
+<p>The <strong>destructor</strong> calls the <strong>uncreate</strong> member to destroy the elements and free the space that allocated by <strong>create</strong>. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">void</span> <span class="title">Vec</span>&lt;T&gt;:</span>:uncreate()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(!data)&#123;</span><br><span class="line">        <span class="comment">// destroy the elements in reverse order</span></span><br><span class="line">        iterator it = avail;</span><br><span class="line">        <span class="keyword">while</span>(it != data)</span><br><span class="line">            alloc.destroy(--it);</span><br><span class="line">        alloc.deallocate(data, limit - data);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// reset pointers to indicate that Vec is empty again</span></span><br><span class="line">    data = limit = avail = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <strong>uncreate</strong> function first checks whether the <strong>data</strong> is 0. This is because that <strong>alloc.deallocate</strong> requires a non-zero pointer. There are two steps to destruct the <strong>Vec</strong>: the first step is that calling the <strong>destroy</strong> function to destroy each object contained in the Vec; the second step is that calling <strong>deallocate</strong> function to free the previous allocated storage. As <strong>deallocate</strong> doesn’t destroy elements in an array, it is crucial to call <strong>destroy</strong> function first which calls the <strong>destructor</strong> of the target element to release resource that might be occupied by the target element. It is known that there is no destructor for built-in types, so how does the <strong>destroy</strong> function work? It is presumed that the destroy function treats <strong>built-in</strong> objects and other objects in different manner. It still needs further research. </p>
+<p>Finally, we write functions to support our <strong>push_back</strong> member.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">void</span> <span class="title">Vec</span>&lt;T&gt;:</span>:grow()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// when growing, allocate twice as much as space as currently in use</span></span><br><span class="line">    size_type new_size = <span class="built_in">max</span>(<span class="number">2</span>*(limit-data), <span class="keyword">ptrdiff_t</span>(<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// allocate new space and copy existing elements to the new space</span></span><br><span class="line">    iterator new_data = alloc.allocate(new_size);</span><br><span class="line">    iterator new_avail = uninitialized_copy(data, avail, new_data);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// return the old space</span></span><br><span class="line">    uncreate();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reset pointers to point to the newly allocated space</span></span><br><span class="line">    data = new_data;</span><br><span class="line">    avail = new_avail;</span><br><span class="line">    limit = data + new_size;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// assumes avail points at allocated, but uninitialized space</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">void</span> <span class="title">Vec</span>&lt;T&gt;:</span>:unchecked_append(<span class="keyword">const</span> T&amp; val)</span><br><span class="line">&#123;</span><br><span class="line">    alloc.construct(avail++, val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Now we have really completed our <strong>Vec</strong> class. The next post presents some tests on our <strong>Vec</strong> type from different perspectives. </p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Liam
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://quantein.com/2018/04/14/C-Defining-abstract-data-types/" title="C++ - Defining abstract data types (Part 1)">http://quantein.com/2018/04/14/C-Defining-abstract-data-types/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/Notes/" rel="tag"># Notes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/04/12/Accelerated-C-Solutions-to-Exercises-Chapter-10/" rel="prev" title="Accelerated C++ Solutions to Exercises(Chapter 10)">
+      <i class="fa fa-chevron-left"></i> Accelerated C++ Solutions to Exercises(Chapter 10)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/04/15/Implementing-the-C-STL-Algorithms-Part-1-Simple-Find-Algorithms/" rel="next" title="Implementing the C++ STL Algorithms-Part 1: Simple Find Algorithms">
+      Implementing the C++ STL Algorithms-Part 1: Simple Find Algorithms <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-vector-class"><span class="nav-number">1.</span> <span class="nav-text">The vector class</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Implementing-the-Vec-class"><span class="nav-number">2.</span> <span class="nav-text">Implementing the Vec class</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Constructors"><span class="nav-number">2.1.</span> <span class="nav-text">Constructors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Index-and-size"><span class="nav-number">2.2.</span> <span class="nav-text">Index and size</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Operations-that-return-iterators"><span class="nav-number">2.3.</span> <span class="nav-text">Operations that return iterators</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Assignment"><span class="nav-number">2.4.</span> <span class="nav-text">Assignment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Assignment-is-not-initialization"><span class="nav-number">2.4.1.</span> <span class="nav-text">Assignment is not initialization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Destructor"><span class="nav-number">2.5.</span> <span class="nav-text">Destructor</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Default-operations"><span class="nav-number">3.</span> <span class="nav-text">Default operations</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dynamic-Vecs"><span class="nav-number">4.</span> <span class="nav-text">Dynamic Vecs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Flexible-memory-management"><span class="nav-number">5.</span> <span class="nav-text">Flexible memory management</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-final-Vec-class"><span class="nav-number">6.</span> <span class="nav-text">The final Vec class</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam</p>
+  <div class="site-description" itemprop="description">Stochastic Modelling Notes; Programming Notes</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/quantliam" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;quantliam" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/yanshijiutu@gmail.com" title="E-Mail → yanshijiutu@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">NaN:aN</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

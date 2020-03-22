@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Accelerated C++ Solutions," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="All the programs were compiled and excuted within the setting of Eclipse CDT and MinGW64  Exercise 0-0Compile and run the Hello, world! program Solution &amp;amp; ResultsCompile and run Hello, world! prog">
+<meta name="keywords" content="Accelerated C++ Solutions">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Accelerated C++ Solutions to Exercises(Chapter 0)">
+<meta property="og:url" content="http://www.quanttour.com/06/02/2018/Accelerated-C-Solution-to-Exercise-Chapter 0/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="All the programs were compiled and excuted within the setting of Eclipse CDT and MinGW64  Exercise 0-0Compile and run the Hello, world! program Solution &amp;amp; ResultsCompile and run Hello, world! prog">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_0.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_1.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_2_1.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_2_2.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_3_linvim.jpg">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_3_linec.png">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_3_minvim.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_3_minec.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_4.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_5.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_6.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_7.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_7_1.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_8.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_9.PNG">
+<meta property="og:image" content="http://www.quanttour.com/images/Exercise0_10.PNG">
+<meta property="og:updated_time" content="2018-02-22T14:21:05.173Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Accelerated C++ Solutions to Exercises(Chapter 0)">
+<meta name="twitter:description" content="All the programs were compiled and excuted within the setting of Eclipse CDT and MinGW64  Exercise 0-0Compile and run the Hello, world! program Solution &amp;amp; ResultsCompile and run Hello, world! prog">
+<meta name="twitter:image" content="http://www.quanttour.com/images/Exercise0_0.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.quanttour.com/06/02/2018/Accelerated-C-Solution-to-Exercise-Chapter 0/"/>
+
+
+
+
+
+  <title>Accelerated C++ Solutions to Exercises(Chapter 0) | Liam's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/06/02/2018/Accelerated-C-Solution-to-Exercise-Chapter 0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Accelerated C++ Solutions to Exercises(Chapter 0)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T12:59:13+08:00">
+                06-02-2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,488
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>All the programs were compiled and excuted within the setting of Eclipse CDT and MinGW64</strong></p>
+<hr>
+<h1 id="Exercise-0-0"><a href="#Exercise-0-0" class="headerlink" title="Exercise 0-0"></a>Exercise 0-0</h1><p>Compile and run the <strong>Hello, world!</strong> program</p>
+<h2 id="Solution-amp-Results"><a href="#Solution-amp-Results" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>Compile and run <strong>Hello, world!</strong> program with MinGW + Eclipse CDT:</p>
+<p><img src="/images/Exercise0_0.PNG" alt="Hello, world!"></p>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>See <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a>. </p>
+<hr>
+<h1 id="Exercise-0-1"><a href="#Exercise-0-1" class="headerlink" title="Exercise 0-1"></a>Exercise 0-1</h1><p>What does the following statement do?<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> + <span class="number">4</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Solution-amp-Results-1"><a href="#Solution-amp-Results-1" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>The expression statement yields 7 as its results because it contains two int type operands (i.e. 3 and 4), and one operator (i.e. addition). However, it has no side effects on the state of the program and the implementation. Hence, there should be nothing displayed on the console when the program is excuated. As expected, the graph below shows the result along with a warning description <em>statement has no effect ‘3+4’</em>. </p>
+<p><img src="/images/Exercise0_1.PNG" alt="Expression Statement: 3+4;"></p>
+<h2 id="Analysis-1"><a href="#Analysis-1" class="headerlink" title="Analysis"></a>Analysis</h2><p>See <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a>.</p>
+<hr>
+<h1 id="Exercise-0-2"><a href="#Exercise-0-2" class="headerlink" title="Exercise 0-2"></a>Exercise 0-2</h1><p>Write a program that, when run, writes<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This (&quot;) is a quote, and this (\) is a backslash.</span><br></pre></td></tr></table></figure></p>
+<h2 id="Solution-amp-Results-2"><a href="#Solution-amp-Results-2" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>It seems that this program is exactly the same as the <strong>Hello, world!</strong> program in Exercise 0-0 once we replace the string literals. In doing so, however, the compiler reports errors as below graph shows. </p>
+<p><img src="/images/Exercise0_2_1.PNG" alt="Compilation errors"></p>
+<p>The the occurrence of errors is due to the facts：</p>
+<ol>
+<li>Characters should be enclosed in double quotes and the string literals is not allowed to span lines. </li>
+<li>Some characters such as backslash or single/double quotes have special meaning in C++ language. </li>
+<li>Some characters such as backspace or control character are <em>nonprintable</em>. </li>
+</ol>
+<p>Therefore, it is impossible to use such characters directly. Instead, the language provides <em>escape sequence</em> to represent such characters. The <em>escape sequence</em> begins with a backslash, i.e. in the form of <strong>\+character</strong>. The follow graph shows the right solution to this question.</p>
+<p><img src="/images/Exercise0_2_2.PNG" alt="String literals output"></p>
+<h2 id="Analysis-2"><a href="#Analysis-2" class="headerlink" title="Analysis"></a>Analysis</h2><p> The below table gives the <em>escape sequences</em> that are defined in C++ language. </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>newline</td>
+<td>\n</td>
+<td>horizontal tab</td>
+<td>\t</td>
+<td>alert bell</td>
+<td>\a</td>
+</tr>
+<tr>
+<td>vertical</td>
+<td>\v</td>
+<td>backspace</td>
+<td>\b</td>
+<td>double quote</td>
+<td>\“</td>
+</tr>
+<tr>
+<td>backslash</td>
+<td>\\</td>
+<td>question mark</td>
+<td>\?</td>
+<td>single quote</td>
+<td>\‘</td>
+</tr>
+<tr>
+<td>carriage return</td>
+<td>\r</td>
+<td>formfeed</td>
+<td>\f</td>
+</tr>
+</tbody>
+</table>
+<p>One can choose another syntax for using <em>Escape sequence</em>: a backslash followed by by hexadecimal or octal digits while the value represents the numerical value of the character. For example, the linefeed command in C++ can be written in three ways:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>character</td>
+<td>\n</td>
+</tr>
+<tr>
+<td>octal digits</td>
+<td>\12</td>
+</tr>
+<tr>
+<td>hexadecimal digits</td>
+<td>\x0a</td>
+</tr>
+</tbody>
+</table>
+<p>If a backslash followed by more than three octal digits, the <em>escape sequence</em> is only valid for the first three digits while the rest digits will be read as normal character. For example, <strong>‘\12345’</strong> is equivalent to <strong>‘S’</strong> followed by <strong>‘4’</strong> and <strong>‘5’</strong>. But if a backslash followed by the hex digits, the <em>escape sequence</em> uses all the hex digits. </p>
+<hr>
+<h1 id="Exercise-0-3"><a href="#Exercise-0-3" class="headerlink" title="Exercise 0-3"></a>Exercise 0-3</h1><p>The string literal “\t” represents a tab character; different C++ implementations display tabs in different ways. Experiment with your implementation to learn how it treats tabs. </p>
+<h2 id="Solution-amp-Results-3"><a href="#Solution-amp-Results-3" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>In my view, the <em>different implementations</em> could be interpretated as: different C++ compilers or different versions, which may have different interpretation of C++ standards or different support for certain C++ features. Different IDEs or editors might also have an impact on the final displays of results due to various settings. Actually, I am not very sure about my understanding on this.</p>
+<p>To test how different implementations display tabs, I wrote an output statement in which the Horizontal tab <strong>‘\t’</strong>  is inserted into a string literals in a random manner. Then, I run the program in four different environments. First I present the codes here：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Accelerated C++ Solution to Exercises 0-3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// for loops for generating 10 groups' string literals. </span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">3</span>; j &lt; <span class="number">13</span>; j++)</span><br><span class="line">    &#123;   <span class="comment">// for loops for generating each character of the string literals</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> i = <span class="string">'A'</span>; i &lt; <span class="string">'z'</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; i;</span><br><span class="line">        <span class="comment">// the insertation of the horizontal tab is </span></span><br><span class="line">        <span class="comment">// conditional on the bool expression: (int)i % j == 0</span></span><br><span class="line">        <span class="keyword">if</span> ((<span class="keyword">int</span>)i % j == <span class="number">0</span>)</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">'\t'</span>;  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The following content displays four environment settings and the results. </p>
+<h3 id="Linux-GNU-G-Vim-Editor"><a href="#Linux-GNU-G-Vim-Editor" class="headerlink" title="Linux   GNU(G++) + Vim Editor"></a>Linux   GNU(G++) + Vim Editor</h3><p><img src="/images/Exercise0_3_linvim.jpg" alt="Linux GNU + Vim"></p>
+<h3 id="Linux-GNU-G-Eclipse"><a href="#Linux-GNU-G-Eclipse" class="headerlink" title="Linux   GNU(G++) + Eclipse"></a>Linux   GNU(G++) + Eclipse</h3><p><img src="/images/Exercise0_3_linec.png" alt="Linux GNU + Eclipse"></p>
+<h3 id="Windows-MinGW-Vim-Editor"><a href="#Windows-MinGW-Vim-Editor" class="headerlink" title="Windows MinGW    + Vim Editor"></a>Windows MinGW    + Vim Editor</h3><p><img src="/images/Exercise0_3_minvim.PNG" alt="MinGW + Vim"></p>
+<h3 id="Windows-MinGW-Eclipse"><a href="#Windows-MinGW-Eclipse" class="headerlink" title="Windows MinGW    + Eclipse"></a>Windows MinGW    + Eclipse</h3><p><img src="/images/Exercise0_3_minec.PNG" alt="MinGW + Eclipse"></p>
+<p>Unfortunately, the experiments failed to response the question correctly as there is no difference between these implementations regarding to displaying tabs. But it reveals that the <strong>tab</strong> stops every 8 spaces and always aligns the followed text to the next stop, regardless of the position where the <strong>tab</strong> is inserted into. I will keep focus on this question and try to find a better solution to this question. </p>
+<h2 id="Analysis-3"><a href="#Analysis-3" class="headerlink" title="Analysis"></a>Analysis</h2><p>To be continued.</p>
+<hr>
+<h1 id="Exercise-0-4"><a href="#Exercise-0-4" class="headerlink" title="Exercise 0-4"></a>Exercise 0-4</h1><p>Write a program that, when run, writes the <strong>Hello, world!</strong> program as its out put.</p>
+<h2 id="Solution-amp-Results-4"><a href="#Solution-amp-Results-4" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>The question is not complicated. But, be carefull about the output of the nexted double quotes. </p>
+<p><img src="/images/Exercise0_4.PNG" alt="Hello, world! program print"></p>
+<h2 id="Analysis-4"><a href="#Analysis-4" class="headerlink" title="Analysis"></a>Analysis</h2><p>See <a href="http://quanttour.com/06/02/2018/Accelerated-C-Solution-to-Exercise-Chapter%200/" target="_blank" rel="noopener">Solution to Exercise 0-2</a>.</p>
+<hr>
+<h1 id="Exercise-0-5"><a href="#Exercise-0-5" class="headerlink" title="Exercise 0-5"></a>Exercise 0-5</h1><p>Is this a valid program? Why or why not?</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt; </span></span></span><br><span class="line">int main() std::cout &lt;&lt; "Hello, world!" &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+<h2 id="Solution-amp-Results-5"><a href="#Solution-amp-Results-5" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>The program is invalid as shown below:</p>
+<p><img src="/images/Exercise0_5.PNG" alt="A invalid program"></p>
+<p>It is clear that <strong>curly braces</strong> are missing for a complete <strong>main function</strong> in this program. A correct main function should include a function body which is a block of statements enclosed by a pair of <strong>curly braces</strong>. </p>
+<h2 id="Analysis-5"><a href="#Analysis-5" class="headerlink" title="Analysis"></a>Analysis</h2><p>If one has no any programming knowledge, he probabily can’t figure out the error only from the error reports:<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expected initializer before 'std'</span><br></pre></td></tr></table></figure></p>
+<p>Why the compile error shows like this? A possible reason is that the compiler treats codes outside the function as declarations of variables. To define a variable, one should firstly specify the <strong>type specifier</strong> and then declare the <strong>name</strong> of the variable, and finally add a semicolon. Once the variable is created, it is initialized. Consider that the compiler treats <strong><em>int main()</em></strong> as a declaration of a variable, it will find that the initialization of this variable is failed due to lacking of a semicolon. </p>
+<hr>
+<h1 id="Exercise-0-6"><a href="#Exercise-0-6" class="headerlink" title="Exercise 0-6"></a>Exercise 0-6</h1><p>Is this a valid program? Why or why not?</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;&#123;&#123;&#123;&#123;&#123;<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world! &lt;&lt; std::endl;&#125;&#125;&#125;&#125;&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Solution-amp-Results-6"><a href="#Solution-amp-Results-6" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>In contrast to the program in Exercise 0-5, this program is valid because it has a complete structure of a main function. Beyond the outmost curly bracces, the rest curly braces form independent blocks and can be nested. </p>
+<p><img src="/images/Exercise0_6.PNG" alt="A valid program"></p>
+<h2 id="Analysis-6"><a href="#Analysis-6" class="headerlink" title="Analysis"></a>Analysis</h2><p>See <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a> and <a href="http://quanttour.com/06/02/2018/Accelerated-C-Solution-to-Exercise-Chapter%200/" target="_blank" rel="noopener">Solution to Exercise 0-5</a>.</p>
+<hr>
+<h1 id="Exercise-0-7"><a href="#Exercise-0-7" class="headerlink" title="Exercise 0-7"></a>Exercise 0-7</h1><p>Is this a valid program? Why or why not?</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*This is a comment that extends over several lines</span></span><br><span class="line"><span class="comment">      because it uses /* and */</span> as its starting <span class="keyword">and</span> ending delimiters */</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Does this work?"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Solution-amp-Results-7"><a href="#Solution-amp-Results-7" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>The program is invalid：</p>
+<p><img src="/images/Exercise0_7.PNG" alt="A invalid program"></p>
+<p>As mentioned in <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a>, comment pairs cannot nest. The warning also confirms this restriction.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">..\Exercise0_7.cpp:7:25: warning: &quot;/*&quot; within comment [-Wcomment]</span><br></pre></td></tr></table></figure></p>
+<p>To Solve the problem, we can add single line comments before each lines of comments. Below graph gives the correct implementation:</p>
+<p><img src="/images/Exercise0_7_1.PNG" alt="A valid program"></p>
+<h2 id="Analysis-7"><a href="#Analysis-7" class="headerlink" title="Analysis"></a>Analysis</h2><p>See <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a>.</p>
+<hr>
+<h1 id="Exercise-0-8"><a href="#Exercise-0-8" class="headerlink" title="Exercise 0-8"></a>Exercise 0-8</h1><p>Is this a valid program? Why or why not?</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// This is a comment that extends over several lines</span></span><br><span class="line">    <span class="comment">// by using // at the begining of each line instead of </span></span><br><span class="line">    <span class="comment">// using /* or */ to delimit comments.</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Does this work?"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="Solution-amp-Results-8"><a href="#Solution-amp-Results-8" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>It is a valid program which successfully corrects the program in Exercise0-7</p>
+<p><img src="/images/Exercise0_8.PNG" alt="A valid program"></p>
+<h2 id="Analysis-8"><a href="#Analysis-8" class="headerlink" title="Analysis"></a>Analysis</h2><p>See <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a> and <a href="http://quanttour.com/06/02/2018/Accelerated-C-Solution-to-Exercise-Chapter%200/" target="_blank" rel="noopener">Solution to Exercise 0-7</a>.</p>
+<hr>
+<h1 id="Exercise-0-9"><a href="#Exercise-0-9" class="headerlink" title="Exercise 0-9"></a>Exercise 0-9</h1><p>What is the shortest valid program?</p>
+<h2 id="Solution-amp-Results-9"><a href="#Solution-amp-Results-9" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>As I mentioned in <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a>, a valid program must contain a main function while a main function includes four elements: <strong><em>return type, function name, parameter list and function body</em></strong>. </p>
+<p>Therefore, the shortest valid program works like this：</p>
+<p><img src="/images/Exercise0_9.PNG" alt="The shortest valid program"></p>
+<p>Andrew Koenig who is the author of <strong><em>Accelerated C++: Practical Programming by Example</em></strong> states: </p>
+<ol>
+<li>generally, functions must include at least one return statement.</li>
+<li>the main function is special and may omit the return. In this case, the implementation will assume a return value of zero. </li>
+</ol>
+<p>The shortest valid program I present here omits the <strong>return</strong> statement. But as pointed out by Andrew Koenig, explicitly including a return from <strong>main</strong> function is a good practice. </p>
+<h2 id="Analysis-9"><a href="#Analysis-9" class="headerlink" title="Analysis"></a>Analysis</h2><p>See <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a>.</p>
+<hr>
+<h1 id="Exercise-0-10"><a href="#Exercise-0-10" class="headerlink" title="Exercise 0-10"></a>Exercise 0-10</h1><p>Rewrite the <strong>Hello, world!</strong> program so that a newline occurs everywhere that whitespace is allowed in the program.</p>
+<h2 id="Solution-amp-Results-10"><a href="#Solution-amp-Results-10" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>Recalling the <strong>Hello, world!</strong> program:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, world!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>There exits one space in the string literals Hello, world!”. I would replace the space with a newline character <strong>\n</strong>. The graph below shows my implementation and result:</p>
+<p><img src="/images/Exercise0_10.PNG" alt="New Hello, world! program"></p>
+<h2 id="Analysis-10"><a href="#Analysis-10" class="headerlink" title="Analysis"></a>Analysis</h2><p>See <a href="http://quanttour.com/02/02/2018/C++%20-%20Getting%20Started/" target="_blank" rel="noopener">C++ - Getting Started</a>. </p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>Koenig, A. and Moo, B.E., 2000. Accelerated C++.</p>
+<p>Lippman, S.B., Lajoie, J. and Moo, B.E., 2013. C++ Primer, 5th edt.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Accelerated-C-Solutions/" rel="tag"># Accelerated C++ Solutions</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/02/02/2018/C++ - Getting Started/" rel="next" title="C++ - Getting Started">
+                <i class="fa fa-chevron-left"></i> C++ - Getting Started
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/11/02/2018/C-Working-with-strings/" rel="prev" title="C++ - Working with strings">
+                C++ - Working with strings <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Liam</p>
+              <p class="site-description motion-element" itemprop="description">Stochastic Modelling Notes; Programming Notes</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/quantliam" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yanshijiutu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-0"><span class="nav-number">1.</span> <span class="nav-text">Exercise 0-0</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results"><span class="nav-number">1.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis"><span class="nav-number">1.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-1"><span class="nav-number">2.</span> <span class="nav-text">Exercise 0-1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-1"><span class="nav-number">2.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-2"><span class="nav-number">3.</span> <span class="nav-text">Exercise 0-2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-2"><span class="nav-number">3.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-2"><span class="nav-number">3.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-3"><span class="nav-number">4.</span> <span class="nav-text">Exercise 0-3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-3"><span class="nav-number">4.1.</span> <span class="nav-text">Solution &amp; Results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-GNU-G-Vim-Editor"><span class="nav-number">4.1.1.</span> <span class="nav-text">Linux   GNU(G++) + Vim Editor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-GNU-G-Eclipse"><span class="nav-number">4.1.2.</span> <span class="nav-text">Linux   GNU(G++) + Eclipse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-MinGW-Vim-Editor"><span class="nav-number">4.1.3.</span> <span class="nav-text">Windows MinGW    + Vim Editor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-MinGW-Eclipse"><span class="nav-number">4.1.4.</span> <span class="nav-text">Windows MinGW    + Eclipse</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-3"><span class="nav-number">4.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-4"><span class="nav-number">5.</span> <span class="nav-text">Exercise 0-4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-4"><span class="nav-number">5.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-4"><span class="nav-number">5.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-5"><span class="nav-number">6.</span> <span class="nav-text">Exercise 0-5</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-5"><span class="nav-number">6.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-5"><span class="nav-number">6.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-6"><span class="nav-number">7.</span> <span class="nav-text">Exercise 0-6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-6"><span class="nav-number">7.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-6"><span class="nav-number">7.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-7"><span class="nav-number">8.</span> <span class="nav-text">Exercise 0-7</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-7"><span class="nav-number">8.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-7"><span class="nav-number">8.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-8"><span class="nav-number">9.</span> <span class="nav-text">Exercise 0-8</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-8"><span class="nav-number">9.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-8"><span class="nav-number">9.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-9"><span class="nav-number">10.</span> <span class="nav-text">Exercise 0-9</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-9"><span class="nav-number">10.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-9"><span class="nav-number">10.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-0-10"><span class="nav-number">11.</span> <span class="nav-text">Exercise 0-10</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-10"><span class="nav-number">11.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-10"><span class="nav-number">11.2.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">12.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">129.6k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

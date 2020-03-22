@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Times New Roman:300,300italic,400,400italic,700,700italic|Courier New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"quantein.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":60,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Exercise 10-0Compile, execute, and test the programs in this chapter. Solution &amp; ResultsPlease click here Managing memory and low-level data structures for codes and analysis.  Exercise 10-1Rewrit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Accelerated C++ Solutions to Exercises(Chapter 10)">
+<meta property="og:url" content="http://quantein.com/2018/04/12/Accelerated-C-Solutions-to-Exercises-Chapter-10/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="Exercise 10-0Compile, execute, and test the programs in this chapter. Solution &amp; ResultsPlease click here Managing memory and low-level data structures for codes and analysis.  Exercise 10-1Rewrit">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-04-12T05:24:45.000Z">
+<meta property="article:modified_time" content="2018-05-06T09:53:19.000Z">
+<meta property="article:author" content="Liam">
+<meta property="article:tag" content="Accelerated C++ Solutions">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://quantein.com/2018/04/12/Accelerated-C-Solutions-to-Exercises-Chapter-10/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>Accelerated C++ Solutions to Exercises(Chapter 10) | Liam's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/quantliam" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://quantein.com/2018/04/12/Accelerated-C-Solutions-to-Exercises-Chapter-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="Stochastic Modelling Notes; Programming Notes">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Accelerated C++ Solutions to Exercises(Chapter 10)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-12 13:24:45" itemprop="dateCreated datePublished" datetime="2018-04-12T13:24:45+08:00">2018-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-05-06 17:53:19" itemprop="dateModified" datetime="2018-05-06T17:53:19+08:00">2018-05-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Exercise-10-0"><a href="#Exercise-10-0" class="headerlink" title="Exercise 10-0"></a>Exercise 10-0</h1><p>Compile, execute, and test the programs in this chapter.</p>
+<h2 id="Solution-amp-Results"><a href="#Solution-amp-Results" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>Please click here <a href="http://quanttour.com/10/04/2018/C-Managing-memory-and-low-level-data-structures/" target="_blank" rel="noopener">Managing memory and low-level data structures</a> for codes and analysis.</p>
+<hr>
+<h1 id="Exercise-10-1"><a href="#Exercise-10-1" class="headerlink" title="Exercise 10-1"></a>Exercise 10-1</h1><p>Rewrite the student-grading program from §9.6/166 to generate letter grades.</p>
+<h2 id="Solution-amp-Results-1"><a href="#Solution-amp-Results-1" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>Since the letter grades function computes a letter grade based on a numerical grade, I would like to add it as a non-member function of the <strong>Student_info</strong> class to avoid repetitively computing the final grade. When need calculate the letter grades, we simply call the function as follows:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> final_grade = it-&gt;grade(); <span class="comment">// it is a pointer to the Student_info object</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; letter_grade(final_grade); <span class="comment">// print the letter grade</span></span><br></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; letter_grade(it-&gt;grade());</span><br></pre></td></tr></table></figure>
+
+<p>All files are presented at below including <strong>mainfunction.cpp, Student_info.h, Student_info.cpp, grade.h, grade.cpp</strong>. </p>
+<p><strong>mainfunction.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Accelerated C++ Solutions Exercises 10-1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;		// to get the declaration of max, sort</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;		// to get the declaration of setprecision</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;		// to get the declaration of streamsize</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;    	// to get the declatation of domain_error</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;		// to get the declaration of string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;		// to get the declaration of vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span>	<span class="comment">// to get the declaration of Student_info</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;					<span class="keyword">using</span> <span class="built_in">std</span>::setprecision;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;				<span class="keyword">using</span> <span class="built_in">std</span>::sort;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;				<span class="keyword">using</span> <span class="built_in">std</span>::streamsize;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::domain_error;   		        <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">max</span>;					<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::fixed;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;Student_info&gt; students;</span><br><span class="line">    Student_info record;</span><br><span class="line">    <span class="built_in">string</span>::size_type maxlen = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read and store all the records, and find the length of the longest name</span></span><br><span class="line">    <span class="keyword">while</span>(record.<span class="built_in">read</span>(<span class="built_in">cin</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        maxlen = <span class="built_in">max</span>(maxlen, record.name().<span class="built_in">size</span>());</span><br><span class="line">        students.push_back(record);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// alphabetize the records</span></span><br><span class="line">    sort(students.<span class="built_in">begin</span>(), students.<span class="built_in">end</span>(), compare);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write each line of outpurs</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">vector</span>&lt;Student_info&gt;::const_iterator it = students.<span class="built_in">begin</span>();</span><br><span class="line">            it != students.<span class="built_in">end</span>(); ++it)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// write the name, blanks</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; (*it).name() &lt;&lt; <span class="built_in">string</span>(maxlen + <span class="number">1</span> - (*it).name().<span class="built_in">size</span>(), <span class="string">' '</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// compute and write the final grade</span></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">double</span> final_grade = (*it).grade();</span><br><span class="line">            streamsize prec = <span class="built_in">cout</span>.precision();</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; setprecision(<span class="number">1</span>) &lt;&lt; final_grade &lt;&lt; setprecision(prec);</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">'\t'</span> &lt;&lt; letter_grade(final_grade); <span class="comment">// new added</span></span><br><span class="line">        &#125; <span class="keyword">catch</span>(domain_error e)&#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; e.what();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Student_info.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_STUDENT_INFO</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_STUDENT_INFO</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student_info</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Student_info ();				<span class="comment">// default constructor</span></span><br><span class="line">	Student_info (<span class="built_in">std</span>::istream &amp;);			<span class="comment">// constructor with argument</span></span><br><span class="line">    <span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">name</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> n; &#125;		<span class="comment">// inline member function return name</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">valid</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> !homework.empty(); &#125;    <span class="comment">// inline member function check state</span></span><br><span class="line">    <span class="function"><span class="built_in">std</span>::istream &amp; <span class="title">read</span><span class="params">(<span class="built_in">std</span>::istream &amp;)</span></span>;		<span class="comment">// member function read in data</span></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">()</span> <span class="keyword">const</span></span>;				<span class="comment">// member function calculate final grade</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> n;</span><br><span class="line">    <span class="keyword">double</span> midterm, <span class="keyword">final</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; homework;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">std</span>::istream &amp; <span class="title">read_hw</span><span class="params">(<span class="built_in">std</span>::istream &amp;, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;)</span></span>;  <span class="comment">// nonmember function read data into a vector</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> Student_info &amp;, <span class="keyword">const</span> Student_info &amp;)</span></span>;       <span class="comment">// nonmember function compare two string</span></span><br><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">letter_grade</span><span class="params">(<span class="keyword">double</span>)</span></span>; <span class="comment">// new added: nonmember function gives a letter grade</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Student_info.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student_info.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"grade.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// construct an empty Student_info object</span></span><br><span class="line">Student_info::Student_info (): midterm(<span class="number">0</span>), <span class="keyword">final</span>(<span class="number">0</span>) &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// construct one by reading from input stream</span></span><br><span class="line">Student_info::Student_info (<span class="built_in">std</span>::istream &amp; in) &#123; <span class="built_in">read</span>(in); &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// member function read data from input stream</span></span><br><span class="line"><span class="function"><span class="built_in">std</span>::istream &amp; <span class="title">Student_info::read</span><span class="params">(<span class="built_in">std</span>::istream &amp;in)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// reads and store the student's name, midterm and final exam grades</span></span><br><span class="line">    in &gt;&gt; n &gt;&gt; midterm &gt;&gt; <span class="keyword">final</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reads and store all homework grades</span></span><br><span class="line">    read_hw(in, homework);</span><br><span class="line">    <span class="keyword">return</span> in;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// member function grade</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Student_info::grade</span><span class="params">()</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> ::grade(midterm, <span class="keyword">final</span>, homework);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// nonmember function compare</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> Student_info &amp;x, <span class="keyword">const</span> Student_info &amp;y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x.name() &lt; y.name();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// nonmember function read_hw</span></span><br><span class="line"><span class="function">istream &amp; <span class="title">read_hw</span><span class="params">(istream &amp;in, <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (in)&#123;</span><br><span class="line">        <span class="comment">//get rid of previous contents</span></span><br><span class="line">        hw.<span class="built_in">clear</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// read homework grades</span></span><br><span class="line">        <span class="keyword">double</span> x;</span><br><span class="line">        <span class="keyword">while</span>(in &gt;&gt; x)</span><br><span class="line">            hw.push_back(x);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// clear the stream so that input will work for the next student</span></span><br><span class="line">        in.<span class="built_in">clear</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> in;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// new added: non-member function to calculate the letter grade</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">letter_grade</span><span class="params">(<span class="keyword">double</span> grade)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// range posts for numberic grades</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">double</span> numbers[] = &#123;<span class="number">97</span>, <span class="number">94</span>, <span class="number">90</span>, <span class="number">87</span>, <span class="number">84</span>, <span class="number">80</span>, <span class="number">77</span>, <span class="number">74</span>, <span class="number">70</span>, <span class="number">60</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// name for the letter grades</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span>* <span class="keyword">const</span> letters[] = &#123;<span class="string">"A+"</span>, <span class="string">"A"</span>, <span class="string">"A-"</span>, <span class="string">"B+"</span>,</span><br><span class="line">                                          <span class="string">"B"</span>, <span class="string">"B-"</span>, <span class="string">"C+"</span>, <span class="string">"C"</span>, <span class="string">"C-"</span>, <span class="string">"D"</span>, <span class="string">"F"</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute the number of grades given the size of the array</span></span><br><span class="line">    <span class="comment">// and the size of a single element</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">std</span>::<span class="keyword">size_t</span> ngrades = <span class="keyword">sizeof</span>(numbers)/<span class="keyword">sizeof</span>(*numbers);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// given a numberic grade, find the associated letter grade</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">std</span>::<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; ngrades; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (grade &gt;= numbers[i])</span><br><span class="line">            <span class="keyword">return</span> letters[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"?\?\?"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>grade.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_GRADE_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_GRADE_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span>, <span class="keyword">double</span>, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span>, <span class="keyword">double</span>, <span class="keyword">double</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;)</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>grade.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"grade.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::domain_error;  <span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;        <span class="keyword">using</span> <span class="built_in">std</span>::sort;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grade function 1</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> <span class="keyword">final</span>, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &amp;hw)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (hw.empty())</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"student has done no homework"</span>);</span><br><span class="line">    <span class="keyword">return</span> grade(midterm, <span class="keyword">final</span>, median(hw));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// grade function 2</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">grade</span><span class="params">(<span class="keyword">double</span> midterm, <span class="keyword">double</span> <span class="keyword">final</span>, <span class="keyword">double</span> homework)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.2</span>*midterm + <span class="number">0.4</span>*<span class="keyword">final</span> + <span class="number">0.4</span>*homework;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// compute the median of vector&lt;double&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">median</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// check whether the vec is empty</span></span><br><span class="line">    <span class="keyword">if</span> (vec.<span class="built_in">begin</span>() == vec.<span class="built_in">end</span>())</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"median of an empty vector"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sort the grades</span></span><br><span class="line">    sort(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute the median homework grade</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::difference_type <span class="built_in">size</span> = vec.<span class="built_in">end</span>() - vec.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::const_iterator mid = vec.<span class="built_in">begin</span>() + <span class="built_in">size</span>/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">size</span> % <span class="number">2</span> == <span class="number">0</span> ? (*mid + *(mid - <span class="number">1</span>))/<span class="number">2</span> : *mid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Test</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Inputs:</span><br><span class="line"></span><br><span class="line">Robin 90 87 79 88 81 73 45</span><br><span class="line">Brendan 70 69 88 100 91 75 66</span><br><span class="line">Arsenii 99 87 89 88 74 90 70</span><br><span class="line">Liam 83 66 100 76 87 91 78</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">Arsenii 89.8	B+</span><br><span class="line">Brendan 76.8	C</span><br><span class="line">Liam    77.8	C+</span><br><span class="line">Robin   84.4	B</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Exercise-10-2-10-3"><a href="#Exercise-10-2-10-3" class="headerlink" title="Exercise 10-2, 10-3"></a>Exercise 10-2, 10-3</h1><p>10-2: Rewrite the median function from §8.1.1/140 so that we can call it with either a vector or a built-in array. The function should allow containers of any arithmetic type.</p>
+<p>10-3: Write a test program to verify that the median function operates correctly. Ensure that calling median does not change the order of the elements in the container.</p>
+<h2 id="Solution-amp-Results-2"><a href="#Solution-amp-Results-2" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><p>There are two requirements: first is that, the median function can calculate the median value by taking either a vector or built-in array; second is that, the container can be container of any arithmetic type. </p>
+<p>Apparently, our median function should be a function template. The first condition implies that the parameters should be two pointers that denote the range of inputs. Unlike the standard vector, built-in array doesn’t provide member functions like <strong>begin()</strong> and <strong>end()</strong>. We cannot simply pass the name of the built-in array to the median function as the name of the array is mere the pointer to the initial element. Alternatively, we can denote its range with [arr, arr+n), where <strong>arr</strong> is the name of the array and <strong>n</strong> is the size of the array. The first type parameter of our tempalte represents the type of supplied pointers and will be inferred from the supplied pointers in the process of instantiation. </p>
+<p>The second condition implies that the type of the elements contained in the container should be supplied as we cannot infer the value type from pointers. Therefore, another type parameter of the function template represents the value type of the container and will be infered from the third function parameter, which is defined as any element of the container. As the following declaration shows, <strong>Pointer</strong> and <strong>T</strong> represents the pointer type and value type. The function defines three parameters, first two of which denotes the range of inputs while the third is a <strong>const reference</strong> to the first element contained in the container. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">Pointer</span>, <span class="title">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span> <span class="title">median</span>(<span class="title">Pointer</span> <span class="title">begin</span>, <span class="title">Pointer</span> <span class="title">end</span>, <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">initialElement</span>);</span></span><br></pre></td></tr></table></figure>
+
+<p>Once we have the pointers, we can implement the algorithm as with the previous version. But to avoid changing the original sequence, we’d better construct a new vector to hold the input sequence. The code below gives the full program. I test it by calling the function template with a standard vector and a built-in array that contains the same elements as the vector. As expected, they yield same median value. If changing the value type to <strong>int</strong>, the function template works as well. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;	// std::vector</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;	// std::cout, std::endl</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;	// std::domain_error</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;	// copy</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstddef&gt;	// size_t</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;			<span class="keyword">using</span> <span class="built_in">std</span>::<span class="keyword">size_t</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;			<span class="keyword">using</span> <span class="built_in">std</span>::copy;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::domain_error;	        <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">Pointer</span>, <span class="title">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span> <span class="title">median</span>(<span class="title">Pointer</span> <span class="title">begin</span>, <span class="title">Pointer</span> <span class="title">end</span>, <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">initialElement</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">begin</span> == <span class="built_in">end</span>)</span><br><span class="line">        <span class="keyword">throw</span> domain_error(<span class="string">"median of an empty container"</span>);</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;T&gt; <span class="title">v</span><span class="params">(<span class="built_in">begin</span>, <span class="built_in">end</span>)</span></span>;</span><br><span class="line">    <span class="keyword">typename</span> <span class="built_in">vector</span>&lt;T&gt;::difference_type <span class="built_in">size</span> = v.<span class="built_in">end</span>() - v.<span class="built_in">begin</span>();</span><br><span class="line">    sort(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>());</span><br><span class="line">    <span class="keyword">typename</span> <span class="built_in">vector</span>&lt;T&gt;::const_iterator mid = v.<span class="built_in">begin</span>() + <span class="built_in">size</span>/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">size</span> % <span class="number">2</span> == <span class="number">0</span> ? (*mid + *(mid<span class="number">-1</span>)) / <span class="number">2</span> : *mid;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec&#123;<span class="number">53</span>, <span class="number">56</span>, <span class="number">23</span>, <span class="number">78</span>, <span class="number">90</span>, <span class="number">89</span>, <span class="number">34</span>, <span class="number">12</span>, <span class="number">41</span>, <span class="number">48</span>&#125;;</span><br><span class="line">    <span class="keyword">size_t</span> n = vec.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">double</span> arr[n];</span><br><span class="line">    copy(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>(), arr);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; median(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>(), vec[<span class="number">0</span>]) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; median(arr, arr + n, arr[<span class="number">0</span>]) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Test Results</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">50.5</span><br><span class="line">50.5</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h1 id="Exercise-10-4-10-5-10-6"><a href="#Exercise-10-4-10-5-10-6" class="headerlink" title="Exercise 10-4, 10-5, 10-6"></a>Exercise 10-4, 10-5, 10-6</h1><p>10-4: Write a class that implements a list that holds strings.</p>
+<p>10-5: Write a bidirectional iterator for your String_list class.</p>
+<p>10-6: Test the class by rewriting the split function to put its output into a String_list.</p>
+<h2 id="Solution-amp-Results-3"><a href="#Solution-amp-Results-3" class="headerlink" title="Solution &amp; Results"></a>Solution &amp; Results</h2><h3 id="define-the-String-list-class"><a href="#define-the-String-list-class" class="headerlink" title="define the String_list class"></a>define the <strong>String_list</strong> class</h3><p>The standard <strong>list</strong> provides all the possible operations and what we need to do is merely to encapsulate our data, a <strong>list<string></strong>, by hiding the data and instead providing an appropriate interface. I intend to implement a subset of the <strong>list<string></strong> class. Specifically, we can use the <strong>String_list</strong> class as follows:</p>
+<p><strong>Interface</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; construct an empty container</span><br><span class="line">String_list s;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; construct a container with a size and a value</span><br><span class="line">String_list s1(10, &quot;Hello&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; return iterator to begining and end</span><br><span class="line">s1.begin();</span><br><span class="line">s1.end();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; construct a container with a range</span><br><span class="line">String_list s2(s1.begin(), s1.end());</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; copy construct a container</span><br><span class="line">String_list s3(s2);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; assignment</span><br><span class="line">s &#x3D; s1;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; check the status of the container</span><br><span class="line">s1.empty();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; check the size</span><br><span class="line">s1.size();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; clear</span><br><span class="line">s1.chear();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; add one element to end</span><br><span class="line">s1.push_back(&quot;Hello&quot;);</span><br></pre></td></tr></table></figure>
+<p>All these operations are obvious and we can directly work with <strong>list<string></strong> in our implementations. You can add more operations to this <strong>String_list</strong> class as long as the operations are supported by the standard <strong>list</strong> class. Let’s see how our <strong>String_list</strong> class is implemented:</p>
+<p><strong>String_list.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> STRING_LIST_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STRING_LIST_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstddef&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">String_list</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; container;</span><br><span class="line">    container SL;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> container::iterator iterator;</span><br><span class="line">    <span class="keyword">typedef</span> container::const_iterator const_iterator;</span><br><span class="line">    <span class="keyword">typedef</span> container::value_type value_type;</span><br><span class="line">    <span class="keyword">typedef</span> container::size_type size_type;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// default constructor: construct an empty String_list</span></span><br><span class="line">    String_list() = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// constructor that takes a size and a value</span></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">String_list</span><span class="params">(size_type n, <span class="keyword">const</span> value_type&amp; val = value_type())</span>: <span class="title">SL</span><span class="params">(n, val)</span> </span>&#123;&#125;</span><br><span class="line">    String_list(const_iterator beg, const_iterator <span class="built_in">end</span>): SL(beg, <span class="built_in">end</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// bidirectional iterator and const bidirectional iterator</span></span><br><span class="line">    <span class="function">iterator <span class="title">begin</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> SL.<span class="built_in">begin</span>(); &#125;</span><br><span class="line">    <span class="function">const_iterator <span class="title">begin</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> SL.cbegin(); &#125;</span><br><span class="line">    <span class="function">iterator <span class="title">end</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> SL.<span class="built_in">end</span>(); &#125;</span><br><span class="line">    <span class="function">const_iterator <span class="title">end</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> SL.cend(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// empty</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> SL.empty(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// size</span></span><br><span class="line">    <span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> SL.<span class="built_in">size</span>(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// clear</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123; SL.<span class="built_in">clear</span>(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// push_back</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">const</span> value_type&amp; v)</span> </span>&#123; SL.push_back(v); &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* STRING_LIST_H_ */</span></span></span><br></pre></td></tr></table></figure>
+<p>It is worth noting that the class defines three constructors but ignores the copy constructor, assignment operator and the destructor. As a result, the compiler will synthesize copy constructor, assignment operator and destructor for us. The synthesized operations depend on the definition of the data member. For example, the compiler will synthesize the copy constructor by calling the default copy constructor of the <strong>list<string></strong> class. Therefore, we do not need to worry about that. The synthesized operations also work on the default constructor. I explicitly define the default constructor because that we need other constructors. If we didn’t explicitly define the default constructor, the compiler won’t synthesize for us due to the existence of other constructors. </p>
+<p>Another point is that the class implicitly supports the conversion from a string literal to a string type. This property is inherent in the standard <strong>string</strong> class and is further explained in chapter 12. </p>
+<p>The last point is that the iterator returned by <strong>begin()</strong> and <strong>end()</strong> are all bidirectional iterator. This has been defined in the standard <strong>list</strong> class. We can traverse forward or backward the container and access or rewrite the elements using the returned iterators. </p>
+<h3 id="rewrite-the-split-function"><a href="#rewrite-the-split-function" class="headerlink" title="rewrite the split function"></a>rewrite the split function</h3><p>The original split function copies its output into the output stream directly. We can replace the outstream object with our <strong>String_list</strong>. Rather than passing an <strong>ostream_iterator<string></strong> as the argument to the split function, we can pass a reference to the container as the argument.<br>Therefore, the declaration of the revisied split function is:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">container</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">split</span>(<span class="title">const</span> <span class="title">std</span>:</span>:<span class="built_in">string</span> &amp;, container&amp;);</span><br></pre></td></tr></table></figure>
+<p>Then we can store each seperated word into the container by calling its <strong>push_back</strong> function. Please see the code below:</p>
+<p><strong>Split.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GUARD_SPLIT_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GUARD_SPLIT_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"String_list.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// true if the argument is whitespace, false otherwise</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">space</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">isspace</span>(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// false is the argument is whitespace, true otherwise</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">not_space</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="built_in">isspace</span>(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// template declaration and definition</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">container</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">split</span>(<span class="title">const</span> <span class="title">std</span>:</span>:<span class="built_in">string</span> &amp;str, container&amp; c)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">string</span>::const_iterator iter;</span><br><span class="line"></span><br><span class="line">    iter i = str.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="keyword">while</span>(i != str.<span class="built_in">end</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// ignore leading spaces</span></span><br><span class="line">        i = <span class="built_in">std</span>::find_if(i, str.<span class="built_in">end</span>(), not_space);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// find end of next word</span></span><br><span class="line">        iter j = <span class="built_in">std</span>::find_if(i, str.<span class="built_in">end</span>(), space);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// copy the characters in [i,j) and store into container</span></span><br><span class="line">        <span class="keyword">if</span>(i != str.<span class="built_in">end</span>())</span><br><span class="line">            c.push_back(<span class="built_in">std</span>::<span class="built_in">string</span>(i, j));</span><br><span class="line">        i = j;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* GUARD_SPLIT_H */</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><p>I wrote a test program to test each members of our <strong>String_list</strong> class and the revised <strong>split</strong> function.</p>
+<p><strong>main.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;		// std::cin, endl, cout</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;		// std::string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"String_list.h"</span>        <span class="comment">// String_list</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"split.h"</span>		<span class="comment">// split</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// construct an empty container</span></span><br><span class="line">    String_list words;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// test the empty function</span></span><br><span class="line">    <span class="keyword">if</span>(words.empty())</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"This is an empty container\n"</span></span><br><span class="line">                <span class="string">"Please enter a sentence: "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// test the split function, and the push_back member of the String_list</span></span><br><span class="line">    <span class="built_in">string</span> <span class="built_in">line</span>;</span><br><span class="line">    <span class="keyword">while</span> (getline(<span class="built_in">cin</span>, <span class="built_in">line</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        split(<span class="built_in">line</span>, words);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"There are "</span> &lt;&lt; words.<span class="built_in">size</span>() &lt;&lt; <span class="string">" word(s) in total: "</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i: words) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// test bidirectional iterators</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"\nprint all words in reverse order: "</span>;</span><br><span class="line">    String_list::iterator rbeg = --words.<span class="built_in">end</span>();</span><br><span class="line">    String_list::iterator rend = --words.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="keyword">while</span>(rbeg != rend)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *rbeg-- &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// test the constructor that takes two input iterators</span></span><br><span class="line">    <span class="function">String_list <span class="title">words_copy</span><span class="params">(words.<span class="built_in">begin</span>(), words.<span class="built_in">end</span>())</span></span>;</span><br><span class="line">    <span class="keyword">if</span>(!words_copy.empty())&#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"\nThe size of the container is: "</span> &lt;&lt; words_copy.<span class="built_in">size</span>();</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"\nThe elements contained in the String_list are: "</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> i: words_copy)</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// test the clear function</span></span><br><span class="line">    words.<span class="built_in">clear</span>();</span><br><span class="line">    <span class="keyword">if</span>(words.empty())</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"\nThe container now is empty again"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// test the constructor that takes a size and a value</span></span><br><span class="line">    <span class="function">String_list <span class="title">words_new</span><span class="params">(<span class="number">10</span>, <span class="string">"Hello"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// test the default copy constructor</span></span><br><span class="line">    <span class="function">String_list <span class="title">words_new_copy</span><span class="params">(words_new)</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"\nThe container contains: "</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i: words_new_copy) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// test the default assignment operator</span></span><br><span class="line">    words = words_new;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"\nNow the container words contains: "</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i: words) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The program above is pretty straightforward and gives following results as expected:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">This is an empty container</span><br><span class="line">Please enter a sentence: Stack is one of the rudimentary data structures that use pointers</span><br><span class="line">There are 11 word(s) in total: Stack is one of the rudimentary data structures that use pointers </span><br><span class="line">print all words in reverse order: pointers use that structures data rudimentary the of one is Stack </span><br><span class="line">The size of the container is: 11</span><br><span class="line">The elements contained in the String_list are: Stack is one of the rudimentary data structures that use pointers </span><br><span class="line">The container now is empty again</span><br><span class="line">The container contains: Hello Hello Hello Hello Hello Hello Hello </span><br><span class="line">Now the container words contains: Hello Hello Hello Hello Hello Hello Hello</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>Koenig, A. and Moo, B.E., 2000. Accelerated C++.</p>
+<p>Lippman, S.B., Lajoie, J. and Moo, B.E., 2013. C++ Primer, 5th edt.</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Liam
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://quantein.com/2018/04/12/Accelerated-C-Solutions-to-Exercises-Chapter-10/" title="Accelerated C++ Solutions to Exercises(Chapter 10)">http://quantein.com/2018/04/12/Accelerated-C-Solutions-to-Exercises-Chapter-10/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Accelerated-C-Solutions/" rel="tag"># Accelerated C++ Solutions</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/04/10/C-Managing-memory-and-low-level-data-structures/" rel="prev" title="C++ - Managing memory and low-level data structures">
+      <i class="fa fa-chevron-left"></i> C++ - Managing memory and low-level data structures
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/04/14/C-Defining-abstract-data-types/" rel="next" title="C++ - Defining abstract data types (Part 1)">
+      C++ - Defining abstract data types (Part 1) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-10-0"><span class="nav-number">1.</span> <span class="nav-text">Exercise 10-0</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results"><span class="nav-number">1.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-10-1"><span class="nav-number">2.</span> <span class="nav-text">Exercise 10-1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-10-2-10-3"><span class="nav-number">3.</span> <span class="nav-text">Exercise 10-2, 10-3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-2"><span class="nav-number">3.1.</span> <span class="nav-text">Solution &amp; Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercise-10-4-10-5-10-6"><span class="nav-number">4.</span> <span class="nav-text">Exercise 10-4, 10-5, 10-6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution-amp-Results-3"><span class="nav-number">4.1.</span> <span class="nav-text">Solution &amp; Results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#define-the-String-list-class"><span class="nav-number">4.1.1.</span> <span class="nav-text">define the String_list class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rewrite-the-split-function"><span class="nav-number">4.1.2.</span> <span class="nav-text">rewrite the split function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Test"><span class="nav-number">4.1.3.</span> <span class="nav-text">Test</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam</p>
+  <div class="site-description" itemprop="description">Stochastic Modelling Notes; Programming Notes</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/quantliam" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;quantliam" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/yanshijiutu@gmail.com" title="E-Mail → yanshijiutu@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">NaN:aN</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

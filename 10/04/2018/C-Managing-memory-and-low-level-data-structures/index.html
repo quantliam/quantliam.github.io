@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C++,Notes," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="PointersIntroductionpointer is a compound type that points to another base type object. A pointer is a value that represents the address of the object that it points to. What is the address of an obje">
+<meta name="keywords" content="C++,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ - Managing memory and low-level data structures">
+<meta property="og:url" content="http://www.quanttour.com/10/04/2018/C-Managing-memory-and-low-level-data-structures/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="PointersIntroductionpointer is a compound type that points to another base type object. A pointer is a value that represents the address of the object that it points to. What is the address of an obje">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-05-05T07:30:58.861Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ - Managing memory and low-level data structures">
+<meta name="twitter:description" content="PointersIntroductionpointer is a compound type that points to another base type object. A pointer is a value that represents the address of the object that it points to. What is the address of an obje">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.quanttour.com/10/04/2018/C-Managing-memory-and-low-level-data-structures/"/>
+
+
+
+
+
+  <title>C++ - Managing memory and low-level data structures | Liam's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.quanttour.com/10/04/2018/C-Managing-memory-and-low-level-data-structures/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++ - Managing memory and low-level data structures</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-10T13:42:55+08:00">
+                10-04-2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  4,880
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  31
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Pointers"><a href="#Pointers" class="headerlink" title="Pointers"></a>Pointers</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>pointer</strong> is a compound type that points to another base type object. <strong>A pointer</strong> is a value that represents the address of the object that it points to. What is the address of an object? The address of an object denotes the part of the computer’s memory that contains the object. For example, if <strong>x</strong> is an object, then <strong>&amp;x</strong> is the address of <strong>x</strong> and <strong>&amp;</strong> is the <strong>address operator</strong>. Further, if <strong>p</strong> is a pointer, then <strong>*p</strong> is the value of the object that <strong>p</strong> points to and <em> is the <em>*deference operator</em></em>. </p>
+<p>We are familar with these two operators<strong>&amp;</strong> and *, however, may feel comfused about their meanings. Generally, these rules can be summarized as follows:</p>
+<ol>
+<li><p>when the <strong>&amp;</strong> is used as part of a declaration, e.g.</p>
+<pre><code>int i = 10;
+int &amp;x = i;
+</code></pre><p> <strong>&amp;</strong> follows a type and <strong>x</strong> is a reference.</p>
+</li>
+<li><p>when the <strong>&amp;</strong> is used as in an expression, e.g.</p>
+<pre><code>int *p = &amp;i;
+</code></pre><p> <strong>&amp;</strong> acts as an <strong>address operator</strong>.</p>
+</li>
+<li><p>when the <strong><em>*</em></strong> is used as part of a declaration, e.g.</p>
+<pre><code>int *p = &amp;i;
+</code></pre><p> <strong><em>*</em></strong> follows a type and <strong>p</strong> is a pointer.</p>
+</li>
+<li><p>when the <strong><em>*</em></strong> is used in an expression, e.g.</p>
+<pre><code>int i = *p;
+*p = i;
+</code></pre><p> it acts as an <strong>deference operator</strong> and yields the value of the object that <strong>p</strong> points to.</p>
+</li>
+</ol>
+<p>It can be observed that a <strong>pointer</strong> can indirect access the value an object like a <strong>reference</strong>. However, a <strong>reference</strong> itself is not an object while a <strong>pointer</strong> itself is an object. From the third rule above, we know how to define a <strong>pointer</strong>. For example<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p;</span><br></pre></td></tr></table></figure></p>
+<p><strong>p</strong> is a <strong>pointer</strong> that points to <strong>int</strong> type object. In other words, <strong>p</strong> has type <strong>int*</strong>. As other built-in types, a <strong>pointer</strong> might point to an unknown object unless we initialize it. Typically,we can initialize a pointer as a <strong>null pointer</strong> which means that the pointer does’t point to any object. There are several ways to do this:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p = <span class="number">0</span>;         <span class="comment">// the constant 0 can be converted to a pointer type</span></span><br><span class="line"><span class="keyword">int</span> *p = <span class="literal">nullptr</span>;   <span class="comment">// c++11 supports</span></span><br><span class="line"><span class="keyword">int</span> *p = <span class="literal">NULL</span>;      <span class="comment">// must include header &lt;cstdlib&gt;</span></span><br></pre></td></tr></table></figure>
+<p>These three statements lead to an equivalent result. If we want to assign other values to a pointer, typically we uses the address-of operator:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> *p = &amp;i; <span class="comment">// p points to i</span></span><br><span class="line"><span class="keyword">int</span> *q = &amp;j; <span class="comment">// q points to j</span></span><br><span class="line">p = q;       <span class="comment">// p points to j now</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Pointers-to-functions"><a href="#Pointers-to-functions" class="headerlink" title="Pointers to functions"></a>Pointers to functions</h2><p>It is known that functions are not objects and hence there is no way to copy or assign them, or to pass them as arguments directly. But we do “pass” functions as arguments in previous chapter, for example, the <a href="http://quanttour.com/22/03/2018/C-Using-library-algorithms-Part-2/" target="_blank" rel="noopener">write_analysis</a> function (see declaration below) takes function as its second parameter.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write_analysis</span><span class="params">(<span class="built_in">std</span>::ostream &amp;out, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;name,</span></span></span><br><span class="line">                    double analysis(const std::vector&lt;Student_info&gt; &amp;),</span><br><span class="line">                    <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;did,</span><br><span class="line">                    <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;didnt);</span><br></pre></td></tr></table></figure></p>
+<p>In fact this is achieved by taking the address of a function, that is, the pointer to the function. Let’s go into some details about the <strong>pointers</strong> to functions.</p>
+<p>The syntax to define a pointer to function is, for example<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*fp)(<span class="keyword">int</span>);</span><br></pre></td></tr></table></figure></p>
+<p>Then, if we deference <strong>fp</strong> and call it with <strong>int</strong> argument, the result is an <strong>int</strong> type value.<br>Another fact is that what we can do with a function is to take its address or call it. Therefore, when we use a function but is not to call it, we are assumed to be take its address, either using <strong>&amp;</strong> or not. For example,</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">next</span> <span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> n + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// these two statements are equivalent</span></span><br><span class="line">fp = next;</span><br><span class="line">fp = &amp;next;</span><br></pre></td></tr></table></figure>
+<p>Further, when we call the next function with an int variable i,<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// these two statements are equivalent</span></span><br><span class="line"><span class="keyword">int</span> x = fp(i);</span><br><span class="line"><span class="keyword">int</span> x = (*fp)(i);</span><br></pre></td></tr></table></figure></p>
+<p>Finally, when we have a function that takes another function as a parameter, the compiler will translate the parameter to be a pointer. Taking the <strong>write_analysis</strong> as an example, the parameter<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">analysis</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>is in fact equivalent to<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> (*analysis)(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Student_info&gt; &amp;)</span><br></pre></td></tr></table></figure></p>
+<p>As shown below, when we “pass” another function as an argument, <strong>analysis</strong> points to a function named <strong>median_analysis</strong>.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">analysis = median_analysis; <span class="comment">// == analysis = &amp;median_analysis</span></span><br></pre></td></tr></table></figure></p>
+<p>What if we want to write a function that returns a function pointer?<br>The simplest way is to use type alias<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">double</span> <span class="params">(*analysis_fp)</span> <span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt;&amp;)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p><strong>analysis_fp</strong> is the name of the type of a pointer to function. Then<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get_analysis_ptr returns a pointer to an analysis function</span></span><br><span class="line"><span class="function">analysis_fp <span class="title">get_analysis_ptr</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>declares a function <strong>get_analysis_ptr()</strong> that returns a pointer to an analysis function. This statement is equivalent to<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> (*get_analysis_ptr()) (<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Student_info&gt; &amp;);</span><br></pre></td></tr></table></figure></p>
+<p>From this, we can see that <strong>get_analysis_ptr</strong> has a parameter list and hence it is a function. In addition, there is an <strong><em>*</em></strong> before it, which indicates that the function returns a pointer. Furthermore, the returned pointer also has a parameter list and hence the returned pointer points to a function that takes parameter <strong>const vector<student_info> &amp;</student_info></strong> and returns a <strong>double</strong> type value. </p>
+<p>Now let’s look at an example<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">In</span>, <span class="title">class</span> <span class="title">Pred</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">In</span> <span class="title">find_if</span>(<span class="title">In</span> <span class="title">begin</span>, <span class="title">In</span> <span class="title">end</span>, <span class="title">Pred</span> <span class="title">f</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">while</span> (begin != end &amp;&amp; !f(*begin))</span><br><span class="line">        ++begin;</span><br><span class="line">    <span class="keyword">return</span> begin;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Suppose we have a predicate function<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_negative</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> n &lt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Let’s instanitialize the template with a vector named <strong>v</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator i = find_if(v.begin(), v.end(), is_negative)</span><br></pre></td></tr></table></figure></p>
+<p>We use <strong>is_negative</strong> instead of <strong>&amp;is_negative</strong> due to that the name of the function turns into a pointer to the function autimatially. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Arrays</span><br><span class="line">**Array** is part of the core language rather than part of the standard library. An **array** is a kind of container that similar to a **vector**, but has fixed length. When we create an **array** object, we should specify the length of the array. For example, we can create an array that contains three elements</span><br><span class="line">```c++</span><br><span class="line">double coords[3];</span><br></pre></td></tr></table></figure>
+<p>Alternatively, we can use a <strong>const</strong> object to denote the size of the array<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">size_t</span> NDim = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">double</span> coords[NDim];</span><br></pre></td></tr></table></figure></p>
+<p><strong>size_t</strong> is a fundamental unsigned integer type that can be used to represent the size of an array. It is defined in the header <strong><cstddef></cstddef></strong>. The reason to use <strong>size_t</strong> is that <strong>array</strong> is not a class type and has no member function like <strong>size_type</strong>. It is worth noting that we use <strong>const</strong> to ensure <strong>Ndim</strong> is fixed and known at compilation time. </p>
+<p><strong>coords</strong> is the name of the array, and in fact it is a pointer that points to the first element of the array. Hence, we can assign a value to the first element through<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*coords = <span class="number">1.5</span>; <span class="comment">// set the initial element of coords to 1.5</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Pointer-arithmetic"><a href="#Pointer-arithmetic" class="headerlink" title="Pointer arithmetic"></a>Pointer arithmetic</h2><p>Another fact is that a <strong>pointer</strong> is a random access iterator. Therefore, we can access the <strong>m</strong>th element (if available) through<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*(coords + m)</span><br></pre></td></tr></table></figure></p>
+<p>The pointer that points to one past the last element is <strong>coords + NDim</strong>. In other words, [coords, coords + NDim) denotes the range of address of the array. </p>
+<p>Now, if we want to copy all elements of the array into a vector named <strong>v</strong>, we can use the copy algorithm as shown as follows<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; v;</span><br><span class="line">copy(coords, coords + NDim, back_inserter(v));</span><br></pre></td></tr></table></figure></p>
+<p>Alternatively, we can construct <strong>v</strong> directly as a copy of the elements in <strong>coords</strong> using<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; v(coords, coords + NDim);</span><br></pre></td></tr></table></figure></p>
+<p>C++ 2011 library provides <strong>begin</strong> and <strong>end</strong> functions to get the initial pointer and the off-the-end pointer:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *beg = begin(coords);   <span class="comment">// points to the initial elements</span></span><br><span class="line"><span class="keyword">int</span> *last = end(coords);    <span class="comment">// points to one past the last element</span></span><br><span class="line">···</span><br><span class="line"></span><br><span class="line">Similar to **difference_type**, **<span class="keyword">ptrdiff_t</span>** is an <span class="keyword">signed</span> itegeral type that represents the distance between two **pointers**. **<span class="keyword">ptrdiff_t</span>** is also defined in the header &lt;cstddef&gt;. </span><br><span class="line"></span><br><span class="line">## Indexing</span><br><span class="line">It is known now that **array** supports random access iterators and naturally supports indexing. Therefore, the **n**th emelent (if available) is **coords[n]** and ***coords = coords[0]**.</span><br><span class="line"></span><br><span class="line">## Array initialization</span><br><span class="line">Array supports <span class="built_in">list</span> initialization, <span class="keyword">for</span> example</span><br><span class="line">```c++</span><br><span class="line"><span class="comment">// these two statements have same effect</span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> a[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">0</span>&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>If we don’t specify the number of elements contained in the array, compiler will infer the number from the number of the supplied the initializers. But if we specify the number exactly, the number of initializers must not exceed the specified size. So, what if we specifies the size but provides initializers less than the specified number?<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>Then, the compiler will value initialize the rest elements. In this case, the elements have built-in type <strong>int</strong> and hence are set to 0. </p>
+<h1 id="String-literals-revisited"><a href="#String-literals-revisited" class="headerlink" title="String literals revisited"></a>String literals revisited</h1><p>As we mentioned earlier, String literals are not <strong>string</strong>s. In fact, a string literal is an array of <strong>const char</strong> with one more element, i.e. ‘\0’ ,than the number of characters in the literal. <strong>‘\0’</strong> is a null character. Therefore, when we create a string literal, we should specify the size one larger than it should be for the purpose of holding the extral null character. For example, a string literal <strong>Hello</strong> is created through<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// two ways to initialize a string literal</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> hello[] = &#123;<span class="string">'H'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'\0'</span>&#125;;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> hello[<span class="number">6</span>] = <span class="string">"Hello"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>The null character marks the end of the literal. When we want to get the number of characters excluding the null character, we can use the function <strong>strlen</strong> defined in <cstring>. The <strong>strlen</strong> might has following implementation<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Exanple implementation of standard-library function</span></span><br><span class="line"><span class="keyword">size_t</span> <span class="built_in">strlen</span>(<span class="keyword">const</span> <span class="keyword">char</span> *p)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">size_t</span> size = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (*p++ != <span class="string">'\0'</span>)</span><br><span class="line">        ++size;</span><br><span class="line">    <span class="keyword">return</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></cstring></p>
+<p>Now, if we want to copy the string literal <strong>Hello</strong> into a string type object, we can use<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// three equivalent ways to copy the string literal into a string</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(hello)</span></span>; <span class="comment">// variable hello represents "Hello"</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"Hello"</span>)</span></span>;</span><br><span class="line">string s(hello, hello + strlen(hello)); // treats hello as the begin iterator</span><br></pre></td></tr></table></figure></p>
+<h2 id="Initializing-arrays-of-character-pointer"><a href="#Initializing-arrays-of-character-pointer" class="headerlink" title="Initializing arrays of character pointer"></a>Initializing arrays of character pointer</h2><p><em>Essentially, a string literal is just a convenient way of writing the address of the initial character of a null-terminated sequence of characters</em>. Now let’s look at an example that shows how to generate an appropriate letter grade according to a numeric grade. The letter grades and numeric grades have following mapping relations:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">If the grade is at least  97  94  90  87  84  80  77  74  70  60  0</span><br><span class="line">then the letter grade is  A+  A   A-  B+  B   B-  C+  C   C-  D   F</span><br></pre></td></tr></table></figure></p>
+<p>The program is shown below and let’s analyse it step by step.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">letter_grade</span><span class="params">(<span class="keyword">double</span> grade)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// range posts for numberic grades</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">double</span> numbers[] = &#123;<span class="number">97</span>, <span class="number">94</span>, <span class="number">90</span>, <span class="number">87</span>, <span class="number">84</span>, <span class="number">80</span>, <span class="number">77</span>, <span class="number">74</span>, <span class="number">70</span>, <span class="number">60</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// name for the letter grades</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span>* <span class="keyword">const</span> letters[] = &#123;<span class="string">"A+"</span>, <span class="string">"A"</span>, <span class="string">"A-"</span>, <span class="string">"B+"</span></span><br><span class="line">                                          <span class="string">"B"</span>, <span class="string">"B-"</span>, <span class="string">"C+"</span>, <span class="string">"C"</span>, <span class="string">"C-"</span>, <span class="string">"D"</span>, <span class="string">"F"</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute the number of grades given the size of the array</span></span><br><span class="line">    <span class="comment">// and the size of a single element</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">size_t</span> ngrades = <span class="keyword">sizeof</span>(numbers)/<span class="keyword">sizeof</span>(*numbers);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// given a numberic grade, find the associated letter grade</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; ngrades; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (grade &gt;= numbers[i])</span><br><span class="line">            <span class="keyword">return</span> letters[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"?\?\?"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The function itself takes a double type value (i.e. a numeric grade), and returns a string (i.e. a letter grade). The first step is to construct two objects that hold the numeric grades and the letter grades, respectively. It is simple if we use <strong>vector</strong> or <strong>list</strong> or <strong>map</strong> as we know the numeric grade <strong>int</strong> type and the letter grade is <strong>string</strong> type. What if we use <strong>array</strong>? There is nothing new if we use <strong>string</strong> type, for example,<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">string</span> letters[] = &#123;<span class="string">"A+"</span>, <span class="string">"A"</span>, <span class="string">"A-"</span>, <span class="string">"B+"</span>, <span class="string">"B"</span>, <span class="string">"B-"</span>, <span class="string">"C+"</span>, <span class="string">"C"</span>, <span class="string">"C-"</span>, <span class="string">"D"</span>, <span class="string">"F"</span>&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>But if we treat each letter grade as a a sequence of characters, we can store them as the program shows<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span>* <span class="keyword">const</span> letters[] = &#123;<span class="string">"A+"</span>, <span class="string">"A"</span>, <span class="string">"A-"</span>, <span class="string">"B+"</span>, <span class="string">"B"</span>, <span class="string">"B-"</span>, <span class="string">"C+"</span>, <span class="string">"C"</span>, <span class="string">"C-"</span>, <span class="string">"D"</span>, <span class="string">"F"</span>&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>It can be observed that:</p>
+<ol>
+<li>the <strong>static</strong> means that the object is initialized only once and exists in the whole process till the program terminates. </li>
+<li>the <strong>letters</strong> is an array of <strong>const pointers</strong> to <strong>const char</strong>. Each element is a string literal, i.e. an alternative way of writing the address of the initial character. Therefore, each element is in fact can be regarded as a pointer that points to the initial letter of the string literal. For example, <strong>letters[0]</strong> gives the first letter grade <strong>A+</strong> while <strong>*(letters[0])</strong> gives the initial letter of the first letter grade as <strong>letters[0]</strong> is a pointer as well. </li>
+<li>The first <strong>const</strong> means that the array elements are constant. The second <strong>const</strong> means that the address are constant. </li>
+<li>the next statement introduces <strong>sizeof</strong> which is a function that returns a <strong>size_t</strong> type value indicating how much memory an object occupied. Therefore, <strong>sizeof(numbers)</strong> gives the number of bytes that the object <strong>numbers</strong> while <strong>sizeof(*numbers)</strong> yields the number of bytes that each element consumes. The result of the division yields a value that is the number of elements contained in the object (i.e. array numbers). </li>
+<li>finally, using a for statement a corresponding letter grade according to the input. If there exists such a grade, return it, otherwise, return <strong>???</strong>. </li>
+</ol>
+<h1 id="Arguments-to-main"><a href="#Arguments-to-main" class="headerlink" title="Arguments to main"></a>Arguments to main</h1><p>As mentioned in chapter 0, the main function can take arguments like other functions if it defines parameters. A conventional way is to pass a sequence of stings to <strong>main</strong> as an argument. For example, when we pass <strong>say Hello, world</strong> as an argument, the program give outputs<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, world</span><br></pre></td></tr></table></figure></p>
+<p>How to achieve this? This is done by giving two parameters: </p>
+<ol>
+<li>an <strong>int</strong> type parameter named <strong>argc</strong> which is a value that denotes the number of pointers that pointed by <strong>argv</strong>.</li>
+<li>another one is named as <strong>argv</strong> which is a pointer to a pointer to char.  For example, the pointer <strong>letters</strong> described above. <strong>letters</strong> points to the initial element, that is, the pointer to char <strong>A</strong> as the pointer to a string literal points to the initial char of the sequence. Therefore, we can define this parameter as</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span>* argv[]</span><br></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">char** argv</span><br></pre></td></tr></table></figure>
+<p>These two expression are equivalent. Now, let’s look at the <strong>main</strong> with arguments <strong>argc</strong> and <strong>argv</strong>:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// if there are arguments, write them</span></span><br><span class="line">    <span class="keyword">if</span>(argv &gt; <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// declare i outside the for because we need it after the loop </span></span><br><span class="line">        <span class="keyword">int</span> i;  </span><br><span class="line"></span><br><span class="line">        <span class="comment">// write all but the last entry and argv[i] is a char* </span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; argc - <span class="number">1</span>; ++i)</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; argv[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// write the last entry but not a space</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; argv[i] &lt;&lt; <span class="built_in">endl</span>;    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Assuming we pass <strong>Hello, world</strong> as an argument, <strong>argc</strong> will be 3 (why ?) and <strong>argv</strong> points to the first element, that is, another pointer to “Hello,” that is, character <strong>‘H’</strong>. <strong>argv[0]</strong> can be regarded as the name (i.e. pointer again) of the first string literal, and hence we can access each string literal through <strong>argv[i]</strong>, where <strong>i &lt; argc</strong>. </p>
+<p>You might wonder that why <strong>argc</strong> is 3 and why we use range [1, argv) rather than [0, argv) as we did before? This is because when we pass arguments, the program name will be automatically passed as one element. Specifically, if we pass sequence <strong>please give me a number</strong>, there will be 5 string literal in total, but <strong>argc = 6</strong> because: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">argv points to pointer argv[0] points to &quot;program name&quot;</span><br><span class="line">                       argv[1] points to &quot;please&quot; </span><br><span class="line">                       argv[2] points to &quot;give&quot; </span><br><span class="line">                       argv[3] points to &quot;me&quot; </span><br><span class="line">                       argv[4] points to &quot;a&quot; </span><br><span class="line">                       argv[5] points to &quot;number&quot;</span><br></pre></td></tr></table></figure>
+<p>This shows why we use the range [1, argv) to access each element. </p>
+<h1 id="Reading-and-writing-files"><a href="#Reading-and-writing-files" class="headerlink" title="Reading and writing files"></a>Reading and writing files</h1><p>By now, we are familar with four <strong>iostream</strong> class objects <strong>cin, cout, clog,</strong> and <strong>cerr</strong>. This part introduces another <strong>IO</strong> facilitiy <strong>ifstream</strong> and <strong>ofstream</strong> class to deal with multiple input and output files. Specifically, the <strong>ofstream</strong> class object allows us to write data into a file, while <strong>iftream</strong> allows us to read data from a file. We can use these objects like what we operate on <strong>cin</strong> and <strong>cout</strong> such as that they also support <strong>&lt;&lt;</strong> and <strong>&gt;&gt;</strong> operators as well as <strong>getline</strong>. </p>
+<p>When defining an <strong>ifstream</strong> or <strong>oftream</strong> object, we can associate the object with a file that we intend to write or read. Naturally we supply the file name which can be a <strong>string</strong> (C++11) or a <strong>string literal</strong>. This can be done either on construction or by calling member function <strong>open</strong>. For example,<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// two ways to open a file named s</span></span><br><span class="line"><span class="function">ifstream <span class="title">in</span><span class="params">(s)</span></span>;</span><br><span class="line">ifstream.open(s);</span><br></pre></td></tr></table></figure></p>
+<p>The below program shows how to copy the contents of a file named <strong>in</strong> to a file named <strong>out</strong>.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">ifstream <span class="title">infile</span><span class="params">(<span class="string">"in"</span>)</span></span>;</span><br><span class="line">    <span class="function">ofstream <span class="title">outfile</span><span class="params">(<span class="string">"out"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> s;</span><br><span class="line">    <span class="keyword">while</span> (getline(infile, s))</span><br><span class="line">        outfile &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The first statement creates an <strong>ifstream</strong> object <strong>infile</strong> and associates it with a file named <strong>in</strong>. Similarly, the second statement creates an <strong>ofstream</strong> object <strong>outfile</strong> and associates it with a file named <strong>out</strong>. Both file names are string literals, i.e. pointers to the initial character of null-terminated array. If file <strong>in</strong> doesn’t exist, there won’t be a file <strong>in</strong> being created. However, if <strong>out</strong> doesn’t exist, it will be create to hold the outputs. </p>
+<p>If we don’t want to use string literal as name, one solution is to store the name in a <strong>string</strong> and use member function <strong>c_str</strong> to get the pointer to the array that contains a null-terminated sequence of characters (i.e., a C-string) representing the current value of the string object_ <a href="http://www.cplusplus.com/reference/string/string/c_str/" target="_blank" rel="noopener">Reference to std::string::c_str</a>. For example, <strong>file</strong> is a string variable that contains the name of a file to be read, we then associate the file with a <strong>ifstream</strong> object through<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifstream infile(file.c_str());</span><br></pre></td></tr></table></figure></p>
+<p>Finally, let’s look at another program that produces a copy of all files whose names are given as arguments to main.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fail_count = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// for each file in the input list</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; argc; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">ifstream <span class="title">in</span><span class="params">(argv[i])</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if it exits, write its contents, otherwise generate an error message</span></span><br><span class="line">        <span class="keyword">if</span>(in)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> s;</span><br><span class="line">            <span class="keyword">while</span>(getline(in, s))</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cerr</span> &lt;&lt; <span class="string">"cannot open file "</span> &lt;&lt; argv[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            ++fail_count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fail_count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>The program logic is simple: first get a name from the arguments <strong>argv</strong>, then open a same name file; if the file exists, the contents of it will be written on the output device, but if there is no such file, count and record such case with a variable <strong>fail_count</strong>; finally, returns <strong>fail_count</strong>, by then, the value of <strong>fail_count</strong> represents the number of non-existent files; if <strong>fail_count</strong> is not 0, it indicates that the program terminates abnormally.</p>
+<p>It is worth noting that when a <strong>ifstream</strong> object fails to associate the corresponding file, the state of the input stream is set to fail. Therefore, the if condition <strong>if(in)</strong> is very useful and helpful for us to check whether our operations on the file are valid.  </p>
+<h1 id="Three-kinds-of-memory-management"><a href="#Three-kinds-of-memory-management" class="headerlink" title="Three kinds of memory management"></a>Three kinds of memory management</h1><p>The first kind is called <strong>automatic</strong> memory management: the system allocates memory for a local variable when it executes the variable’s definition, and deallocates that memory automatically at the end of the block that contains the definition. Therefore, we should note that once a variable has been dealloated, any pointers to it are invalid. For example,<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// this function deliberately yields an invalid pointer</span></span><br><span class="line"><span class="comment">// it is intended as a negative example-don't do this!</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>* <span class="title">invalid_pointer</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">return</span> &amp;x;  <span class="comment">// instant disaster</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>This function intends to return the address of local variable <strong>x</strong>. However, the return statement ends the execution of the block and hence deallocates the memory of <strong>x</strong>, resulting that <strong>&amp;x</strong> is invalid. To solve this problem, we can use another kine memory management, i.e. statically allocated.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This function is completely legitimate</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>* <span class="title">pointer_to_static</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">return</span> &amp;x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>When a local object is specified as <strong>static</strong>, it is created only the first time when its definition is executed and won’t be destroied until meet the end of the program. Therefore, the function returns a valid pointer of object <strong>x</strong>.</p>
+<p>The shortcoming of this kind memory management is that each call of such function obtains the same pointer. If we want to get a different pointer each time, we can choose an alternative memory management, the <strong>dynamic allocation</strong>. </p>
+<p>If <strong>T</strong> is an object type, then <strong>new T</strong> is an expression that</p>
+<ol>
+<li>allocates an <strong>T</strong> type object </li>
+<li>default-initializes the object</li>
+<li>yields a pointer to this newly allocated object</li>
+<li>the object exists since it is created till either the end of the program or the execution of <strong>delete p</strong>, where <strong>p</strong> is a copy of the pointer returned by the expression. </li>
+</ol>
+<p>For example,<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// allocate an unnamed object of type int, and initialize it to 42</span></span><br><span class="line"><span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">42</span>);</span><br></pre></td></tr></table></figure></p>
+<p>We can change the value of the object by manipulating the <strong>pointer p</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// change the object to 43</span></span><br><span class="line">++*p;</span><br></pre></td></tr></table></figure></p>
+<p>If we want to delete it, we do<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// after this execution, the occupied memory is freed and p becomes an invalid pointer</span></span><br><span class="line"><span class="keyword">delete</span> p;</span><br></pre></td></tr></table></figure></p>
+<p>Now let’s revisit the problem we met above and write a function that can return different pointer each time<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> *<span class="title">pointer_to_dynamic</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>This function returns a brand new pointer each time. But do not forget to release the memory through <strong>delete p</strong>. </p>
+<h2 id="Allocating-and-deallocating-an-array"><a href="#Allocating-and-deallocating-an-array" class="headerlink" title="Allocating and deallocating an array"></a>Allocating and deallocating an array</h2><p>By analogy, we can allocate an array that contains <strong>T</strong> type values.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T* p = <span class="keyword">new</span> T[n];</span><br></pre></td></tr></table></figure></p>
+<p><strong>n</strong> is a non-negative integral value and <strong>new T[n]</strong> allocates an array of <strong>n</strong> objects of type <strong>T</strong>. There is also a returned <strong>pointer</strong> that points to the initial element of the array. Each object of the array is default-initialized. This means that if <strong>T</strong> is a built-in type, then the elements are undefined while if <strong>T</strong> is a class type, then the elements are initialized by the default constructor defined in that class type. </p>
+<p>If <strong>n</strong> equals to 0, then the <strong>new</strong> return a valid <strong>off-the-end</strong> pointer as there is no element contained in the array. To deallocate the memory, we use <strong>delete[] p</strong>. Here is an example<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">T* p = <span class="keyword">new</span> T[n];</span><br><span class="line"><span class="built_in">vector</span>&lt;T&gt; v(p, p + n); <span class="comment">// copy elements in the array to vector</span></span><br><span class="line"><span class="keyword">delete</span>[] p;</span><br></pre></td></tr></table></figure></p>
+<p>The <strong>new</strong> allocates an array and stay around until that the program terminates or executes the <strong>delete[]</strong>. Before deallocating the array, the system destroys each element in reverse order. Let’s look at a function<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">duplicate_share</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// allocate enough space; remember to add one for the null</span></span><br><span class="line">    <span class="keyword">size_t</span> length = <span class="built_in">strlen</span>(p) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">char</span>* result = <span class="keyword">new</span> <span class="keyword">char</span>[length];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// copy into our newly allocated space and return pointer to first element</span></span><br><span class="line">    copy(p, p + length, result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>This function takes a pointer to char as an argument and returns a point to char. It actually copy all chars from one string literal into a new string literal. Firstly, it allocates memory for the new array of chars, then apply copy algorithm to copy each char in the original array into the newly created array. Noting that <strong>strlen</strong> gives the number of non-null characters contained in a string literal. However, when we allocate the memory for a new string literal, we need to add one position more for holding the null-character. As for the deallocation of dynamic allocation, we will discuss more in next chapter. </p>
+<hr>
+<h1 id="Test-examples"><a href="#Test-examples" class="headerlink" title="Test examples"></a>Test examples</h1><p>Now I test severl programs analysed above. The first program tests <strong>arguments to main</strong> and <strong>letter_grade</strong> function.</p>
+<p><strong>Test_1.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;		// to get the declaration of cout, endl</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;		// to get the declaration of string</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstddef&gt;		// to get the declaration of size_t</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; 	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;  <span class="keyword">using</span> <span class="built_in">std</span>::<span class="keyword">size_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// function declaration</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">letter_grade</span><span class="params">(<span class="keyword">double</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main function with non-empty parameter list</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// if there are arguments, write them</span></span><br><span class="line">    <span class="keyword">if</span>(argc &gt; <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// declare i outside the for because we need it after the loop</span></span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// write all but the last entry and argv[i] is a char*</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; argc - <span class="number">1</span>; ++i)</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; argv[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// write the last entry but not a space</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; argv[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"my letter grade is: "</span> &lt;&lt; letter_grade(<span class="number">75</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">letter_grade</span><span class="params">(<span class="keyword">double</span> grade)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// range posts for numberic grades</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">double</span> numbers[] = &#123;<span class="number">97</span>, <span class="number">94</span>, <span class="number">90</span>, <span class="number">87</span>, <span class="number">84</span>, <span class="number">80</span>, <span class="number">77</span>, <span class="number">74</span>, <span class="number">70</span>, <span class="number">60</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// name for the letter grades</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span>* <span class="keyword">const</span> letters[] = &#123;<span class="string">"A+"</span>, <span class="string">"A"</span>, <span class="string">"A-"</span>, <span class="string">"B+"</span>,</span><br><span class="line">                                            <span class="string">"B"</span>, <span class="string">"B-"</span>, <span class="string">"C+"</span>, <span class="string">"C"</span>, <span class="string">"C-"</span>, <span class="string">"D"</span>, <span class="string">"F"</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute the number of grades given the size of the array</span></span><br><span class="line">    <span class="comment">// and the size of a single element</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">size_t</span> ngrades = <span class="keyword">sizeof</span>(numbers)/<span class="keyword">sizeof</span>(*numbers);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// given a numberic grade, find the associated letter grade</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; ngrades; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (grade &gt;= numbers[i])</span><br><span class="line">            <span class="keyword">return</span> letters[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"?\?\?"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>Test Results</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Inputs</span><br><span class="line"></span><br><span class="line">command line arguments: please tell me the true</span><br><span class="line">numeric grade: 75</span><br><span class="line"></span><br><span class="line">Outputs</span><br><span class="line"></span><br><span class="line">please tell me the truth</span><br><span class="line">my letter grade is: C-</span><br></pre></td></tr></table></figure></p>
+<p>The second program produces a copy of all files whose names are given as arguments to main. </p>
+<p><strong>test_2.cpp</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;		// to get the declaration of cout, endl, cerr</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;		// to get the declaration string getline</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;		// to get the declaration of ifstream</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cerr</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::getline; <span class="keyword">using</span> <span class="built_in">std</span>::ifstream;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fail_count = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// for each file in the input list</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; argc; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">ifstream <span class="title">in</span><span class="params">(argv[i])</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if it exits, write its contents, otherwise generate an error message</span></span><br><span class="line">        <span class="keyword">if</span>(in)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> s;</span><br><span class="line">            <span class="keyword">while</span>(getline(in, s))</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cerr</span> &lt;&lt; <span class="string">"cannot open file "</span> &lt;&lt; argv[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            ++fail_count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fail_count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>I firstly create a file named <strong>in</strong> and write following sequences into it<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">what are you going to do</span><br><span class="line">to be or not to be</span><br><span class="line">that is a question</span><br></pre></td></tr></table></figure></p>
+<p>Then I set the commond line arguments as: please tell me the truth in<br>Once I click the run button, the program below gives following results<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cannot open file please</span><br><span class="line">cannot open file tell</span><br><span class="line">cannot open file me</span><br><span class="line">cannot open file the</span><br><span class="line">cannot open file truth</span><br><span class="line">what are you going to do</span><br><span class="line">to be or not to be</span><br><span class="line">that is a question</span><br></pre></td></tr></table></figure></p>
+<p>The last program tests that we can use the <strong>duplicate_share</strong> function to produce a copy of a sequence of characters. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;	// to get the declaration of cout,</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;	// to get the declaration of strlen</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstddef&gt;	// to get the declaration of size_t</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;// to get the declaration of copy</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; 	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">strlen</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="keyword">size_t</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::copy;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">duplicate_share</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// allocate enough space; remember to add one for the null</span></span><br><span class="line">    <span class="keyword">size_t</span> length = <span class="built_in">strlen</span>(p) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">char</span>* result = <span class="keyword">new</span> <span class="keyword">char</span>[length];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// copy into our newly allocated space and return pointer to first element</span></span><br><span class="line">    copy(p, p + length, result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// constructe an array</span></span><br><span class="line">	<span class="keyword">char</span> s[] = <span class="string">"computational"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// get a copy</span></span><br><span class="line">	<span class="keyword">char</span>* s_copy = duplicate_share(s);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// verify the copy</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; s_copy &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The program works as we expected and gives results<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">computational</span><br></pre></td></tr></table></figure></p>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/Notes/" rel="tag"># Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/08/04/2018/Accelerated-C-Solutions-to-Exercises-Chapter-9/" rel="next" title="Accelerated C++ Solutions to Exercises(Chapter 9)">
+                <i class="fa fa-chevron-left"></i> Accelerated C++ Solutions to Exercises(Chapter 9)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/12/04/2018/Accelerated-C-Solutions-to-Exercises-Chapter-10/" rel="prev" title="Accelerated C++ Solutions to Exercises(Chapter 10)">
+                Accelerated C++ Solutions to Exercises(Chapter 10) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Liam</p>
+              <p class="site-description motion-element" itemprop="description">Stochastic Modelling Notes; Programming Notes</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/quantliam" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yanshijiutu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pointers"><span class="nav-number">1.</span> <span class="nav-text">Pointers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pointers-to-functions"><span class="nav-number">1.2.</span> <span class="nav-text">Pointers to functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pointer-arithmetic"><span class="nav-number">1.3.</span> <span class="nav-text">Pointer arithmetic</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#String-literals-revisited"><span class="nav-number">2.</span> <span class="nav-text">String literals revisited</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Initializing-arrays-of-character-pointer"><span class="nav-number">2.1.</span> <span class="nav-text">Initializing arrays of character pointer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Arguments-to-main"><span class="nav-number">3.</span> <span class="nav-text">Arguments to main</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reading-and-writing-files"><span class="nav-number">4.</span> <span class="nav-text">Reading and writing files</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Three-kinds-of-memory-management"><span class="nav-number">5.</span> <span class="nav-text">Three kinds of memory management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Allocating-and-deallocating-an-array"><span class="nav-number">5.1.</span> <span class="nav-text">Allocating and deallocating an array</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Test-examples"><span class="nav-number">6.</span> <span class="nav-text">Test examples</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">129.6k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

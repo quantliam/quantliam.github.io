@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Times New Roman:300,300italic,400,400italic,700,700italic|Courier New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"quantein.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":60,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Imagine a course in which each student’s final exam counts for 40% of the final grade, the midterm exam counts for 20%, and the average homework grade makes up the remaining 40%. Now we are asked to w">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ - Working with batches of data">
+<meta property="og:url" content="http://quantein.com/2018/03/02/C-Working-with-batches-of-data/index.html">
+<meta property="og:site_name" content="Liam&#39;s Blog">
+<meta property="og:description" content="Imagine a course in which each student’s final exam counts for 40% of the final grade, the midterm exam counts for 20%, and the average homework grade makes up the remaining 40%. Now we are asked to w">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://quantein.com/images/even.png">
+<meta property="og:image" content="http://quantein.com/images/odd.png">
+<meta property="article:published_time" content="2018-03-01T18:17:43.000Z">
+<meta property="article:modified_time" content="2018-03-10T03:35:35.000Z">
+<meta property="article:author" content="Liam">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Notes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://quantein.com/images/even.png">
+
+<link rel="canonical" href="http://quantein.com/2018/03/02/C-Working-with-batches-of-data/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>C++ - Working with batches of data | Liam's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liam's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">If history repeats itself, and the unexpected always happens, how incapable must Man be of learning from experience?—George Bernard Shaw.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/quantliam" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://quantein.com/2018/03/02/C-Working-with-batches-of-data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liam">
+      <meta itemprop="description" content="Stochastic Modelling Notes; Programming Notes">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liam's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ - Working with batches of data
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-02 02:17:43" itemprop="dateCreated datePublished" datetime="2018-03-02T02:17:43+08:00">2018-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-03-10 11:35:35" itemprop="dateModified" datetime="2018-03-10T11:35:35+08:00">2018-03-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span></span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>NaN:aN</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><em>Imagine a course in which each student’s final exam counts for 40% of the final grade, the midterm exam counts for 20%, and the average homework grade makes up the remaining 40%. Now we are asked to write a program that reads a student’s exam and homework grades and computes a final grade.</em></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ios&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;			<span class="keyword">using</span> <span class="built_in">std</span>::setprecision;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::streamsize;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// ask for and read the student's name</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter your first name: "</span>;</span><br><span class="line">	<span class="built_in">string</span> name;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; name;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, "</span> &lt;&lt; name &lt;&lt; <span class="string">"!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ask for and read the midterm and final grades</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter you midterm and final exam grades: "</span>;</span><br><span class="line">	<span class="keyword">double</span> midterm, <span class="keyword">final</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; midterm &gt;&gt; <span class="keyword">final</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ask for the homework grades</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter all your homework grades, "</span></span><br><span class="line">			<span class="string">"followed by end-of-file: "</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// the number and the sum of grades read so far</span></span><br><span class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">double</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// a variable into which to read</span></span><br><span class="line">	<span class="keyword">double</span> x;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// invariant: we have read count grades so far, and sum is the sum of the first count grades</span></span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; x)</span><br><span class="line">	&#123;</span><br><span class="line">		++count;</span><br><span class="line">		sum += x;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// write the result</span></span><br><span class="line">	streamsize prec = <span class="built_in">cout</span>.precision();</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Your final grade is "</span> &lt;&lt; setprecision(<span class="number">3</span>) </span><br><span class="line">         &lt;&lt; <span class="number">0.2</span> * midterm + <span class="number">0.4</span> * <span class="keyword">final</span> + <span class="number">0.4</span> * sum/count </span><br><span class="line">         &lt;&lt; setprecision(prec) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="More-about-IO-system"><a href="#More-about-IO-system" class="headerlink" title="More about IO system"></a>More about IO system</h1><p>The goal of above program is to compute a final grade, which is a simple math question-computing the weighted average. Let’s start from the <strong>#include</strong> directives</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ios&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>We are familar with <iostream> which is the header that defines the standard input/output stream objects, and <string> which is the header that defines string type objects. Correspondingly, objects <strong>cin</strong> , <strong>cout</strong> and <strong>endl</strong> are defined in the <strong>iostream</strong> library, and <strong>string</strong> is defined in the <strong>string</strong> class. These names are defined in the namespace <strong>std</strong>, and need to be declared in the form of <strong>std::name</strong> or <strong>using std::name</strong> before we can use them.</p>
+<p>Similarly, the <ios> is a header that defines the type <strong>streamsize</strong> which represents sizes. The <iomanip> defines the manipulator <strong>setprecision</strong> which sets the decimal precision. Both names <strong>streamsize</strong> and <strong>setprecision</strong> are defined in the namespace std.</p>
+<h2 id="setprecision-shownpoint-amp-fixed"><a href="#setprecision-shownpoint-amp-fixed" class="headerlink" title="setprecision, shownpoint &amp; fixed"></a>setprecision, shownpoint &amp; fixed</h2><p><strong>setprecision</strong> is used to format floating-point values, such as <strong>float</strong> and <strong>double</strong> type values. It manipulates the stream by causing the subsequent output on that stream to be written with a given number of digits. The syntax is </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;&lt; setprecision(<span class="keyword">int</span> n) &lt;&lt;</span><br></pre></td></tr></table></figure>
+<p>The parameter <strong>n</strong> determines the number of digits to be written. In this case, <strong>setprecision(3)</strong> means the output will remain three digits. Let’s do some experiments to explore more about <strong>setprecision</strong></p>
+<p><strong>Experiment 1</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ios&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::setprecision;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">12345</span>;</span><br><span class="line">    <span class="keyword">float</span> f1 = <span class="number">12345</span>;</span><br><span class="line">    <span class="keyword">float</span> f2 = <span class="number">3.148</span>;;</span><br><span class="line">    <span class="keyword">float</span> f3 = <span class="number">0.03148</span>;</span><br><span class="line">    <span class="keyword">float</span> f4 = <span class="number">0.03108</span>;</span><br><span class="line">    <span class="keyword">float</span> f5 = <span class="number">0.03100</span>;</span><br><span class="line">    <span class="keyword">float</span> f6 = <span class="number">1000.435</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">3</span>) &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f1 &lt;&lt; <span class="built_in">endl</span>;   </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f4 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f5 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f6 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The result is shown below</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">12345</span><br><span class="line">1.23e+004</span><br><span class="line">3.15</span><br><span class="line">0.0315</span><br><span class="line">0.0311</span><br><span class="line">0.031</span><br><span class="line">1e+003</span><br></pre></td></tr></table></figure>
+<p>It can be seen from this experiment that </p>
+<ol>
+<li><strong>setprecision</strong> doesn’t work on int type values</li>
+<li>the parameter <strong>n</strong> (in this case is 3) controls the number of significant digits (i.e. count from the first non-zero number).</li>
+<li>it follows the rounding principles.</li>
+<li>it omits the trailing <strong>0</strong>s.</li>
+</ol>
+<p>If one want to keep the trailing zero, the manipulator <strong>showpoint</strong> can be used. <strong>showpoint</strong> is declared in the <strong>ios</strong> library and its name is also in the namespace std. It sets the format flag and always includes the decimal point as well as the tail 0 for matching the precision. The <strong>showpoint</strong> flag can be unset with the <strong>noshowpoint</strong> manipulator. </p>
+<p>If we want control the precision of the decimal part, we can use <strong>fixed</strong> manipulator to fixed the decimal part. Together with the <strong>setprecision(n)</strong>, the number of digits in the fractional part will be fixed at <strong>n</strong>. If there is no enough numbers after the decimal point, zero will be added to match the precision. </p>
+<p>To veryfy the usages of <strong>showpoint</strong> and <strong>fixed</strong>, I did tests as follows.</p>
+<p><strong>Experiment 2</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ios&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::setprecision;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::fixed;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::showpoint;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::noshowpoint;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">float</span> f1 = <span class="number">1000.00</span>;</span><br><span class="line">    <span class="keyword">float</span> f2 = <span class="number">3.14800</span>;</span><br><span class="line">    <span class="keyword">float</span> f3 = <span class="number">0.03148</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; showpoint &lt;&lt; setprecision(<span class="number">4</span>) &lt;&lt; f1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f3 &lt;&lt; noshowpoint &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write a bank line to sepearate outputs</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; setprecision(<span class="number">6</span>) &lt;&lt; f1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The result is as analysed above</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1000.</span><br><span class="line">3.148</span><br><span class="line">0.03148</span><br><span class="line"></span><br><span class="line">1000.000000</span><br><span class="line">3.148000</span><br><span class="line">0.031480</span><br></pre></td></tr></table></figure>
+<h2 id="streamsize"><a href="#streamsize" class="headerlink" title="streamsize"></a>streamsize</h2><p>Once we changed the precision, the subsequent output would be formated to match the precision. If we want to change back, we can reset the precision to the original setting if we know the precision value. If we don’t know the previous setting of the <strong>cout</strong>, the <strong>cout.presicion</strong> returns us the value and its type is <strong>streamsize</strong>. </p>
+<p>Without using <strong>setprecision</strong>, we could use <strong>cout.precision(n)</strong> to set the precision. The usage is shown as below</p>
+<p><strong>Experiment 3</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ios&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;		<span class="keyword">using</span> <span class="built_in">std</span>::setprecision;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::fixed;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;	<span class="keyword">using</span> <span class="built_in">std</span>::streamsize;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">float</span> f1 = <span class="number">1000.00</span>;</span><br><span class="line">    <span class="keyword">float</span> f2 = <span class="number">3.14800</span>;</span><br><span class="line">    <span class="keyword">float</span> f3 = <span class="number">0.03148</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// return the current precision</span></span><br><span class="line">    streamsize prec1 = <span class="built_in">cout</span>.precision();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// set precision to 2</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// set precision to 3, return previous value</span></span><br><span class="line">    streamsize prec2 = <span class="built_in">cout</span>.precision(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// the outputs should have three decimal digits</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; f1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reset precision value to its previous value</span></span><br><span class="line">    <span class="built_in">cout</span>.precision(prec2);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// the outputs should have two decimal digits</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; f1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// reset the the initial precision value</span></span><br><span class="line">    <span class="built_in">cout</span>.precision(prec1);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; f1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check the original value of precision</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"The origin precision value is: "</span> &lt;&lt; prec1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The comments show the expected results according to that </p>
+<ol>
+<li><strong>streamsize precision()</strong> returns the the value of the current floating-point precision.</li>
+<li><strong>streamsize precision(int n)</strong> sets the precision to a new value.</li>
+</ol>
+<p>The program gives result as I expected</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1000.000</span><br><span class="line">3.148</span><br><span class="line">0.031</span><br><span class="line"></span><br><span class="line">1000.00</span><br><span class="line">3.15</span><br><span class="line">0.03</span><br><span class="line"></span><br><span class="line">1000.000000</span><br><span class="line">3.148000</span><br><span class="line">0.031480</span><br><span class="line"></span><br><span class="line">The origin precision value is: 6</span><br></pre></td></tr></table></figure>
+<h1 id="Return-to-while-statement"><a href="#Return-to-while-statement" class="headerlink" title="Return to while statement"></a>Return to while statement</h1><p>Let’s get back to the example. The statements in the function body begin with writing a greeting as illustrated in previous chapters. Then, it reads two values into two variables <strong>midterm</strong> and <strong>final</strong>. The input operations can be chained as</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cin</span> &gt;&gt; midterm &gt;&gt; <span class="keyword">final</span>;</span><br></pre></td></tr></table></figure>
+<p>This statement is equivalent to</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cin</span> &gt;&gt; midterm;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; <span class="keyword">final</span>;</span><br></pre></td></tr></table></figure>
+<p>The next statement shows a new form of writing string literals. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter all your homework grades, "</span></span><br><span class="line">        <span class="string">"followed by end-of-file: "</span>;</span><br></pre></td></tr></table></figure>
+<p>It seems that two string lterals will be written, but in fact it has the same effect as the following statement</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter all your homework grades, followed by end-of-file: "</span>;</span><br></pre></td></tr></table></figure>
+<p>This is because two or more string literals separated only by whitespace are concatenated automatically. </p>
+<p>What closely follow is the while loop. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">double</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// a variable into which to read</span></span><br><span class="line"><span class="keyword">double</span> x;</span><br><span class="line"></span><br><span class="line"><span class="comment">// invariant: we have read count grades so far, and sum is the sum of the first count grades</span></span><br><span class="line"><span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; x)</span><br><span class="line">&#123;</span><br><span class="line">    ++count;</span><br><span class="line">    sum += x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>count</strong> is defined for counting the number of inputs as well as describing the loops. <strong>sum</strong> is defined for holding the summation of homework grades. Note that it is initialized with an int value 0 though it is a double type variable. Therefore, the int value will be converted automatically to double type with the fractional part of 0. </p>
+<p>Since the number of homework grades is unkonwn, we could not use the while loop as before as we don’t know the number of loops. The <strong>while loop</strong> here makes it available to input multiple times continuously. As we know, the condition in a while loop should yield a value of bool, that is, true or false, otherwise the value (if available) will be converted to the type of bool. According to Koenig and Moo (2000), <em>the <strong>istream</strong> class provides a conversion that can be used to convert <strong>cin</strong> to a value that can be used in a condition</em>. <em>In addition, the value depends on the iternal state of the <strong>istream</strong> object, which will remember whether the last attempt to read worked</em>. Hence, the <strong>cin &gt;&gt; x</strong> will theoretically always yield a true value as long as we keep inputing right type values. In this example, it reminds us to send “EOF” signal, which will change the value to false, to stop the loop. </p>
+<h1 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h1><p>The example above shows how to compute an average value of a batch of data. In reality, the goal is probably to compute the median, or other statistics in the data. However, the inputted data are not stored in above program and hence are unavailable to access. Naturally, the first step is to store the data and the second step is to access or compute the target value via algorithms. Now we learn how to deal with these problems with <strong>vector</strong>. </p>
+<h2 id="Defining-and-Initializing-vectors"><a href="#Defining-and-Initializing-vectors" class="headerlink" title="Defining and Initializing vectors"></a>Defining and Initializing <strong>vector</strong>s</h2><p>The vector is a <strong>class template</strong>. Before using the vector in a program, we need to include the header and qualify the name either explicitly or using <em>using declaration</em>. For example</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span></span><br></pre></td></tr></table></figure>
+<p>A <strong>vector</strong> is a container that holds a sequence  of objects of the same type. The syntax of creating a vector is</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;T&gt; name; <span class="comment">// default initialization</span></span><br></pre></td></tr></table></figure>
+<p>The <strong>name</strong>  is the template name. The <strong>T</strong> insides the angle brackets represents the type of the contained objects. It could be built-in types like <strong>int</strong>, <strong>char</strong>, or class types such as <strong>string</strong>, or even <strong>vector</strong> which means that the element contained in this vector is also a vector. </p>
+<p>The vector template defines how to initialze vectors. When a vector is defalut initialized, it has no elements, which creats an empty <strong>vector</strong>. We can also initialize <strong>vector</strong>s using copy initialization or direct initialization or list initialization (see the table below).</p>
+<table>
+<thead>
+<tr>
+<th align="left">Ways to initialize a vector</th>
+<th align="left">reference: Lippman etc. 2012</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">vector<T> v1</td>
+<td align="left">default initialization and creat an empty vector</td>
+</tr>
+<tr>
+<td align="left">vector<T> v2(v1)</td>
+<td align="left">copy all elements in v1 to v2</td>
+</tr>
+<tr>
+<td align="left">vector<T> v2 = v1</td>
+<td align="left">has same effect as the last one</td>
+</tr>
+<tr>
+<td align="left">vector<T> v3(n, val)</td>
+<td align="left">direct initialization with n elements of the same value val</td>
+</tr>
+<tr>
+<td align="left">vector<T> v4(n)</td>
+<td align="left">v4 has n copies of value-initialized object</td>
+</tr>
+<tr>
+<td align="left">vector<T> v5{a, b, c}</td>
+<td align="left">v5 has three elements initialized with initializers a, b, c respectively</td>
+</tr>
+<tr>
+<td align="left">vector<T> v5 = {a, b, c}</td>
+<td align="left">has same effect as the last one</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>What new usage here is the value-initialization</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;T&gt; <span class="title">v4</span><span class="params">(n)</span></span></span><br></pre></td></tr></table></figure>
+<p>The <strong>n</strong> here only provide the number of elements that will be contained in the <strong>vector</strong>. But there is no initializers provided. In this case, all elements will be initialized following the principle of default initialization determined by the type of the elements. For example</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v1</span><span class="params">(<span class="number">10</span>)</span></span>; <span class="comment">// 10 elements will be initialized with 0</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">v2</span><span class="params">(<span class="number">10</span>)</span></span>; <span class="comment">// 10 elements will be initialized to empty string type objects</span></span><br></pre></td></tr></table></figure>
+<p>If the type of the contained elements does’t support default initialization, the initialization of the vector would be failure. </p>
+<p>In addition, it is worth noting the difference between </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">1</span>)    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v1</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>and </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">2</span>)    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v2&#123;<span class="number">10</span>&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">3</span>)    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v3</span><span class="params">(<span class="number">10</span>, <span class="number">1</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>and</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">4</span>)    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v4&#123;<span class="number">10</span>, <span class="number">1</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>The first one is value-initialization as explained above while the second is list initialization with initializer 10. The third one is direct initialization with value 1 and the total number of elements is 10. The fourth one is list initialization with initializers 10 and 1, and the total number of elements is 2.</p>
+<p>However, there exist some special cases</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">5</span>)    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">v5</span><span class="params">(<span class="string">"hello"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">(<span class="number">6</span>)    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; v6&#123;<span class="number">10</span>&#125;; <span class="comment">// 10 value-initialized elements</span></span><br></pre></td></tr></table></figure>
+<p>Example (5) is incorrect as we can not copy the string lterals to a vector. Example (6) is correct but has the same effect as example (1) rather than list initialization. This is because 10 can not be used to initialize an element of string type, instead it can be used to initialize the vector with 10 value-initialized <strong>string</strong>s. </p>
+<p>Now returing to the beigining of this post, I’ll define a vector for the purpose of holding all homework grades.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> x;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; homework;</span><br></pre></td></tr></table></figure>
+<h2 id="Operations-on-vectors"><a href="#Operations-on-vectors" class="headerlink" title="Operations on vectors"></a>Operations on <strong>vector</strong>s</h2><h3 id="Reading-the-elements"><a href="#Reading-the-elements" class="headerlink" title="Reading the elements"></a>Reading the elements</h3><p>One feature of a vector is that it has variable size, which is particularly helpful for us when the number of elements is unknown. The member function <strong>push_back</strong> can add a new element at the end of the vector after the current last element. The usage is shown below</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; x)</span><br><span class="line">&#123;</span><br><span class="line">    homework.push_back(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The x is passed as an argument and its value is copied to the new element. As a result, the size of the vector <strong>homework</strong> is increased by 1.  </p>
+<h3 id="Implementing-algorithms"><a href="#Implementing-algorithms" class="headerlink" title="Implementing algorithms"></a>Implementing algorithms</h3><p>Now all data have been stored into a vector. Assuming the goal of the program is to compute the median of the data set. It is known that the median value depends on the number of the stored elements (i.e. the size of the vector). </p>
+<ol>
+<li>if there exist an odd number of numbers, the median value is the value of the middle number. </li>
+<li>if there exist an even number of numbers, there is no single middle number and the median value is the average value of two middle numbers.  </li>
+</ol>
+<p>For a program, we also need to consider the case of no elements.</p>
+<ol start="3">
+<li>if there is no elements at present, throwing a warning and asking to input again.</li>
+</ol>
+<p>Similar as a string, the size of a vector can be obtained through its member function <strong>size</strong>. For example, homework.size() returns the size of the vector. The returned value has a type of <strong>vector<T>::size_type</strong>. Now we can translate above conditions to real code</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// obtain the size of homework</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::size_type vec_size;</span><br><span class="line">vecsize <span class="built_in">size</span> = homework.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">size</span> == <span class="number">0</span>)</span><br><span class="line">&#123;   <span class="built_in">cout</span> &lt;&lt; <span class="string">"You must enter your grades. "</span></span><br><span class="line">            <span class="string">"Please try again."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// return 1 instead of 0 to indicate failure </span></span><br><span class="line">     <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">size</span> % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">    <span class="comment">// compute median</span></span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    <span class="comment">// compute median</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Note that an alternative for the condition <strong>size == 0</strong> is the <strong>empty</strong> function which returns true if vector is empty else returns false. The usage is the same as that for <strong>string</strong>s.</p>
+<h4 id="Type-Aliases"><a href="#Type-Aliases" class="headerlink" title="Type Aliases"></a>Type Aliases</h4><p>For convenience, we uses <strong>type alias</strong> instead of using <strong>vector<double>::size_type</strong> directly in defining variables of such type. A <strong>type alias</strong> defines the name <strong>vec_size</strong> as a synonym for <strong>vector<double>::size_type</strong>. There are two ways to define type alias</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(1)    typedef double length; &#x2F;&#x2F; length is a synonym for double</span><br><span class="line"></span><br><span class="line">(2)    using length &#x3D; double; &#x2F;&#x2F; length is a synonmy for double</span><br></pre></td></tr></table></figure>
+<p>The second method is the new feature of new standards c++2011.</p>
+<h4 id="sort-function"><a href="#sort-function" class="headerlink" title="sort function"></a>sort function</h4><p>Now the rest of the work is to find the median and basically speaking, is to sort the data set. This can be done by using a library algoritm.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line">... <span class="comment">// other code </span></span><br><span class="line">sort(homework.<span class="built_in">begin</span>(), homework.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
+<p>The <strong>sort</strong> function is defined in the library <strong>algorithm</strong> and therefore the header is added. It sorts the values in a container in an nondecreasing order. The arguments to <strong>sort</strong> specify the range of the data to be sorted. <strong>begin</strong> and <strong>end</strong> are member functions of the vector and represents the first element and (one past)the last element in <strong>homework</strong> respectively.<br>They are <strong>iterators</strong> and will further discussed in chapter 6.</p>
+<p>After we obtained a ordered sequence of values, now I illustrate how to determine the median value.<br><img src="/images/even.png" alt="If size is an even number"></p>
+<p>Similar as a string, we can access individual elements using <strong>subscript operator</strong>([]) and the index uses an asymmetrical range from 0 to the size of <strong>homework</strong> (excluded). If the size of <strong>homework</strong> is an even number, then size is exactly devided by 2. Due to the index starts from 0 ranther than 1, the mid elements should be <strong>homework[size/2 - 1]</strong> and <strong>homework[size/1]</strong>. Therefore, the median value is the average of the corresponding two values. As shown in above graph, the number of elements of both sides equals to <strong>size/2</strong> because</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">left side:  number &#x3D; size&#x2F;2 - 1 - 0 + 1 &#x3D; size&#x2F;2</span><br><span class="line">right side: number &#x3D; size - 1 - size&#x2F;2 + 1 &#x3D; size&#x2F;2</span><br></pre></td></tr></table></figure>
+<p>If size is an odd number, the result of <strong>size/2</strong> is in fact the value of <strong>(size-1)/2</strong>. Then the mid element is exact the <strong>homework[(size-1)/2]</strong> as both sides of this element has same number of elements(as shown in below graph).  This can also be verified mathematically</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">left side:  number &#x3D; (size-1)&#x2F;2 - 1 - 0 + 1 &#x3D; (size-1)&#x2F;2</span><br><span class="line">right side: number &#x3D; size - 1 - &#123;(size-1)&#x2F;2 + 1&#125; + 1 &#x3D; (size-1)&#x2F;2;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/odd.png" alt="If size is an odd number"></p>
+<p>Now let’s translate the algorithms to real code</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">   vec_sz mid = <span class="built_in">size</span>/<span class="number">2</span>;</span><br><span class="line">   <span class="keyword">double</span> median;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">if</span> (<span class="built_in">size</span> % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">        median = (homework[mid] + homework[mid<span class="number">-1</span>])/<span class="number">2.0</span>;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">        median = homework[mid] </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><em>Note that when calculate the average of two mid elements, I divide by 2.0 rather than 2 for the purpose of avoiding the loss of precision.This is because the quotient of two integers will be an integer.</em></strong></p>
+<h4 id="The-conditional-or-ternary-operator"><a href="#The-conditional-or-ternary-operator" class="headerlink" title="The conditional (or ternary) operator"></a>The conditional (or ternary) operator</h4><p>An alternative statements for above <strong>if-else</strong> clause is to use the conditional (or ternary) operator (?:). The syntax is</p>
+<pre><code>(condition 1) ? expression 1 : expression 2</code></pre><p>It means that if condition 1 evaluates to true, then expression 2 is evaluated, and if condition 1 evaluates to false, then expression 3 is evaluated instead.</p>
+<p>Therefore, we can change above code as</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">   vec_sz mid = <span class="built_in">size</span>/<span class="number">2</span>;</span><br><span class="line">   <span class="keyword">double</span> median;</span><br><span class="line">   </span><br><span class="line">   median =  <span class="built_in">size</span> % <span class="number">2</span> == <span class="number">0</span>) ? (homework[mid] + homework[mid<span class="number">-1</span>])/<span class="number">2.0</span> : median = homework[mid];                </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="A-complete-program"><a href="#A-complete-program" class="headerlink" title="A complete program"></a>A complete program</h1><p>Finally, I put all pieces of code together and obtained the complete program. Also, it works well when I test it.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ios&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>; 			<span class="keyword">using</span> <span class="built_in">std</span>::sort;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; 			<span class="keyword">using</span> <span class="built_in">std</span>::streamsize;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;			<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::setprecision; 	<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ask for and read the student's name</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter your first name: "</span>;</span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; name;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, "</span> &lt;&lt; name &lt;&lt; <span class="string">"!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ask for and read the midterm and final grades</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Please enter your midterm and final grades: "</span>;</span><br><span class="line">    <span class="keyword">double</span> midterm, <span class="keyword">final</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; midterm &gt;&gt; <span class="keyword">final</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ask for the student entered some homework grades</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter all your homework grades, "</span></span><br><span class="line">            <span class="string">"followed by end-of-file: "</span>;</span><br><span class="line">    <span class="keyword">double</span> x;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; homework;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; x)</span><br><span class="line">        homework.push_back(x);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check that the student entered homework grades</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::size_type vec_size;</span><br><span class="line">    vec_size <span class="built_in">size</span> = homework.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">size</span> == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="string">"You must enter your grades. "</span></span><br><span class="line">                <span class="string">"Please try again."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sort the grades</span></span><br><span class="line">    sort(homework.<span class="built_in">begin</span>(), homework.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute the median homework grade</span></span><br><span class="line">    vec_size mid = <span class="built_in">size</span>/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">double</span> median;</span><br><span class="line">    median = <span class="built_in">size</span> % <span class="number">2</span> == <span class="number">0</span> ? (homework[mid] + homework[mid - <span class="number">1</span>])/<span class="number">2</span></span><br><span class="line">            : homework[mid];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// compute and write the final grade</span></span><br><span class="line">    streamsize prec = <span class="built_in">cout</span>.precision();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Your final grade is "</span> &lt;&lt; setprecision(<span class="number">3</span>)</span><br><span class="line">        &lt;&lt; <span class="number">0.2</span> * midterm + <span class="number">0.4</span> * <span class="keyword">final</span> + <span class="number">0.4</span> * median</span><br><span class="line">        &lt;&lt; setprecision(prec) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Test and results:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Please enter your first name: Bruce</span><br><span class="line">Hello, Bruce!</span><br><span class="line">Please enter your midterm and final grades: 80 90</span><br><span class="line">Enter all your homework grades, followed by end-of-file: 50 60 70 80 90</span><br><span class="line">Your final grade is 80</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Liam
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://quantein.com/2018/03/02/C-Working-with-batches-of-data/" title="C++ - Working with batches of data">http://quantein.com/2018/03/02/C-Working-with-batches-of-data/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/Notes/" rel="tag"># Notes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/03/02/C-Built-in-types-and-expressions/" rel="prev" title="C++ - Built-in types and expressions">
+      <i class="fa fa-chevron-left"></i> C++ - Built-in types and expressions
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/03/04/Accelerated-C-Solutions-to-Exercise-Chapter-3/" rel="next" title="Accelerated C++ Solutions to Exercises(Chapter 3 Part 1)">
+      Accelerated C++ Solutions to Exercises(Chapter 3 Part 1) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#More-about-IO-system"><span class="nav-number">1.</span> <span class="nav-text">More about IO system</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#setprecision-shownpoint-amp-fixed"><span class="nav-number">1.1.</span> <span class="nav-text">setprecision, shownpoint &amp; fixed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#streamsize"><span class="nav-number">1.2.</span> <span class="nav-text">streamsize</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Return-to-while-statement"><span class="nav-number">2.</span> <span class="nav-text">Return to while statement</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vector"><span class="nav-number">3.</span> <span class="nav-text">vector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Defining-and-Initializing-vectors"><span class="nav-number">3.1.</span> <span class="nav-text">Defining and Initializing vectors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Operations-on-vectors"><span class="nav-number">3.2.</span> <span class="nav-text">Operations on vectors</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reading-the-elements"><span class="nav-number">3.2.1.</span> <span class="nav-text">Reading the elements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implementing-algorithms"><span class="nav-number">3.2.2.</span> <span class="nav-text">Implementing algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Type-Aliases"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">Type Aliases</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sort-function"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">sort function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-conditional-or-ternary-operator"><span class="nav-number">3.2.2.3.</span> <span class="nav-text">The conditional (or ternary) operator</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A-complete-program"><span class="nav-number">4.</span> <span class="nav-text">A complete program</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liam</p>
+  <div class="site-description" itemprop="description">Stochastic Modelling Notes; Programming Notes</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/quantliam" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;quantliam" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/yanshijiutu@gmail.com" title="E-Mail → yanshijiutu@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liam</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">NaN:aN</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
